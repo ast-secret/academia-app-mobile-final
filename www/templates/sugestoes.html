@@ -1,0 +1,20 @@
+<ion-view view-title="Sugestões">
+    <ion-nav-buttons side="right">
+        <button class="button" ng-click="send(sugestao)" ng-disabled="!sugestao.message">
+            Enviar
+        </button>
+    </ion-nav-buttons>
+    <ion-content>
+        <form>
+            <div class="list">
+                <label class="item item-input">
+                    <textarea
+                        placeholder="Sugestão..."
+                        class="sugestao"
+                        ng-model="sugestao.message"
+                        required></textarea>
+                </label>
+            </div>
+        </form>
+    </ion-content>
+</ion-view>

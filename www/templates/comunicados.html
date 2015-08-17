@@ -1,0 +1,25 @@
+<ion-view view-title="Comunicados">
+    <ion-content>
+        <ion-refresher
+            ng-if="!loading"
+            pulling-text="Puxe para atualizar..."
+            on-refresh="doRefresh()">
+        </ion-refresher>
+
+        <div class="text-center padding" ng-if="loading">
+            <ion-spinner></ion-spinner>    
+        </div>
+        
+        <ion-list>
+            <ion-item ng-repeat="comunicado in comunicados" href="#/app/comunicado/{{$index}}">
+                {{comunicado.title}}
+                <p>
+                    <small class="text-muted">
+                        <span am-time-ago="comunicado.created"></span>
+                    </small>
+                </p>
+            </ion-item>
+        </ion-list>
+
+    </ion-content>
+</ion-view>
