@@ -4,14 +4,13 @@ angular.module('starter.services', [])
 
 .factory('Comunicados', function(
     $q, 
-    $timeout, 
     $http, 
-    localStorageService,
+    store,
     WEBSERVICE_URL
 ){
     return {
         getLocalData: function(){
-            return localStorageService.get('comunicados');
+            return store.get('comunicados');
         },
         getServerData: function(){
             var _this = this;
@@ -21,7 +20,7 @@ angular.module('starter.services', [])
                 .get(WEBSERVICE_URL + '/releases.json')
                 .success(function(result){
                     var releases = result.releases;
-                    localStorageService.set('comunicados', releases);
+                    store.set('comunicados', releases);
                     defer.resolve(releases);
                 })
                 .error(function(){
@@ -32,14 +31,34 @@ angular.module('starter.services', [])
         }
     };
 })
-.factory('Sugestoes', function($q, $timeout){
+.factory('Sugestoes', function(
+    $cordovaToast,
+    $http,
+    $ionicPlatform,
+    $q,
+    WEBSERVICE_URL
+){
     return {
         send: function(sugestao){
             var defer = $q.defer();
             
-            $timeout(function(){
-                defer.resolve();
-            }, 2000);
+            var toastMsg = '';
+
+            $http
+                .post(WEBSERVICE_URL + '/suggestions/add.json', sugestao)
+                .success(function(result){
+                    toastMsg = 'A sua sugestão foi enviada com sucesso! Obrigado.';
+                    defer.resolve(result);
+                })
+                .error(function(){
+                    toastMsg = 'A sua sugestão não foi enviada, Por favor aguarde um pouco e tente novamente.';
+                    defer.reject();  
+                })
+                .finally(function(){
+                    $ionicPlatform.ready(function() {
+                        $cordovaToast.show(toastMsg, 'long', 'bottom');
+                    });
+                });
 
             return defer.promise;
         }

@@ -9,7 +9,7 @@ angular.module('starter', [
     'starter.controllers',
     'starter.services',
     'angularMoment',
-    'LocalStorageModule',
+    'angular-storage',
     'ngCordova'
 ])
 
