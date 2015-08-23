@@ -1,7 +1,35 @@
 angular.module('starter.services', [])
 
 .constant('WEBSERVICE_URL', 'http://localhost/academia-webservice')
+.factory('Aulas', function(
+    $q, 
+    $http, 
+    store,
+    WEBSERVICE_URL
+){
+    return {
+        getLocalData: function(){
+            return store.get('aulas');
+        },
+        getServerData: function(){
+            var _this = this;
+            var defer = $q.defer();
+            
+            $http
+                .get(WEBSERVICE_URL + '/services.json')
+                .success(function(result){
+                    var releases = result.releases;
+                    store.set('aulas', releases);
+                    defer.resolve(releases);
+                })
+                .error(function(){
+                  defer.reject();  
+                });
 
+            return defer.promise;
+        }
+    };
+})
 .factory('Comunicados', function(
     $q, 
     $http, 

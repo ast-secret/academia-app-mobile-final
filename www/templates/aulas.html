@@ -1,0 +1,20 @@
+<ion-view view-title="Aulas">
+    <ion-content>
+        <ion-refresher
+            ng-if="!loading"
+            pulling-text="Puxe para atualizar..."
+            on-refresh="doRefresh()">
+        </ion-refresher>
+
+        <div class="text-center padding" ng-if="loading">
+            <ion-spinner></ion-spinner>    
+        </div>
+        
+        <ion-list>
+            <ion-item ng-repeat="aula in aulas" href="#/app/aula/{{$index}}">
+                {{aula.name}}
+                <span class="item-note">{{aula.duration}} minutos</span>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>
