@@ -10,7 +10,8 @@ angular.module('starter', [
     'starter.services',
     'angularMoment',
     'angular-storage',
-    'ngCordova'
+    'ngCordova',
+    'angular.filter'
 ])
 
 .run(function($ionicPlatform) {
@@ -67,6 +68,15 @@ angular.module('starter', [
                 }
             }
         })
+    .state('app.horarios', {
+        url: '/horarios/:weekdayIndex',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/horarios.html',
+                controller: 'HorariosController'
+            }
+        }
+    })
     .state('app.comunicados', {
         url: '/comunicados',
         views: {
@@ -96,5 +106,5 @@ angular.module('starter', [
     });    
 
     // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/app/aulas');
+    $urlRouterProvider.otherwise('/app/horarios/0');
 });

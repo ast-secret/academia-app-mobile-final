@@ -1,0 +1,28 @@
+<ion-view view-title="Horários">
+    <div class="tabs tabs-top tabs-striped">
+        <a
+            ng-class="{'active' : weekdayIndex == $index}"
+            class="tab-item"
+            ng-repeat="weekday in weekdays"
+            ng-click="changeTab($index)">
+            {{weekday | limitTo : 3}}
+        </a>
+    </div>
+    <ion-content class="has-tabs-top">
+        <ion-list>
+            <span
+                ng-repeat="(key, horario) in horarios[weekdayIndex] | groupBy: 'start_hour'"
+                ng-if="horarios[weekdayIndex]">
+                <ion-item class="item-divider">
+                    {{key | date: 'HH:mm'}}
+                </ion-item>
+                <ion-item ng-repeat="aula in horario">
+                    {{aula.service.name}}
+                </ion-item>
+            </span>
+            <ion-item ng-if="!horarios[weekdayIndex]">
+                <small class="text-muted">Nenhuma aula para hoje.</small>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

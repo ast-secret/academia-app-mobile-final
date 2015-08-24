@@ -1,6 +1,43 @@
 angular.module('starter.services', [])
 
 .constant('WEBSERVICE_URL', 'http://localhost/academia-webservice')
+.factory('Weekdays', function(){
+    return {
+        data: ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sabado'],
+        get: function(){
+            return this.data;
+        }
+    };
+})
+.factory('Horarios', function(
+    $q, 
+    $http, 
+    store,
+    WEBSERVICE_URL
+){
+    return {
+        getLocalData: function(){
+            return store.get('horarios') || [];
+        },
+        getServerData: function(){
+            var _this = this;
+            var defer = $q.defer();
+            
+            $http
+                .get(WEBSERVICE_URL + '/times.json')
+                .success(function(result){
+                    var horarios = result.times;
+                    store.set('horarios', horarios);
+                    defer.resolve(horarios);
+                })
+                .error(function(){
+                  defer.reject();  
+                });
+
+            return defer.promise;
+        }
+    };
+})
 .factory('Aulas', function(
     $q, 
     $http, 
