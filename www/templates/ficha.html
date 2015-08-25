@@ -1,0 +1,25 @@
+<ion-view view-title="Minha Ficha">
+    <ion-nav-buttons side="right">
+        <button class="button button-icon icon ion-ios-more" ng-click="doSomething()"></button>
+    </ion-nav-buttons>
+    <div class="tabs tabs-top tabs-striped">
+        <a
+            ng-class="{'active' : currentTab == $index}"
+            class="tab-item"
+            ng-repeat="(key, exercise) in ficha.exercises"
+            ng-click="changeTab($index)">
+            {{exercisesColumns[key]}}
+        </a>
+    </div>
+    <ion-content class="has-tabs-top">
+        <ion-refresher
+            pulling-text="Pull to refresh..."
+            on-refresh="doRefresh()">
+        </ion-refresher>
+    	<ion-list>
+            <ion-item ng-repeat="exercise in ficha.exercises[currentTab]">
+                {{exercise.name}}
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

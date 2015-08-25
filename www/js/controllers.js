@@ -71,12 +71,44 @@ angular.module('starter.controllers', [])
 })
 
 .controller('AulaController', function($scope, $stateParams, Aulas) {
-    $scope.aula = Aulas.getLocalData()[$stateParams.aulaIndex];
+    $scope.aula = Aulas.get('id', $stateParams.aulaId);
     // angular.forEach($scope.aula, function(value, key){
     //     console.log(value);
     // });
 })
 
+.controller('FichaController', function($scope, $stateParams, Fichas) {
+    $scope.loading = true;
+    $scope.ficha = Fichas.getLocalData();
+
+    $scope.exercisesColumns = Fichas.getExercisesColumns();
+
+    $scope.currentTab = 0;
+
+    $scope.changeTab = function(index){
+        $scope.currentTab = index;
+    };
+
+    Fichas
+        .getServerData()
+        .then(function(data){
+            $scope.ficha = data;
+        })
+        .finally(function(){
+            $scope.loading = false;
+        });
+
+    $scope.doRefresh = function() {
+        Fichas
+            .Ficha()
+            .then(function(data){
+                $scope.ficha = data;
+            })
+            .finally(function(){
+                $scope.$broadcast('scroll.refreshComplete');    
+            });
+    };
+})
 
 .controller('ComunicadosController', function(
     $scope,

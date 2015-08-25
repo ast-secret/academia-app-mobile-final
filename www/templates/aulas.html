@@ -11,7 +11,7 @@
         </div>
         
         <ion-list>
-            <ion-item ng-repeat="aula in aulas" href="#/app/aula/{{$index}}">
+            <ion-item ng-repeat="aula in aulas" href="#/app/aula/{{aula.id}}">
                 {{aula.name}}
                 <span class="item-note">{{aula.duration}} minutos</span>
             </ion-item>

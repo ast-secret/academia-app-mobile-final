@@ -60,7 +60,7 @@ angular.module('starter', [
         }
     })
         .state('app.aula', {
-            url: '/aula/:aulaIndex',
+            url: '/aula/:aulaId',
             views: {
                 'menuContent': {
                     templateUrl: 'templates/aula.html',
@@ -95,6 +95,15 @@ angular.module('starter', [
             }
         }
     })
+    .state('app.ficha', {
+        url: '/ficha',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/ficha.html',
+                controller: 'FichaController'
+            }
+        }
+    })
     .state('app.sugestoes', {
         url: '/sugestoes',
         views: {
@@ -106,5 +115,5 @@ angular.module('starter', [
     });    
 
     // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/app/horarios/0');
+    $urlRouterProvider.otherwise('/app/ficha');
 });

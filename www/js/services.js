@@ -1,11 +1,57 @@
 angular.module('starter.services', [])
 
 .constant('WEBSERVICE_URL', 'http://localhost/academia-webservice')
+.factory('Util', function(){
+    return {
+        get: function(data, key, value){
+            var out = null;
+            angular.forEach(data, function(val, index){
+                if (val[key] == value) {
+                    out = val;
+                    return true;
+                }
+            });
+            return out;
+        }
+    };
+})
 .factory('Weekdays', function(){
     return {
         data: ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sabado'],
         get: function(){
             return this.data;
+        }
+    };
+})
+.factory('Fichas', function(
+    $q, 
+    $http, 
+    store,
+    WEBSERVICE_URL
+){
+    return {
+        getExercisesColumns: function(){
+            return ['A', 'B', 'C', 'D', 'E', 'F'];
+        },
+        getLocalData: function(){
+            return store.get('ficha') || [];
+        },
+        getServerData: function(){
+            var _this = this;
+            var defer = $q.defer();
+            
+            $http
+                .get(WEBSERVICE_URL + '/cards.json')
+                .success(function(result){
+                    var ficha = result.card;
+                    store.set('ficha', ficha);
+                    defer.resolve(ficha);
+                })
+                .error(function(){
+                  defer.reject();  
+                });
+
+            return defer.promise;
         }
     };
 })
@@ -42,9 +88,14 @@ angular.module('starter.services', [])
     $q, 
     $http, 
     store,
-    WEBSERVICE_URL
+    WEBSERVICE_URL,
+    Util
 ){
     return {
+        get: function(key, value){
+            console.log(Util.get(this.getLocalData(), key, value));
+            return Util.get(this.getLocalData(), key, value);
+        },
         getLocalData: function(){
             return store.get('aulas');
         },

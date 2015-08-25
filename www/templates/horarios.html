@@ -16,8 +16,9 @@
                 <ion-item class="item-divider">
                     {{key | date: 'HH:mm'}}
                 </ion-item>
-                <ion-item ng-repeat="aula in horario">
+                <ion-item ng-repeat="aula in horario" href="#/app/aula/{{aula.service.id}}">
                     {{aula.service.name}}
+                    <span class="item-note">{{aula.service.duration}} minutos</span>
                 </ion-item>
             </span>
             <ion-item ng-if="!horarios[weekdayIndex]">
