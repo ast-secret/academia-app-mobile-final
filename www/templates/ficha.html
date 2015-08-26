@@ -1,8 +1,12 @@
 <ion-view view-title="Minha Ficha">
     <ion-nav-buttons side="right">
-        <button class="button button-icon icon ion-ios-more" ng-click="doSomething()"></button>
+        <button
+            ng-if="ficha"
+            class="button button-icon icon ion-ios-more" ng-click="openModal()"></button>
     </ion-nav-buttons>
-    <div class="tabs tabs-top tabs-striped">
+    <div
+        ng-if="ficha"
+        class="tabs tabs-top tabs-striped">
         <a
             ng-class="{'active' : currentTab == $index}"
             class="tab-item"
@@ -11,15 +15,36 @@
             {{exercisesColumns[key]}}
         </a>
     </div>
-    <ion-content class="has-tabs-top">
+    <ion-content ng-class="{'has-tabs-top' : ficha}">
+
         <ion-refresher
-            pulling-text="Pull to refresh..."
+            ng-if="!loading"
+            pulling-text="Puxe para atualizar..."
             on-refresh="doRefresh()">
         </ion-refresher>
-    	<ion-list>
-            <ion-item ng-repeat="exercise in ficha.exercises[currentTab]">
-                {{exercise.name}}
-            </ion-item>
-        </ion-list>
+
+        <div class="text-center padding" ng-if="loading">
+            <ion-spinner></ion-spinner>    
+        </div>
+
+        <div ng-if="ficha">
+            <div class="padding">
+                <p class="text-center" ng-if="ficha.obs">
+                    {{ficha.obs}}
+                </p>
+            </div>
+        	<ion-list>
+                <ion-item ng-repeat="exercise in ficha.exercises[currentTab]">
+                    {{exercise.name}}
+                </ion-item>
+            </ion-list>
+        </div>
+        <div ng-if="!ficha" class="text-center">
+            Você não tem nenhuma ficha cadastrada.
+            <br>
+            <button
+                ng-click="doRefreshByButton()"
+                class="button button-primary">Verificar novamente</button>
+        </div>
     </ion-content>
 </ion-view>

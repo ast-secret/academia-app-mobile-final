@@ -77,14 +77,41 @@ angular.module('starter.controllers', [])
     // });
 })
 
-.controller('FichaController', function($scope, $stateParams, Fichas) {
-    $scope.loading = true;
-    $scope.ficha = Fichas.getLocalData();
+.controller('ConfiguracoesDeContaController', function($scope) {
+
+})
+.controller('AlterarSenhaController', function($scope) {
+
+})
+
+.controller('FichaController', function($scope, $stateParams, $ionicModal, Fichas) {
+    
+    $scope.$on( "$ionicView.beforeEnter", function(scopes, states) {
+        $scope.loading = true;
+        $scope.ficha = [];
+        $scope.ficha = Fichas.getLocalData();
+    });
 
     $scope.exercisesColumns = Fichas.getExercisesColumns();
 
     $scope.currentTab = 0;
 
+    $scope.isOverdue = function(date){
+        return date < new Date().toISOString();
+    };
+
+    $ionicModal.fromTemplateUrl('templates/Modal/ficha_detalhes.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+    }).then(function(modal) {
+        $scope.modal = modal;
+    });
+    $scope.openModal = function() {
+        $scope.modal.show();
+    };
+    $scope.closeModal = function() {
+        $scope.modal.hide();
+    };
     $scope.changeTab = function(index){
         $scope.currentTab = index;
     };
@@ -100,13 +127,24 @@ angular.module('starter.controllers', [])
 
     $scope.doRefresh = function() {
         Fichas
-            .Ficha()
+            .getServerData()
             .then(function(data){
                 $scope.ficha = data;
             })
             .finally(function(){
                 $scope.$broadcast('scroll.refreshComplete');    
             });
+    };
+    $scope.doRefreshByButton = function(){
+        $scope.loading = true;
+        Fichas
+            .getServerData()
+            .then(function(data){
+                $scope.ficha = data;
+            })
+            .finally(function(){
+                $scope.loading = false;
+            });  
     };
 })
 

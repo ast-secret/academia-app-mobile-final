@@ -104,6 +104,24 @@ angular.module('starter', [
             }
         }
     })
+    .state('app.configuracoes-de-conta', {
+        url: '/configuracoes-de-conta',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/configuracoes_de_conta.html',
+                controller: 'ConfiguracoesDeContaController'
+            }
+        }
+    })
+    .state('app.alterar-senha', {
+        url: '/alterar-senha',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/alterar_senha.html',
+                controller: 'AlterarSenhaController'
+            }
+        }
+    })
     .state('app.sugestoes', {
         url: '/sugestoes',
         views: {
