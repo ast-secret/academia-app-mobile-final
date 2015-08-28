@@ -1,35 +1,28 @@
 <ion-modal-view>
 	<ion-header-bar>	
+		<h1 class="title">Detalhes da Ficha</h1>
 		<button
-			class="button button-icon icon ion-android-close pull-right"
+			class="button button-clear button-positive"
 			ng-click="closeModal()">
+			Fechar
 		</button>
 	</ion-header-bar>
 
 	<ion-content>
-<!-- 		<div class="padding">
-			<p class="text-center">
-				{{ficha.obs}}
-			</p>	
-		</div> -->
 		<ion-list>
-			<ion-item class="item-divider">
-				Objetivo
+			<ion-item>
+				<h3>Instrutor</h3>
+				<p>{{ficha.user.name}}</p>
 			</ion-item>
 			<ion-item>
-				{{ficha.goal}}
-			</ion-item>
-			<ion-item class="item-divider">
-				Instrutor
-			</ion-item>
-			<ion-item>
-				{{ficha.user.name}}
-			</ion-item>
-			<ion-item class="item-divider">
-				Vencimento
+				<h3>Objetivo</h3>
+				<p>
+					{{ficha.goal}}
+				</p>
 			</ion-item>
 			<ion-item>
-				<span am-time-ago="ficha.end_date"></span>
+				<h3>Vencimento</h3>
+				<p><span am-time-ago="ficha.end_date"></span></p>
 			</ion-item>
 		</ion-list>
 	</ion-content>

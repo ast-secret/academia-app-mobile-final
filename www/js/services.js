@@ -1,6 +1,7 @@
 angular.module('starter.services', [])
 
-.constant('WEBSERVICE_URL', 'http://localhost/academia-webservice')
+// .constant('WEBSERVICE_URL', 'http://localhost/academia-webservice')
+.constant('WEBSERVICE_URL', 'http://api.asturia.kinghost.net')
 .factory('Util', function(){
     return {
         get: function(data, key, value){
@@ -34,7 +35,7 @@ angular.module('starter.services', [])
             return ['A', 'B', 'C', 'D', 'E', 'F'];
         },
         getLocalData: function(){
-            return store.get('ficha') || [];
+            return store.get('ficha') || null;
         },
         getServerData: function(){
             var _this = this;

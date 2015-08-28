@@ -1,6 +1,7 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $rootScope, $cordovaNetwork) {
+
 
 })
 .filter('weekdayHumanize', function(Weekdays) {
@@ -9,16 +10,49 @@ angular.module('starter.controllers', [])
         return names[input];
     };
 })
-
+.directive('noDataAlert', function(){
+    return {
+        restrict: 'E',
+        scope: {
+            tey: '='
+        },
+        templateUrl:  'templates/Element/no_data_alert.html'
+    };
+})
+.directive('myNetworkAlert', function(){
+    return {
+        templateUrl:  'templates/Element/network_alert.html'
+    };
+})
 .controller('LoginController', function($scope) {
 
 })
-.controller('HorariosController', function($scope, $stateParams, Horarios, Weekdays) {
+.controller('HorariosController', function($scope,
+    $ionicModal,
+    $stateParams,
+    Aulas,
+    Horarios, 
+    Weekdays
+) {
     $scope.weekdays = Weekdays.get();
     $scope.weekdayIndex = $stateParams.weekdayIndex;
 
     $scope.changeTab = function(index){
         $scope.weekdayIndex = index;
+    };
+
+    $ionicModal.fromTemplateUrl('templates/Modal/aula.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+    }).then(function(modal) {
+        $scope.modal = modal;
+    });
+    $scope.openModal = function(aula) {
+        $scope.aula = aula;
+        $scope.modal.show();
+    };
+    $scope.closeModal = function() {
+        $scope.modal.hide();
     };
 
     $scope.loading = true;
@@ -45,9 +79,27 @@ angular.module('starter.controllers', [])
     };
 })
 
-.controller('AulasController', function($scope, Aulas) {
+.controller('AulasController', function($scope, $ionicModal, Aulas) {
     $scope.loading = true;
     $scope.aulas = Aulas.getLocalData();
+    $scope.aula = {};//Serve para a aula que vai aparecer no modal
+
+    $ionicModal.fromTemplateUrl('templates/Modal/aula.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+    }).then(function(modal) {
+        $scope.modal = modal;
+    });
+    $scope.openModal = function(aula) {
+        $scope.aula = aula;
+        $scope.modal.show();
+    };
+    $scope.closeModal = function() {
+        $scope.modal.hide();
+    };
+    $scope.changeTab = function(index){
+        $scope.currentTab = index;
+    };
 
     Aulas
         .getServerData()
@@ -88,8 +140,16 @@ angular.module('starter.controllers', [])
     
     $scope.$on( "$ionicView.beforeEnter", function(scopes, states) {
         $scope.loading = true;
-        $scope.ficha = [];
         $scope.ficha = Fichas.getLocalData();
+
+        Fichas
+            .getServerData()
+            .then(function(data){
+                $scope.ficha = data;
+            })
+            .finally(function(){
+                $scope.loading = false;
+            });
     });
 
     $scope.exercisesColumns = Fichas.getExercisesColumns();
@@ -115,15 +175,6 @@ angular.module('starter.controllers', [])
     $scope.changeTab = function(index){
         $scope.currentTab = index;
     };
-
-    Fichas
-        .getServerData()
-        .then(function(data){
-            $scope.ficha = data;
-        })
-        .finally(function(){
-            $scope.loading = false;
-        });
 
     $scope.doRefresh = function() {
         Fichas
@@ -153,6 +204,7 @@ angular.module('starter.controllers', [])
     Comunicados
 ) {
 
+    $scope.jonas = {name: 'jonas'};
     $scope.loading = true;
     $scope.comunicados = Comunicados.getLocalData();
 

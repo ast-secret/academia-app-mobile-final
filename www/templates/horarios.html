@@ -8,15 +8,24 @@
             {{weekday | limitTo : 3}}
         </a>
     </div>
-    <ion-content class="has-tabs-top">
-        <ion-list>
+    <ion-content class="padding custom-bg has-tabs-top">
+        
+        <ion-refresher
+            ng-if="!loading"
+            pulling-text="Puxe para atualizar..."
+            on-refresh="doRefresh()">
+        </ion-refresher>
+
+        <my-network-alert></my-network-alert>
+
+        <ion-list class="card">
             <span
                 ng-repeat="(key, horario) in horarios[weekdayIndex] | groupBy: 'start_hour'"
                 ng-if="horarios[weekdayIndex]">
                 <ion-item class="item-divider">
                     {{key | date: 'HH:mm'}}
                 </ion-item>
-                <ion-item ng-repeat="aula in horario" href="#/app/aula/{{aula.service.id}}">
+                <ion-item ng-repeat="aula in horario" ng-click="openModal(aula.service)">
                     {{aula.service.name}}
                     <span class="item-note">{{aula.service.duration}} minutos</span>
                 </ion-item>

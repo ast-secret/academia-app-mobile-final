@@ -1,16 +1,18 @@
 <ion-view view-title="Comunicados">
-    <ion-content>
+    <ion-content class="padding custom-bg">
         <ion-refresher
             ng-if="!loading"
             pulling-text="Puxe para atualizar..."
             on-refresh="doRefresh()">
         </ion-refresher>
 
+        <my-network-alert></my-network-alert>
+
         <div class="text-center padding" ng-if="loading">
             <ion-spinner></ion-spinner>    
         </div>
         
-        <ion-list>
+        <ion-list class="card">
             <ion-item ng-repeat="comunicado in comunicados" href="#/app/comunicado/{{$index}}">
                 {{comunicado.title}}
                 <p>
@@ -20,6 +22,10 @@
                 </p>
             </ion-item>
         </ion-list>
+
+        <div class="no-data-alert" ng-if="!comunicados">
+            Você ainda não tem nenhum comunicado.
+        </div>
 
     </ion-content>
 </ion-view>

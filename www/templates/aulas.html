@@ -1,5 +1,5 @@
 <ion-view view-title="Aulas">
-    <ion-content>
+    <ion-content class="padding custom-bg">
         <ion-refresher
             ng-if="!loading"
             pulling-text="Puxe para atualizar..."
@@ -10,11 +10,17 @@
             <ion-spinner></ion-spinner>    
         </div>
         
-        <ion-list>
-            <ion-item ng-repeat="aula in aulas" href="#/app/aula/{{aula.id}}">
+        <my-network-alert></my-network-alert>   
+
+        <ion-list class="card">
+            <ion-item ng-repeat="aula in aulas" ng-click="openModal(aula)">
                 {{aula.name}}
                 <span class="item-note">{{aula.duration}} minutos</span>
             </ion-item>
         </ion-list>
+
+        <p class="no-data-alert" ng-if="!aulas">
+            Você não tem nenhuma aula no momento.
+        </p>
     </ion-content>
 </ion-view>

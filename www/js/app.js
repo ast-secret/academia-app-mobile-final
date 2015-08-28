@@ -14,8 +14,20 @@ angular.module('starter', [
     'angular.filter'
 ])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, $cordovaNetwork, $rootScope) {
+
+    $rootScope.isOnline = true;
+    
     $ionicPlatform.ready(function() {
+        $rootScope.isOnline = $cordovaNetwork.isOnline();
+        // listen for Online event
+        $rootScope.$on('$cordovaNetwork:online', function(event, networkState){
+            $rootScope.isOnline = true;
+        });
+        $rootScope.$on('$cordovaNetwork:offline', function(event, networkState){
+            $rootScope.isOnline = false;
+        });
+
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
         if (window.cordova && window.cordova.plugins.Keyboard) {
@@ -59,15 +71,6 @@ angular.module('starter', [
             }
         }
     })
-        .state('app.aula', {
-            url: '/aula/:aulaId',
-            views: {
-                'menuContent': {
-                    templateUrl: 'templates/aula.html',
-                    controller: 'AulaController'
-                }
-            }
-        })
     .state('app.horarios', {
         url: '/horarios/:weekdayIndex',
         views: {
