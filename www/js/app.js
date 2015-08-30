@@ -4,6 +4,15 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
+
+var prod = true;
+var config = {
+    webservice_url: 'http://api.asturia.kinghost.net'
+};
+if (!prod) {
+    config.webservice_url = 'http://localhost/academia-webservice';
+}
+
 angular.module('starter', [
     'ionic',
     'starter.controllers',
@@ -11,15 +20,35 @@ angular.module('starter', [
     'angularMoment',
     'angular-storage',
     'ngCordova',
-    'angular.filter'
+    'angular.filter',
+    'angular-jwt'
 ])
 
 // CONFIGURAÇÕES
-// .constant('WEBSERVICE_URL', 'http://localhost/academia-webservice')
-.constant('WEBSERVICE_URL', 'http://api.asturia.kinghost.net')
-.constant('HOME', 'app/aulas')
+.constant('WEBSERVICE_URL', 'http://localhost/academia-webservice')
+// .constant('WEBSERVICE_URL', 'http://api.asturia.kinghost.net')
+.constant('HOME', 'app/comunicados')
+.constant('HOME_STATE', 'app.comunicados')
 
-.run(function($ionicPlatform, $cordovaNetwork, $rootScope) {
+
+
+.run(function(
+    $ionicPlatform,
+    $cordovaNetwork,
+    $rootScope,
+    $state,
+    HOME,
+    store
+) {
+    // Garanto que rotas com requiresLogin = true não sejam acessados sem o JWT no localStore
+    $rootScope.$on('$stateChangeStart', function(e, to){
+        if (to.data && to.data.requiresLogin) {
+            if (!store.get('jwt')) {
+                $state.go('login');
+                e.preventDefault();
+            }
+        }
+    });
 
     $rootScope.isOnline = true;
     
@@ -46,12 +75,30 @@ angular.module('starter', [
         }
     });
 })
+.factory('myHttpInterceptor', function(){
+    return {
+        // responseError: function(response){
+        //     // if ($response.status == 4) {};
+        //     return response;
+        // }
+    };
+})
 
 .config(function(
-    HOME,
+    $httpProvider,
     $stateProvider, 
-    $urlRouterProvider
+    $urlRouterProvider,
+    HOME,
+    jwtInterceptorProvider
 ) {
+
+    // Interceptor to send the JWT for every $http call.
+    jwtInterceptorProvider.tokenGetter = function(store){
+        return store.get('jwt');
+    };
+    $httpProvider.interceptors.push('jwtInterceptor');
+    $httpProvider.interceptors.push('myHttpInterceptor');
+
     $stateProvider    
     .state('app', {
         url: '/app',
@@ -65,9 +112,17 @@ angular.module('starter', [
         templateUrl: 'templates/login.html',
         controller: 'LoginController'
     })
+    .state('logout', {
+        url: '/logout',
+        templateUrl: 'templates/logout.html',
+        controller: 'LogoutController'
+    })
 
     .state('app.aulas', {
         url: '/aulas',
+        data: {
+            requiresLogin: true
+        },
         views: {
             'menuContent': {
                 templateUrl: 'templates/aulas.html',
@@ -77,6 +132,9 @@ angular.module('starter', [
     })
     .state('app.horarios', {
         url: '/horarios/:weekdayIndex',
+        data: {
+            requiresLogin: true
+        },
         views: {
             'menuContent': {
                 templateUrl: 'templates/horarios.html',
@@ -86,6 +144,9 @@ angular.module('starter', [
     })
     .state('app.comunicados', {
         url: '/comunicados',
+        data: {
+            requiresLogin: true
+        },
         views: {
             'menuContent': {
                 templateUrl: 'templates/comunicados.html',
@@ -95,6 +156,9 @@ angular.module('starter', [
     })
     .state('app.comunicado', {
         url: '/comunicado/:comunicadoIndex',
+        data: {
+            requiresLogin: true
+        },
         views: {
             'menuContent': {
                 templateUrl: 'templates/comunicado.html',
@@ -104,6 +168,9 @@ angular.module('starter', [
     })
     .state('app.ficha', {
         url: '/ficha',
+        data: {
+            requiresLogin: true
+        },
         views: {
             'menuContent': {
                 templateUrl: 'templates/ficha.html',
@@ -113,6 +180,9 @@ angular.module('starter', [
     })
     .state('app.configuracoes-de-conta', {
         url: '/configuracoes-de-conta',
+        data: {
+            requiresLogin: true
+        },
         views: {
             'menuContent': {
                 templateUrl: 'templates/configuracoes_de_conta.html',
@@ -122,6 +192,9 @@ angular.module('starter', [
     })
     .state('app.alterar-senha', {
         url: '/alterar-senha',
+        data: {
+            requiresLogin: true
+        },
         views: {
             'menuContent': {
                 templateUrl: 'templates/alterar_senha.html',
@@ -131,6 +204,9 @@ angular.module('starter', [
     })
     .state('app.caixa-de-sugestoes', {
         url: '/caixa-de-sugestoes',
+        data: {
+            requiresLogin: true
+        },
         views: {
             'menuContent': {
                 templateUrl: 'templates/caixa_de_sugestoes.html',

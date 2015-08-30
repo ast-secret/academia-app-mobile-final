@@ -22,12 +22,13 @@ angular.module('starter.services', [])
         }
     };
 })
-.factory('Me', function(
+.factory('User', function(
     $cordovaPush,
     $rootScope,
     $q,
     $http,
-    WEBSERVICE_URL
+    store,
+    HOME_STATE
 ){
     return {
         login: function(postData){
@@ -37,15 +38,22 @@ angular.module('starter.services', [])
                 .then(function(regId){
 
                     postData.push_reg_id = regId;
-                    postData.platform = 'android';
+                    postData.platform = ionic.Platform.platform();
 
-                    $http.post(WEBSERVICE_URL + '/customers/login.json', postData)
-                        .then(function(data){
-                            alert(data);
-                            defer.resolve();
-                        }, function(){
-                            defer.reject();
-                        });
+                    $http({
+                        url: config.webservice_url + '/auth/token/create.json',
+                        method: 'POST',
+                        data: postData,
+                        skipAuthorization: true
+                    })
+                    .then(function(result){
+                        store.set('jwt', result.data.message.token || null);
+                        store.set('User', result.data.message.user);
+                        defer.resolve(HOME_STATE);
+                    }, function(err){
+                        console.log('oi gente');
+                        defer.reject(err);
+                    });
                 }, function(){
                     defer.reject();
                 });
@@ -53,6 +61,12 @@ angular.module('starter.services', [])
         },
         getPushRegistrationId: function(){
             var defer = $q.defer();
+            
+            if (!prod) {
+                defer.resolve('login_browser_dont_have_regid');
+                return defer.promise;
+            }
+
             var androidConfig = {
                 "senderID": "replace_with_sender_id",
             };
@@ -113,8 +127,7 @@ angular.module('starter.services', [])
     $q, 
     $http, 
     Aulas,
-    store,
-    WEBSERVICE_URL
+    store
 ){
     return {
         getLocalData: function(){
@@ -123,9 +136,8 @@ angular.module('starter.services', [])
         getServerData: function(){
             var _this = this;
             var defer = $q.defer();
-            
             $http
-                .get(WEBSERVICE_URL + '/times.json')
+                .get(config.webservice_url + '/times.json')
                 .success(function(result){
                     // ATENÇÃO!! Eu também pego as aulas pq quando ele clica na moral
                     // eu trago a aula

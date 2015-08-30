@@ -1,8 +1,9 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout, $rootScope, $cordovaNetwork) {
-
-
+.controller('AppCtrl', function($scope, store) {
+    $scope.$on( "$ionicView.beforeEnter", function(scopes, states) {
+        $scope.user = store.get('User');    
+    });
 })
 .filter('weekdayHumanize', function(Weekdays) {
     return function(input) {
@@ -10,36 +11,57 @@ angular.module('starter.controllers', [])
         return names[input];
     };
 })
-.directive('noDataAlert', function(){
-    return {
-        restrict: 'E',
-        scope: {
-            tey: '='
-        },
-        templateUrl:  'templates/Element/no_data_alert.html'
-    };
-})
 .directive('myNetworkAlert', function(){
     return {
         templateUrl:  'templates/Element/network_alert.html'
     };
 })
+.controller('LogoutController', function(
+    $ionicLoading,
+    $scope,
+    $state,
+    $timeout,
+    $window
+) {
+    var duration = 1000;
+    $scope.$on( "$ionicView.beforeEnter", function(scopes, states) {
+        $ionicLoading.show({template: 'Saindo, aguarde...'});
+        
+        $window.localStorage.clear();
+        $scope = null;
+
+        $timeout(function(){
+            $ionicLoading.hide();
+            $state.go('login');
+        }, duration);
+    });
+})
 .controller('LoginController', function(
     $scope,
-    Me
+    $state,
+    $ionicLoading,
+    User
 ) {
-    $scope.form = {};
+    
+    $scope.$on( "$ionicView.beforeEnter", function(scopes, states) {
+        $scope.form = {};
+        $scope.wrongCredentials = false;
+    });
 
     $scope.doLogin = function(){
-        console.log('Dados do form:');
-        console.log($scope.form);
-        Me
-        .login($scope.form)
-        .then(function(data){
-            alert(data);
-        }, function(){
-            alert('deu ruim');
-        });
+        $ionicLoading.show({template: 'Entrando, aguarde...'});
+        User
+            .login($scope.form)
+            .then(function(home){
+                $state.go(home);
+            }, function(err){
+                if (err.status == 401) {
+                    $scope.wrongCredentials = true;
+                }
+            })
+            .finally(function(){
+                $ionicLoading.hide();
+            });
     };
 })
 .controller('HorariosController', function($scope,
