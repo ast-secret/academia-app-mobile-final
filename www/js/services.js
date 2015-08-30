@@ -1,7 +1,5 @@
 angular.module('starter.services', [])
 
-// .constant('WEBSERVICE_URL', 'http://localhost/academia-webservice')
-.constant('WEBSERVICE_URL', 'http://api.asturia.kinghost.net')
 .factory('Util', function(){
     return {
         get: function(data, key, value){
@@ -21,6 +19,61 @@ angular.module('starter.services', [])
         data: ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sabado'],
         get: function(){
             return this.data;
+        }
+    };
+})
+.factory('Me', function(
+    $cordovaPush,
+    $rootScope,
+    $q,
+    $http,
+    WEBSERVICE_URL
+){
+    return {
+        login: function(postData){
+            var defer = $q.defer();
+
+            this.getPushRegistrationId()
+                .then(function(regId){
+
+                    postData.push_reg_id = regId;
+                    postData.platform = 'android';
+
+                    $http.post(WEBSERVICE_URL + '/customers/login.json', postData)
+                        .then(function(data){
+                            alert(data);
+                            defer.resolve();
+                        }, function(){
+                            defer.reject();
+                        });
+                }, function(){
+                    defer.reject();
+                });
+            return defer.promise;
+        },
+        getPushRegistrationId: function(){
+            var defer = $q.defer();
+            var androidConfig = {
+                "senderID": "replace_with_sender_id",
+            };
+
+            document.addEventListener("deviceready", function(){
+                $cordovaPush.register(androidConfig).then(function(result) {
+                // Success
+                }, function(err) {
+                    defer.reject();
+                });
+
+                $rootScope.$on('$cordovaPush:notificationReceived', function(event, notification) {
+                    switch (notification.event) {
+                        case 'registered':
+                            console.log(notification.regid);
+                            defer.resolve(notification.regid);
+                        break;
+                    }
+                });
+            });
+            return defer.promise;
         }
     };
 })
@@ -59,6 +112,7 @@ angular.module('starter.services', [])
 .factory('Horarios', function(
     $q, 
     $http, 
+    Aulas,
     store,
     WEBSERVICE_URL
 ){
@@ -73,9 +127,17 @@ angular.module('starter.services', [])
             $http
                 .get(WEBSERVICE_URL + '/times.json')
                 .success(function(result){
+                    // ATENÇÃO!! Eu também pego as aulas pq quando ele clica na moral
+                    // eu trago a aula
                     var horarios = result.times;
-                    store.set('horarios', horarios);
-                    defer.resolve(horarios);
+                    Aulas
+                        .getServerData()
+                        .then(function(){
+                            store.set('horarios', horarios);
+                            defer.resolve(horarios);
+                        }, function(){
+                            defer.reject();
+                        });
                 })
                 .error(function(){
                   defer.reject();  
@@ -94,7 +156,7 @@ angular.module('starter.services', [])
 ){
     return {
         get: function(key, value){
-            console.log(Util.get(this.getLocalData(), key, value));
+            // console.log(Util.get(this.getLocalData(), key, value));
             return Util.get(this.getLocalData(), key, value);
         },
         getLocalData: function(){
@@ -107,9 +169,9 @@ angular.module('starter.services', [])
             $http
                 .get(WEBSERVICE_URL + '/services.json')
                 .success(function(result){
-                    var releases = result.releases;
-                    store.set('aulas', releases);
-                    defer.resolve(releases);
+                    var services = result.services;
+                    store.set('aulas', services);
+                    defer.resolve(services);
                 })
                 .error(function(){
                   defer.reject();  
@@ -148,7 +210,7 @@ angular.module('starter.services', [])
         }
     };
 })
-.factory('Sugestoes', function(
+.factory('CaixaDeSugestoes', function(
     $cordovaToast,
     $http,
     $ionicPlatform,
@@ -164,7 +226,7 @@ angular.module('starter.services', [])
             $http
                 .post(WEBSERVICE_URL + '/suggestions/add.json', sugestao)
                 .success(function(result){
-                    toastMsg = 'A sua sugestão foi enviada com sucesso! Obrigado.';
+                    toastMsg = 'A sua sugestão foi enviada com sucesso, obrigado.';
                     defer.resolve(result);
                 })
                 .error(function(){

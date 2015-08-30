@@ -13,9 +13,10 @@
         <my-network-alert></my-network-alert>   
 
         <ion-list class="card">
-            <ion-item ng-repeat="aula in aulas" ng-click="openModal(aula)">
+            <ion-item ng-repeat="aula in aulas | orderBy : 'name'" ng-click="openModal(aula)">
                 {{aula.name}}
-                <span class="item-note">{{aula.duration}} minutos</span>
+                <p>Duração: {{aula.duration}} Minutos</p>
+                <p>Gasto calórico médio: {{aula.gasto_calorico}}Kcal</p>
             </ion-item>
         </ion-list>
 

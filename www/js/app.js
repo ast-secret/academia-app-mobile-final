@@ -14,6 +14,11 @@ angular.module('starter', [
     'angular.filter'
 ])
 
+// CONFIGURAÇÕES
+// .constant('WEBSERVICE_URL', 'http://localhost/academia-webservice')
+.constant('WEBSERVICE_URL', 'http://api.asturia.kinghost.net')
+.constant('HOME', 'app/aulas')
+
 .run(function($ionicPlatform, $cordovaNetwork, $rootScope) {
 
     $rootScope.isOnline = true;
@@ -42,24 +47,23 @@ angular.module('starter', [
     });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
-    $stateProvider
-
-        .state('app', {
+.config(function(
+    HOME,
+    $stateProvider, 
+    $urlRouterProvider
+) {
+    $stateProvider    
+    .state('app', {
         url: '/app',
         abstract: true,
         templateUrl: 'templates/menu.html',
         controller: 'AppCtrl'
     })
 
-    .state('app.login', {
+    .state('login', {
         url: '/login',
-        views: {
-            'menuContent': {
-                templateUrl: 'templates/login.html',
-                controller: 'LoginController'
-            }
-        }
+        templateUrl: 'templates/login.html',
+        controller: 'LoginController'
     })
 
     .state('app.aulas', {
@@ -125,16 +129,16 @@ angular.module('starter', [
             }
         }
     })
-    .state('app.sugestoes', {
-        url: '/sugestoes',
+    .state('app.caixa-de-sugestoes', {
+        url: '/caixa-de-sugestoes',
         views: {
             'menuContent': {
-                templateUrl: 'templates/sugestoes.html',
-                controller: 'SugestoesController'
+                templateUrl: 'templates/caixa_de_sugestoes.html',
+                controller: 'CaixaDeSugestoesController'
             }
         }
     });    
 
     // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/app/ficha');
+    $urlRouterProvider.otherwise(HOME);
 });

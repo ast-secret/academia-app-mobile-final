@@ -24,8 +24,23 @@ angular.module('starter.controllers', [])
         templateUrl:  'templates/Element/network_alert.html'
     };
 })
-.controller('LoginController', function($scope) {
+.controller('LoginController', function(
+    $scope,
+    Me
+) {
+    $scope.form = {};
 
+    $scope.doLogin = function(){
+        console.log('Dados do form:');
+        console.log($scope.form);
+        Me
+        .login($scope.form)
+        .then(function(data){
+            alert(data);
+        }, function(){
+            alert('deu ruim');
+        });
+    };
 })
 .controller('HorariosController', function($scope,
     $ionicModal,
@@ -34,6 +49,20 @@ angular.module('starter.controllers', [])
     Horarios, 
     Weekdays
 ) {
+    $scope.$on( "$ionicView.beforeEnter", function(scopes, states) {
+        $scope.horarios = Horarios.getLocalData();
+        $scope.loading = !$scope.horarios;
+
+        Horarios
+            .getServerData()
+            .then(function(data){
+                $scope.horarios = data;
+            })
+            .finally(function(){
+                $scope.loading = false;
+            });
+    });
+
     $scope.weekdays = Weekdays.get();
     $scope.weekdayIndex = $stateParams.weekdayIndex;
 
@@ -48,24 +77,12 @@ angular.module('starter.controllers', [])
         $scope.modal = modal;
     });
     $scope.openModal = function(aula) {
-        $scope.aula = aula;
+        $scope.aula = Aulas.get('id', aula.id);
         $scope.modal.show();
     };
     $scope.closeModal = function() {
         $scope.modal.hide();
     };
-
-    $scope.loading = true;
-    $scope.horarios = Horarios.getLocalData();
-
-    Horarios
-        .getServerData()
-        .then(function(data){
-            $scope.horarios = data;
-        })
-        .finally(function(){
-            $scope.loading = false;
-        });
 
     $scope.doRefresh = function() {
         Horarios
@@ -80,9 +97,23 @@ angular.module('starter.controllers', [])
 })
 
 .controller('AulasController', function($scope, $ionicModal, Aulas) {
-    $scope.loading = true;
-    $scope.aulas = Aulas.getLocalData();
-    $scope.aula = {};//Serve para a aula que vai aparecer no modal
+
+    $scope.$on( "$ionicView.beforeEnter", function(scopes, states) {
+        $scope.aulas = Aulas.getLocalData();
+        $scope.loading = !$scope.aulas;
+        $scope.aula = {};//Serve para a aula que vai aparecer no modal
+
+        Aulas
+            .getServerData()
+            .then(function(data){
+                console.log(data);
+                $scope.aulas = data;
+            })
+            .finally(function(){
+                $scope.loading = false;
+            });
+
+    });
 
     $ionicModal.fromTemplateUrl('templates/Modal/aula.html', {
         scope: $scope,
@@ -100,15 +131,6 @@ angular.module('starter.controllers', [])
     $scope.changeTab = function(index){
         $scope.currentTab = index;
     };
-
-    Aulas
-        .getServerData()
-        .then(function(data){
-            $scope.aulas = data;
-        })
-        .finally(function(){
-            $scope.loading = false;
-        });
 
     $scope.doRefresh = function() {
         Aulas
@@ -136,11 +158,15 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('FichaController', function($scope, $stateParams, $ionicModal, Fichas) {
-    
+.controller('FichaController', function(
+    $scope,
+    $stateParams,
+    $ionicModal,
+    Fichas
+) {
     $scope.$on( "$ionicView.beforeEnter", function(scopes, states) {
-        $scope.loading = true;
         $scope.ficha = Fichas.getLocalData();
+        $scope.loading = !$scope.ficha;
 
         Fichas
             .getServerData()
@@ -203,19 +229,19 @@ angular.module('starter.controllers', [])
     $scope,
     Comunicados
 ) {
+    $scope.$on( "$ionicView.beforeEnter", function(scopes, states) {
+        $scope.comunicados = Comunicados.getLocalData();
+        $scope.loading = !$scope.comunicados;
 
-    $scope.jonas = {name: 'jonas'};
-    $scope.loading = true;
-    $scope.comunicados = Comunicados.getLocalData();
-
-    Comunicados
-        .getServerData()
-        .then(function(data){
-            $scope.comunicados = data;
-        })
-        .finally(function(){
-            $scope.loading = false;
-        });
+        Comunicados
+            .getServerData()
+            .then(function(data){
+                $scope.comunicados = data;
+            })
+            .finally(function(){
+                $scope.loading = false;
+            });
+    });
 
     $scope.doRefresh = function() {
         Comunicados
@@ -228,14 +254,21 @@ angular.module('starter.controllers', [])
             });
     };
 })
-.controller('SugestoesController', function($scope, $ionicLoading, Sugestoes) {
+.controller('ComunicadoController', function($scope, $stateParams, Comunicados) {
+    $scope.comunicado = Comunicados.getLocalData()[$stateParams.comunicadoIndex];
+})
+.controller('CaixaDeSugestoesController', function(
+    $ionicLoading, 
+    $scope, 
+    CaixaDeSugestoes
+) {
     $scope.sugestao = {};
 
     $scope.send = function(sugestao){
         $ionicLoading.show({
             template: 'Enviando, aguarde...'
         });
-        Sugestoes
+        CaixaDeSugestoes
             .send(sugestao)
             .then(function(){
                 $scope.sugestao = {};
@@ -244,7 +277,4 @@ angular.module('starter.controllers', [])
                 $ionicLoading.hide();
             });
     };
-})
-.controller('ComunicadoController', function($scope, $stateParams, Comunicados) {
-    $scope.comunicado = Comunicados.getLocalData()[$stateParams.comunicadoIndex];
 });
