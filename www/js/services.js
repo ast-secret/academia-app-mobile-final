@@ -28,7 +28,7 @@ angular.module('starter.services', [])
     $q,
     $http,
     store,
-    HOME_STATE
+    CONFIG
 ){
     return {
         login: function(postData){
@@ -41,7 +41,7 @@ angular.module('starter.services', [])
                     postData.platform = ionic.Platform.platform();
 
                     $http({
-                        url: config.webservice_url + '/auth/token/create.json',
+                        url: CONFIG.WEBSERVICE_URL + '/auth/token/create.json',
                         method: 'POST',
                         data: postData,
                         skipAuthorization: true
@@ -49,7 +49,7 @@ angular.module('starter.services', [])
                     .then(function(result){
                         store.set('jwt', result.data.message.token || null);
                         store.set('User', result.data.message.user);
-                        defer.resolve(HOME_STATE);
+                        defer.resolve(CONFIG.HOME_STATE);
                     }, function(err){
                         console.log('oi gente');
                         defer.reject(err);
@@ -95,7 +95,7 @@ angular.module('starter.services', [])
     $q, 
     $http, 
     store,
-    WEBSERVICE_URL
+    CONFIG
 ){
     return {
         getExercisesColumns: function(){
@@ -109,7 +109,7 @@ angular.module('starter.services', [])
             var defer = $q.defer();
             
             $http
-                .get(WEBSERVICE_URL + '/cards.json')
+                .get(CONFIG.WEBSERVICE_URL + '/cards.json')
                 .success(function(result){
                     var ficha = result.card;
                     store.set('ficha', ficha);
@@ -127,7 +127,8 @@ angular.module('starter.services', [])
     $q, 
     $http, 
     Aulas,
-    store
+    store,
+    CONFIG
 ){
     return {
         getLocalData: function(){
@@ -137,7 +138,7 @@ angular.module('starter.services', [])
             var _this = this;
             var defer = $q.defer();
             $http
-                .get(config.webservice_url + '/times.json')
+                .get(CONFIG.WEBSERVICE_URL + '/times.json')
                 .success(function(result){
                     // ATENÇÃO!! Eu também pego as aulas pq quando ele clica na moral
                     // eu trago a aula
@@ -163,8 +164,8 @@ angular.module('starter.services', [])
     $q, 
     $http, 
     store,
-    WEBSERVICE_URL,
-    Util
+    Util,
+    CONFIG
 ){
     return {
         get: function(key, value){
@@ -179,7 +180,7 @@ angular.module('starter.services', [])
             var defer = $q.defer();
             
             $http
-                .get(WEBSERVICE_URL + '/services.json')
+                .get(CONFIG.WEBSERVICE_URL + '/services.json')
                 .success(function(result){
                     var services = result.services;
                     store.set('aulas', services);
@@ -197,7 +198,7 @@ angular.module('starter.services', [])
     $q, 
     $http, 
     store,
-    WEBSERVICE_URL
+    CONFIG
 ){
     return {
         getLocalData: function(){
@@ -208,7 +209,7 @@ angular.module('starter.services', [])
             var defer = $q.defer();
             
             $http
-                .get(WEBSERVICE_URL + '/releases.json')
+                .get(CONFIG.WEBSERVICE_URL + '/releases.json')
                 .success(function(result){
                     var releases = result.releases;
                     store.set('comunicados', releases);
@@ -227,7 +228,7 @@ angular.module('starter.services', [])
     $http,
     $ionicPlatform,
     $q,
-    WEBSERVICE_URL
+    CONFIG
 ){
     return {
         send: function(sugestao){
@@ -236,7 +237,7 @@ angular.module('starter.services', [])
             var toastMsg = '';
 
             $http
-                .post(WEBSERVICE_URL + '/suggestions/add.json', sugestao)
+                .post(CONFIG.WEBSERVICE_URL + '/suggestions/add.json', sugestao)
                 .success(function(result){
                     toastMsg = 'A sua sugestão foi enviada com sucesso, obrigado.';
                     defer.resolve(result);

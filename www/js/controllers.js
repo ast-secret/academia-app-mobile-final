@@ -11,16 +11,63 @@ angular.module('starter.controllers', [])
         return names[input];
     };
 })
-.directive('myNetworkAlert', function(){
+.directive('itemListAula', function(){
     return {
-        templateUrl:  'templates/Element/network_alert.html'
+        templateUrl:  'templates/Element/item_list_aula.html',
+        scope: {
+            'aula': '=content'
+        }
+    };
+})
+.controller('HomeController', function(
+    $scope,
+    $ionicModal,
+    $ionicLoading,
+    $state,
+    User
+) {
+    $scope.$on( "$ionicView.beforeEnter", function(scopes, states) {
+        $scope.form = {};
+        $scope.wrongCredentials = false;
+    });
+
+    $ionicModal.fromTemplateUrl('templates/Modal/login.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+    }).then(function(modal) {
+        $scope.modal = modal;
+    });
+    $scope.openModal = function() {
+        $scope.modal.show();
+    };
+    $scope.closeModal = function() {
+        $scope.modal.hide();
+    };
+
+    $scope.doLogin = function(){
+        $ionicLoading.show({template: 'Entrando, aguarde...'});
+        User
+            .login($scope.form)
+            .then(function(home){
+                $scope.closeModal();
+                $state.go(home);
+            }, function(err){
+                if (err.status == 401) {
+                    $scope.wrongCredentials = true;
+                }
+            })
+            .finally(function(){
+                $ionicLoading.hide();
+            });
     };
 })
 .controller('LogoutController', function(
     $ionicLoading,
     $scope,
+    $rootScope,
     $state,
     $timeout,
+    CONFIG,
     $window
 ) {
     var duration = 1000;
@@ -28,11 +75,10 @@ angular.module('starter.controllers', [])
         $ionicLoading.show({template: 'Saindo, aguarde...'});
         
         $window.localStorage.clear();
-        $scope = null;
 
         $timeout(function(){
             $ionicLoading.hide();
-            $state.go('login');
+            $state.go(CONFIG.LOGOUT_REDIRECT);
         }, duration);
     });
 })
@@ -67,6 +113,7 @@ angular.module('starter.controllers', [])
 .controller('HorariosController', function($scope,
     $ionicModal,
     $stateParams,
+    $state,
     Aulas,
     Horarios, 
     Weekdays
@@ -86,7 +133,7 @@ angular.module('starter.controllers', [])
     });
 
     $scope.weekdays = Weekdays.get();
-    $scope.weekdayIndex = $stateParams.weekdayIndex;
+    $scope.weekdayIndex = 0;
 
     $scope.changeTab = function(index){
         $scope.weekdayIndex = index;
@@ -233,17 +280,6 @@ angular.module('starter.controllers', [])
             .finally(function(){
                 $scope.$broadcast('scroll.refreshComplete');    
             });
-    };
-    $scope.doRefreshByButton = function(){
-        $scope.loading = true;
-        Fichas
-            .getServerData()
-            .then(function(data){
-                $scope.ficha = data;
-            })
-            .finally(function(){
-                $scope.loading = false;
-            });  
     };
 })
 

@@ -1,5 +1,5 @@
 <ion-view view-title="Horários">
-    <div class="tabs tabs-top tabs-striped">
+    <div class="tabs tabs-top tabs-striped tabs-positive">
         <a
             ng-class="{'active' : weekdayIndex == $index}"
             class="tab-item"
@@ -26,8 +26,9 @@
                     {{key | date: 'HH:mm'}}
                 </ion-item>
                 <ion-item ng-repeat="aula in horario" ng-click="openModal(aula.service)">
-                    {{aula.service.name}}
-                    <span class="item-note">{{aula.service.duration}} minutos</span>
+                    <!-- {{aula.service.name}}
+                    <p>Duração: {{aula.service.name}}</p> -->
+                    <item-list-aula content="aula.service"></item-list-aula>
                 </ion-item>
             </span>
             <ion-item ng-if="!horarios[weekdayIndex]">

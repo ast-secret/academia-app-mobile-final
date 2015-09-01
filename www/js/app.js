@@ -6,12 +6,6 @@
 // 'starter.controllers' is found in controllers.js
 
 var prod = true;
-var config = {
-    webservice_url: 'http://api.asturia.kinghost.net'
-};
-if (!prod) {
-    config.webservice_url = 'http://localhost/academia-webservice';
-}
 
 angular.module('starter', [
     'ionic',
@@ -25,26 +19,27 @@ angular.module('starter', [
 ])
 
 // CONFIGURAÇÕES
-.constant('WEBSERVICE_URL', 'http://localhost/academia-webservice')
-// .constant('WEBSERVICE_URL', 'http://api.asturia.kinghost.net')
-.constant('HOME', 'app/comunicados')
-.constant('HOME_STATE', 'app.comunicados')
-
-
+.constant('CONFIG', {
+    WEBSERVICE_URL: (prod) ? 'http://api.asturia.kinghost.net' : 'http://localhost/academia-webservice',
+    HOME: 'app/horarios',
+    HOME_STATE: 'app.horarios',
+    LOGOUT_REDIRECT: 'login',
+    LOGOUT: 'logout'
+})
 
 .run(function(
     $ionicPlatform,
     $cordovaNetwork,
     $rootScope,
     $state,
-    HOME,
+    CONFIG,
     store
 ) {
     // Garanto que rotas com requiresLogin = true não sejam acessados sem o JWT no localStore
     $rootScope.$on('$stateChangeStart', function(e, to){
         if (to.data && to.data.requiresLogin) {
             if (!store.get('jwt')) {
-                $state.go('login');
+                $state.go(CONFIG.LOGOUT);
                 e.preventDefault();
             }
         }
@@ -53,14 +48,16 @@ angular.module('starter', [
     $rootScope.isOnline = true;
     
     $ionicPlatform.ready(function() {
-        $rootScope.isOnline = $cordovaNetwork.isOnline();
-        // listen for Online event
-        $rootScope.$on('$cordovaNetwork:online', function(event, networkState){
-            $rootScope.isOnline = true;
-        });
-        $rootScope.$on('$cordovaNetwork:offline', function(event, networkState){
-            $rootScope.isOnline = false;
-        });
+        if (prod) {
+            $rootScope.isOnline = $cordovaNetwork.isOnline();
+            // listen for Online event
+            $rootScope.$on('$cordovaNetwork:online', function(event, networkState){
+                $rootScope.isOnline = true;
+            });
+            $rootScope.$on('$cordovaNetwork:offline', function(event, networkState){
+                $rootScope.isOnline = false;
+            });
+        }
 
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
@@ -88,7 +85,7 @@ angular.module('starter', [
     $httpProvider,
     $stateProvider, 
     $urlRouterProvider,
-    HOME,
+    CONFIG,
     jwtInterceptorProvider
 ) {
 
@@ -106,7 +103,14 @@ angular.module('starter', [
         templateUrl: 'templates/menu.html',
         controller: 'AppCtrl'
     })
-
+    .state('home', {
+        url: '/home',
+        data: {
+            requiresLog: false
+        },
+        templateUrl: 'templates/home.html',
+        controller: 'HomeController'
+    })
     .state('login', {
         url: '/login',
         templateUrl: 'templates/login.html',
@@ -131,7 +135,7 @@ angular.module('starter', [
         }
     })
     .state('app.horarios', {
-        url: '/horarios/:weekdayIndex',
+        url: '/horarios',
         data: {
             requiresLogin: true
         },
@@ -216,5 +220,5 @@ angular.module('starter', [
     });    
 
     // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise(HOME);
+    $urlRouterProvider.otherwise(CONFIG.HOME);
 });
