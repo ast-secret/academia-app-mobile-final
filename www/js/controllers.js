@@ -223,8 +223,25 @@ angular.module('starter.controllers', [])
 .controller('ConfiguracoesDeContaController', function($scope) {
 
 })
-.controller('AlterarSenhaController', function($scope) {
+.controller('AlterarSenhaController', function(
+    $scope,
+    $ionicLoading,
+    User
+) {
+    $scope.form = {};
+    $scope.doSubmit = function(){
+        $ionicLoading.show({template: 'Alterando senha, aguarde...'});
+        User
+            .changePassword($scope.form)
+            .then(function(result){
 
+            }, function(err){
+
+            })
+            .finally(function(){
+                $ionicLoading.hide();
+            });
+    };
 })
 
 .controller('FichaController', function(

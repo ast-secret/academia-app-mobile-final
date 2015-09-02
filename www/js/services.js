@@ -26,11 +26,28 @@ angular.module('starter.services', [])
     $cordovaPush,
     $rootScope,
     $q,
+    $cordovaToast,
     $http,
     store,
     CONFIG
 ){
     return {
+        changePassword: function(data){
+            var defer = $q.defer();
+            $http({
+                method: 'POST',
+                url: CONFIG.WEBSERVICE_URL + '/customers/change-password',
+                data: data
+            })
+            .then(function(result){
+                $cordovaToast.show('Senha alterada com sucesso!', 'long', 'bottom');
+                defer.resolve(result);
+            }, function(err){
+                defer.reject(err);
+            });
+
+            return defer.promise;
+        },
         login: function(postData){
             var defer = $q.defer();
 
@@ -248,7 +265,7 @@ angular.module('starter.services', [])
                 })
                 .finally(function(){
                     $ionicPlatform.ready(function() {
-                        $cordovaToast.show(toastMsg, 'long', 'bottom');
+                        $cordovaToast.show(toastMsg, 'short', 'bottom');
                     });
                 });
 
