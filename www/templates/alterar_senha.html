@@ -1,10 +1,16 @@
 <ion-view view-title="Alterar Senha">
     <ion-content>
-        <form name="form" ng-submit="doSubmit()">
+        <form name="my_form" ng-submit="doSubmit()">
             <div class="list">
                 <label class="item item-input item-stacked-label">
                     <span class="input-label">Nova Senha</span>
-                    <input type="password" ng-model="form.new_password" required>
+                    <input
+                        minlength="5"
+                        maxlength="24"
+                        type="password"
+                        ng-model="form.password"
+                        required>
+                    <p>Deverá conter no mínimo 5 caracteres e no máximo 24</p>
                 </label>
                 <label class="item item-input item-stacked-label">
                     <span class="input-label">Confirmar Nova Senha</span>
@@ -15,9 +21,12 @@
                     <input type="password" ng-model="form.current_password" required>
                 </label>
             </div>
+            <div ng-if="formError">
+                {{formError}}
+            </div>
             <div class="padding">
                 <button
-                    ng-disabled="form.$pristine|| form.$invalid"
+                    ng-disabled="my_form.$pristine|| my_form.$invalid"
                     type="submit"
                     class="button button-assertive button-block">
                     Confirmar Alteração

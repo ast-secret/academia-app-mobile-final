@@ -229,14 +229,17 @@ angular.module('starter.controllers', [])
     User
 ) {
     $scope.form = {};
+    $scope.formError = null;
+
     $scope.doSubmit = function(){
         $ionicLoading.show({template: 'Alterando senha, aguarde...'});
+        console.log($scope.form);
         User
             .changePassword($scope.form)
             .then(function(result){
-
+                $scope.form = {};
             }, function(err){
-
+                $scope.formError = err;
             })
             .finally(function(){
                 $ionicLoading.hide();

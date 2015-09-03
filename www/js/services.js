@@ -33,17 +33,18 @@ angular.module('starter.services', [])
 ){
     return {
         changePassword: function(data){
+            console.log(data);
             var defer = $q.defer();
             $http({
                 method: 'POST',
-                url: CONFIG.WEBSERVICE_URL + '/customers/change-password',
+                url: CONFIG.WEBSERVICE_URL + '/customers/change-password.json',
                 data: data
             })
             .then(function(result){
-                $cordovaToast.show('Senha alterada com sucesso!', 'long', 'bottom');
                 defer.resolve(result);
+                $cordovaToast.show('Senha alterada com sucesso!', 'long', 'bottom');
             }, function(err){
-                defer.reject(err);
+                defer.reject(err.data.message);
             });
 
             return defer.promise;
@@ -68,7 +69,6 @@ angular.module('starter.services', [])
                         store.set('User', result.data.message.user);
                         defer.resolve(CONFIG.HOME_STATE);
                     }, function(err){
-                        console.log('oi gente');
                         defer.reject(err);
                     });
                 }, function(){
