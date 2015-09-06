@@ -15,7 +15,7 @@
             {{exercisesColumns[key]}}
         </a>
     </div>
-    <ion-content class="custom-bg padding" ng-class="{'has-tabs-top' : ficha}">
+    <ion-content class="custom-bg" ng-class="{'has-tabs-top' : ficha}">
         <ion-refresher
             ng-if="!loading"
             pulling-text="Puxe para atualizar..."
@@ -29,19 +29,21 @@
         </div>
 
         <div ng-if="ficha">
-            <div class="padding">
-                <p class="text-center" ng-if="ficha.obs">
+<!--             <div class="alert alert-default text-center" ng-if="ficha.obs">
                     {{ficha.obs}}
-                </p>
-            </div>
-        	<ion-list class="card">
-                <ion-item ng-repeat="exercise in ficha.exercises[currentTab]">
+            </div> -->
+        	<ion-list>
+                <ion-item class="item-checkbox" ng-repeat="exercise in ficha.exercises[currentTab]">
+                    <label class="checkbox">
+                        <input type="checkbox">
+                    </label>
                     {{exercise.name}}
                 </ion-item>
             </ion-list>
         </div>
-        <div ng-if="!ficha" class="text-center">
-            Você não tem nenhuma ficha cadastrada. Peça para um instrutor criar uma nova para você.
+        <div class="alert-no-data" ng-if="!ficha">
+            <span class="icon {{menuIcons.ficha}}"></span>
+            <p>Você não tem nenhuma ficha válida, um instrutor pode cuidar disso para você</p>
         </div>
     </ion-content>
 </ion-view>

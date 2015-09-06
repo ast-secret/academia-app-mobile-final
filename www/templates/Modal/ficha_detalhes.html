@@ -9,20 +9,21 @@
 	</ion-header-bar>
 
 	<ion-content>
+            <div class="alert alert-default text-center" ng-if="ficha.obs">
+                {{ficha.obs}}
+            </div>
 		<ion-list>
 			<ion-item>
-				<h3>Instrutor</h3>
-				<p>{{ficha.user.name}}</p>
+				Instrutor
+				<div class="item-sub-item">{{ficha.user.name}}</div>
 			</ion-item>
 			<ion-item>
-				<h3>Objetivo</h3>
-				<p>
-					{{ficha.goal}}
-				</p>
+				Objetivo
+				<div class="item-sub-item">{{ficha.goal}}</div>
 			</ion-item>
 			<ion-item>
-				<h3>Vencimento</h3>
-				<p><span am-time-ago="ficha.end_date"></span></p>
+				Vencimento
+				<div class="item-sub-item"><span am-time-ago="ficha.end_date"></span></div	>
 			</ion-item>
 		</ion-list>
 	</ion-content>

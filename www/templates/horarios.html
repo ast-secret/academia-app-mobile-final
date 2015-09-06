@@ -8,7 +8,7 @@
             {{weekday | limitTo : 3}}
         </a>
     </div>
-    <ion-content class="padding custom-bg has-tabs-top">
+    <ion-content class="custom-bg has-tabs-top">
         
         <ion-refresher
             ng-if="!loading"
@@ -18,7 +18,7 @@
 
         <my-network-alert></my-network-alert>
 
-        <ion-list class="card">
+        <ion-list class="list-android">
             <span
                 ng-repeat="(key, horario) in horarios[weekdayIndex] | groupBy: 'start_hour'"
                 ng-if="horarios[weekdayIndex]">
@@ -31,9 +31,12 @@
                     <item-list-aula content="aula.service"></item-list-aula>
                 </ion-item>
             </span>
-            <ion-item ng-if="!horarios[weekdayIndex]">
-                <small class="text-muted">Nenhuma aula para hoje.</small>
-            </ion-item>
         </ion-list>
+
+        <div class="alert-no-data" ng-if="!horarios[weekdayIndex]">
+            <span class="icon {{menuIcons.horarios}}"></span>
+            <p>Nenhuma aula para hoje</p>
+        </div>
+
     </ion-content>
 </ion-view>

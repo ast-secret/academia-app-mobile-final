@@ -5,6 +5,10 @@ in ionic's _variables.scss file.
 
 For example, you might change some of the default colors:
 */
+/*TIPOGRAFIA CORES*/
+/*BASE*/
+/*ITEMS*/
+/*MY VARS*/
 /*!
   Ionicons, v2.0.1
   Created by Ben Sperry for the Ionic Framework, http://ionicons.com/
@@ -2553,11 +2557,11 @@ body, .ionic-body {
   overflow: hidden;
   margin: 0;
   padding: 0;
-  color: #000;
+  color: #262626;
   word-wrap: break-word;
-  font-size: 14px;
-  font-family: "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
-  line-height: 20px;
+  font-size: 15px;
+  font-family: "Roboto", "Segoe UI", sans-serif;
+  line-height: 21px;
   text-rendering: optimizeLegibility;
   -webkit-backface-visibility: hidden;
   -webkit-user-drag: none;
@@ -2766,7 +2770,7 @@ ion-infinite-scroll {
  * --------------------------------------------------
  */
 p {
-  margin: 0 0 10px; }
+  margin: 0 0 10.5px; }
 
 small {
   font-size: 85%; }
@@ -2784,55 +2788,55 @@ cite {
   text-align: center; }
 
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-  color: #000;
+  color: #262626;
   font-weight: 500;
-  font-family: "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
+  font-family: "Roboto", "Segoe UI", sans-serif;
   line-height: 1.2; }
   h1 small, h2 small, h3 small, h4 small, h5 small, h6 small, .h1 small, .h2 small, .h3 small, .h4 small, .h5 small, .h6 small {
     font-weight: normal;
     line-height: 1; }
 
 h1, .h1, h2, .h2, h3, .h3 {
-  margin-top: 20px;
-  margin-bottom: 10px; }
+  margin-top: 21px;
+  margin-bottom: 10.5px; }
   h1:first-child, .h1:first-child, h2:first-child, .h2:first-child, h3:first-child, .h3:first-child {
     margin-top: 0; }
   h1 + h1, h1 + .h1, h1 + h2, h1 + .h2, h1 + h3, h1 + .h3, .h1 + h1, .h1 + .h1, .h1 + h2, .h1 + .h2, .h1 + h3, .h1 + .h3, h2 + h1, h2 + .h1, h2 + h2, h2 + .h2, h2 + h3, h2 + .h3, .h2 + h1, .h2 + .h1, .h2 + h2, .h2 + .h2, .h2 + h3, .h2 + .h3, h3 + h1, h3 + .h1, h3 + h2, h3 + .h2, h3 + h3, h3 + .h3, .h3 + h1, .h3 + .h1, .h3 + h2, .h3 + .h2, .h3 + h3, .h3 + .h3 {
-    margin-top: 10px; }
+    margin-top: 10.5px; }
 
 h4, .h4, h5, .h5, h6, .h6 {
-  margin-top: 10px;
-  margin-bottom: 10px; }
+  margin-top: 10.5px;
+  margin-bottom: 10.5px; }
 
 h1, .h1 {
-  font-size: 36px; }
+  font-size: 39px; }
 
 h2, .h2 {
-  font-size: 30px; }
+  font-size: 32px; }
 
 h3, .h3 {
-  font-size: 24px; }
+  font-size: 26px; }
 
 h4, .h4 {
-  font-size: 18px; }
+  font-size: 19px; }
 
 h5, .h5 {
-  font-size: 14px; }
+  font-size: 15px; }
 
 h6, .h6 {
-  font-size: 12px; }
+  font-size: 13px; }
 
 h1 small, .h1 small {
-  font-size: 24px; }
+  font-size: 26px; }
 
 h2 small, .h2 small {
-  font-size: 18px; }
+  font-size: 19px; }
 
 h3 small, .h3 small, h4 small, .h4 small {
-  font-size: 14px; }
+  font-size: 15px; }
 
 dl {
-  margin-bottom: 20px; }
+  margin-bottom: 21px; }
 
 dt, dd {
   line-height: 1.42857; }
@@ -2841,12 +2845,12 @@ dt {
   font-weight: bold; }
 
 blockquote {
-  margin: 0 0 20px;
-  padding: 10px 20px;
+  margin: 0 0 21px;
+  padding: 10.5px 21px;
   border-left: 5px solid gray; }
   blockquote p {
     font-weight: 300;
-    font-size: 17.5px;
+    font-size: 18.75px;
     line-height: 1.25; }
   blockquote p:last-child {
     margin-bottom: 0; }
@@ -2861,7 +2865,7 @@ q:before, q:after, blockquote:before, blockquote:after {
 
 address {
   display: block;
-  margin-bottom: 20px;
+  margin-bottom: 21px;
   font-style: normal;
   line-height: 1.42857; }
 
@@ -4137,7 +4141,7 @@ ion-tabs.tabs-color-active-dark .tab-item {
   white-space: nowrap;
   font-weight: 400;
   font-size: 14px;
-  font-family: "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
+  font-family: "Roboto", "Segoe UI", sans-serif;
   opacity: 0.7; }
   .tab-item:hover {
     cursor: pointer; }
@@ -4648,7 +4652,7 @@ ion-tabs.tabs-color-active-dark .tab-item {
 .item {
   border-color: #ddd;
   background-color: #fff;
-  color: #444;
+  color: #262626;
   position: relative;
   z-index: 2;
   display: block;
@@ -4656,7 +4660,7 @@ ion-tabs.tabs-color-active-dark .tab-item {
   padding: 16px;
   border-width: 1px;
   border-style: solid;
-  font-size: 16px; }
+  font-size: 17px; }
   .item h2 {
     margin: 0 0 2px 0;
     font-size: 16px;
@@ -5644,7 +5648,7 @@ legend {
   width: 100%;
   border: 1px solid #ddd;
   color: #444;
-  font-size: 21px;
+  font-size: 22.5px;
   line-height: 2.85714; }
   legend small {
     color: #f8f8f8;
@@ -5652,11 +5656,11 @@ legend {
 
 label, input, button, select, textarea {
   font-weight: normal;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.42857; }
 
 input, button, select, textarea {
-  font-family: "Helvetica Neue", "Roboto", "Segoe UI", sans-serif; }
+  font-family: "Roboto", "Segoe UI", sans-serif; }
 
 .item-input {
   display: -webkit-box;
@@ -5800,7 +5804,7 @@ input, button, select, textarea {
 
 .item-stacked-label input {
   overflow: hidden;
-  height: 46px; }
+  height: 48px; }
 
 .item-floating-label {
   display: block;
@@ -5823,11 +5827,11 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
   display: block;
   padding-top: 2px;
   padding-left: 0;
-  height: 34px;
+  height: 36px;
   color: #111;
   vertical-align: middle;
-  font-size: 14px;
-  line-height: 16px; }
+  font-size: 15px;
+  line-height: 17px; }
 
 .platform-ios input[type="datetime-local"], .platform-ios input[type="date"], .platform-ios input[type="month"], .platform-ios input[type="time"], .platform-ios input[type="week"], .platform-android input[type="datetime-local"], .platform-android input[type="date"], .platform-android input[type="month"], .platform-android input[type="time"], .platform-android input[type="week"] {
   padding-top: 8px; }
@@ -5859,7 +5863,7 @@ input[type="radio"], input[type="checkbox"] {
   width: auto; }
 
 input[type="file"] {
-  line-height: 34px; }
+  line-height: 35px; }
 
 .previous-input-focus, .cloned-text-input + input, .cloned-text-input + textarea {
   position: absolute !important;
@@ -6454,7 +6458,7 @@ input[type="radio"][disabled], input[type="checkbox"][disabled], input[type="rad
     text-indent: .01px;
     text-overflow: '';
     white-space: nowrap;
-    font-size: 14px;
+    font-size: 15px;
     cursor: pointer;
     direction: rtl; }
   .item-select select::-ms-expand {
@@ -7690,9 +7694,138 @@ a.button {
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
 
+@font-face {
+  font-family: "Roboto";
+  src: url("../fonts/Roboto-Regular.ttf") format("truetype");
+  font-weight: normal; }
+
+@font-face {
+  font-family: "Doida";
+  src: url("../fonts/Doida.ttf") format("truetype"); }
+
+small {
+  font-size: 13px; }
+
+.item-sub-item, .item-note {
+  font-size: 13px;
+  color: #666666 !important; }
+
+.custom-bg {
+  background-color: #f7f7f7; }
+
 textarea.sugestao {
   min-height: 200px;
   resize: none; }
 
-.custom-bg {
-  background-color: #F7F7F7; }
+/*TIPOGRAFIA*/
+.text-secondary {
+  color: #666666 !important; }
+
+/*ALERTS*/
+.alert-no-data {
+  padding: 40px 10px;
+  text-align: center;
+  color: #999999; }
+
+.alert-no-network {
+  padding: 3px;
+  text-align: center;
+  background-color: #387ef5;
+  color: white;
+  font-size: 13px; }
+
+.alert-no-data p {
+  margin-top: 15px;
+  font-size: 16px; }
+
+.alert-no-data span.icon {
+  bottom: 15px;
+  font-size: 70px; }
+
+.alert {
+  padding: 15px 20px;
+  font-size: 14px; }
+
+.alert-success {
+  background-color: #2ecc71;
+  color: #FFF; }
+
+.alert-default {
+  color: black;
+  background-color: #EEE; }
+
+.alert-positive {
+  color: #FFF;
+  background-color: #387ef5; }
+
+/*MENU*/
+.content-menu {
+  background-color: #000;
+  background-image: url(../img/menu_bg.jpg);
+  background-size: auto 100%;
+  background-position: center; }
+
+.spartan-sidemenu > .list {
+  margin-top: 60px; }
+
+.spartan-sidemenu > .list > .item {
+  background: none;
+  border: 0;
+  padding-left: 8px; }
+
+.spartan-sidemenu > .list > .item > a {
+  background: none;
+  color: #DDD;
+  text-shadow: 1px 1px #000; }
+
+.spartan-sidemenu > .list > .item > a > .icon {
+  font-size: 24px; }
+
+.spartan-sidemenu > .list > .item.active {
+  border-left: 4px solid #387ef5;
+  padding-left: 4px; }
+
+.spartan-sidemenu > .list > .item.active > a {
+  color: #FFF; }
+
+.spartan-bar-footer {
+  background-color: #050505 !important; }
+
+.spartan-bar-footer > .title {
+  color: #DDD;
+  font-size: 14px !important;
+  font-weight: normal !important;
+  text-shadow: 1px 1px #000; }
+
+.spartan-bar-footer > .buttons > a:before {
+  color: #DDD;
+  font-size: 24px !important; }
+
+/*LIST ANDROID*/
+/*.list > .item > a, .list-android > .list > .item{
+    font-size: 16px;
+    color: $colorPrimaryTextDark;
+}
+.list > .item > a > p,
+.list > .item > p,
+.list > .item > * > p,{
+    font-size: 15px;
+    font-weight: normal!important;
+}
+.list-android > .list > .item > * > span.item-note,
+.list-android > .list > .item > a > span.item-note,{
+    font-size: 13px;
+    font-weight: normal!important;
+}*/
+.subtitle-text {
+  margin: 5px 0 10px 0; }
+
+.label {
+  padding: 4px 10px;
+  margin-right: 5px;
+  border-radius: 4px;
+  font-size: 13px; }
+
+.label-default {
+  background-color: #ebebeb;
+  color: #666666; }

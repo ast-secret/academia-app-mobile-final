@@ -3,13 +3,13 @@
         <button class="button button-icon icon ion-ios-paperplane" ng-click="send(sugestao)" ng-disabled="!sugestao.text">
         </button>
     </ion-nav-buttons>
-    <ion-content>
+    <ion-content class="custom-bg">
         <my-network-alert></my-network-alert>
         <form>
             <div class="list">
                 <label class="item item-input">
                     <textarea
-                        placeholder="Sugestão..."
+                        placeholder="Digite aqui a sua sugestão..."
                         class="sugestao"
                         ng-model="sugestao.text"
                         required></textarea>

@@ -2,6 +2,12 @@ angular.module('starter.controllers', [])
 
 .controller('AppCtrl', function($scope, store) {
     $scope.$on( "$ionicView.beforeEnter", function(scopes, states) {
+        $scope.menuIcons = {
+            comunicados: 'ion-flag',
+            aulas: 'ion-arrow-graph-up-right',
+            ficha: 'ion-clipboard',
+            horarios: 'ion-android-time',
+        };
         $scope.user = store.get('User');    
     });
 })
@@ -17,6 +23,11 @@ angular.module('starter.controllers', [])
         scope: {
             'aula': '=content'
         }
+    };
+})
+.directive('myNetworkAlert', function(){
+    return {
+        templateUrl:  'templates/Element/network_alert.html',
     };
 })
 .controller('HomeController', function(

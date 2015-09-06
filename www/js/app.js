@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 
-var prod = false;
+var prod = true;
 
 angular.module('starter', [
     'ionic',
@@ -20,9 +20,10 @@ angular.module('starter', [
 
 // CONFIGURAÇÕES
 .constant('CONFIG', {
-    WEBSERVICE_URL: (prod) ? 'http://api.asturia.kinghost.net' : 'http://localhost/academia-webservice',
-    HOME: 'app/horarios',
-    HOME_STATE: 'app.horarios',
+    HTTP_TIMEOUT: 15000,
+    WEBSERVICE_URL: (prod) ? 'http://api.asturia.kinghost.net' : 'http://169.254.253.182/academia-webservice',
+    HOME: 'app/aulas',
+    HOME_STATE: 'app.aulas',
     LOGOUT_REDIRECT: 'login',
     LOGOUT: 'logout'
 })
@@ -72,12 +73,12 @@ angular.module('starter', [
         }
     });
 })
-.factory('myHttpInterceptor', function(){
+.factory('myHttpInterceptor', function($q, CONFIG){
     return {
-        // responseError: function(response){
-        //     // if ($response.status == 4) {};
-        //     return response;
-        // }
+        request: function(config){
+            config.timeout = CONFIG.HTTP_TIMEOUT;
+            return config;
+        }
     };
 })
 
@@ -93,6 +94,7 @@ angular.module('starter', [
     jwtInterceptorProvider.tokenGetter = function(store){
         return store.get('jwt');
     };
+
     $httpProvider.interceptors.push('jwtInterceptor');
     $httpProvider.interceptors.push('myHttpInterceptor');
 

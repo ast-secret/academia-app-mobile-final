@@ -14,17 +14,190 @@ $assertive:                       #ef473a !default;
 $royal:                           #886aea !default;
 $dark:                            #444 !default;
 
+/*TIPOGRAFIA CORES*/
+$color-primary-text: darken(#FFF, 85%);
+$color-secondary-text: darken(#FFF, 60%);
+$color-primary-text-light: lighten(#000, 100%);
+
+/*BASE*/
+
+$font-family-sans-serif: "Roboto", "Segoe UI", sans-serif !default;
+$font-family-light-sans-serif: "Roboto-Light", "Segoe UI-Light", sans-serif-light !default;
+
+$font-size-base: 15px !default;
+$font-size-small: 13px !default;
+
+$base-color: $color-primary-text !default;
+
+/*ITEMS*/
+$item-font-size: 17px;
+$item-sub-item-font-size: 13px;
+$item-default-text: $color-primary-text !default;
+$item-default-sub-item-text: $color-secondary-text !default;
+
+/*MY VARS*/
+$main-color: $positive;
+$main-color-style-dark: true;
+
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 
+@font-face {
+    font-family: "Roboto";
+    src: url("../fonts/Roboto-Regular.ttf") format("truetype");
+    font-weight: normal;
+}
+@font-face {
+    font-family: "Doida";
+    src: url("../fonts/Doida.ttf") format("truetype");
+}
+
+small{
+    font-size: $font-size-small;
+}
+
+.item-sub-item, .item-note{
+    font-size: $item-sub-item-font-size;
+    color: $item-default-sub-item-text !important;
+}
+
+.custom-bg{
+    background-color: darken(#FFF, 3%);
+}
 
 textarea.sugestao{
     min-height: 200px;
     resize: none;
 }
-.custom-bg{
-    background-color: #F7F7F7;
+
+/*TIPOGRAFIA*/
+.text-secondary{
+    color: $color-secondary-text !important;
+}
+
+
+/*ALERTS*/
+.alert-no-data{
+    padding: 40px 10px;
+    text-align: center;   
+    color: lighten(#000, 60%);
+}
+.alert-no-network{
+    padding: 3px;
+    text-align: center;   
+    background-color: $main-color;
+    @if $main-color-style-dark {
+        color: $color-primary-text-light;
+    } @else {
+        color: $color-primary-text-dark;
+    }
+
+    font-size: 13px;
+}
+.alert-no-data p{
+    margin-top: 15px;
+    font-size: 16px;
+}
+.alert-no-data span.icon{
+    bottom: 15px;
+    font-size: 70px;
+}
+.alert{
+    padding: 15px 20px;
+    font-size: 14px;
+}
+.alert-success{
+    background-color: #2ecc71;
+    color: #FFF;
+}
+.alert-default{
+    color: darken(#000, 87%);
+    background-color: #EEE;
+}
+.alert-positive{
+    color: #FFF;
+    background-color: $positive;
+}
+
+/*MENU*/
+$mFontColor: #DDD;
+$mfontShadow: 1px 1px #000;
+$mFooterBg: #050505;
+.content-menu{
+    background-color: #000;
+    background-image: url(../img/menu_bg.jpg);
+    background-size: auto 100%;
+    background-position: center;
+}
+.spartan-sidemenu > .list{
+    margin-top: 60px;
+}
+.spartan-sidemenu > .list > .item{
+    background: none;
+    border: 0;
+    padding-left: 8px;
+}
+.spartan-sidemenu > .list > .item > a{
+    background: none;
+    color: $mFontColor;
+    text-shadow: $mfontShadow;
+}
+.spartan-sidemenu > .list > .item > a > .icon{
+    font-size: 24px;
+}
+.spartan-sidemenu > .list > .item.active{
+    border-left: 4px solid $main-color;
+    padding-left: 4px;
+}
+.spartan-sidemenu > .list > .item.active > a{
+    color: #FFF;
+}
+
+.spartan-bar-footer{
+    background-color: $mFooterBg!important;
+}
+.spartan-bar-footer > .title{
+    color: $mFontColor;
+    font-size: 14px!important;
+    font-weight: normal!important;
+    text-shadow: $mfontShadow;
+}
+.spartan-bar-footer > .buttons > a:before{
+    color: $mFontColor;
+    font-size: 24px!important;
+}
+
+/*LIST ANDROID*/
+/*.list > .item > a, .list-android > .list > .item{
+    font-size: 16px;
+    color: $colorPrimaryTextDark;
+}
+.list > .item > a > p,
+.list > .item > p,
+.list > .item > * > p,{
+    font-size: 15px;
+    font-weight: normal!important;
+}
+.list-android > .list > .item > * > span.item-note,
+.list-android > .list > .item > a > span.item-note,{
+    font-size: 13px;
+    font-weight: normal!important;
+}*/
+
+.subtitle-text{
+    margin: 5px 0 10px 0;
+}
+
+.label{
+    padding: 4px 10px;
+    margin-right: 5px;
+    border-radius: 4px;
+    font-size: 13px;
+}
+.label-default{
+    background-color: darken(#FFF, 8%);
+    color: $color-secondary-text;
 }

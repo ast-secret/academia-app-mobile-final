@@ -1,5 +1,8 @@
 <ion-view view-title="Alterar Senha">
     <ion-content>
+
+        <my-network-alert></my-network-alert>
+
         <form name="my_form" ng-submit="doSubmit()">
             <div class="list">
                 <label class="item item-input item-stacked-label">
@@ -10,7 +13,7 @@
                         type="password"
                         ng-model="form.password"
                         required>
-                    <p>Deverá conter no mínimo 5 caracteres e no máximo 24</p>
+                    <p class="text-muted">Deverá conter no mínimo 5 caracteres e no máximo 24</p>
                 </label>
                 <label class="item item-input item-stacked-label">
                     <span class="input-label">Confirmar Nova Senha</span>

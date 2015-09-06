@@ -1,5 +1,5 @@
 <ion-view view-title="Aulas">
-    <ion-content class="padding custom-bg">
+    <ion-content class="custom-bg">
         <ion-refresher
             ng-if="!loading"
             pulling-text="Puxe para atualizar..."
@@ -12,7 +12,7 @@
         
         <my-network-alert></my-network-alert>   
 
-        <ion-list class="card">
+        <ion-list>
 <!--             <ion-item ng-repeat="aula in aulas | orderBy : 'name'" ng-click="openModal(aula)">
                 {{aula.name}}
                 <p>Duração: {{aula.duration}} Minutos</p>
@@ -27,8 +27,9 @@
             </ion-item>
         </ion-list>
 
-        <p class="no-data-alert" ng-if="!aulas">
-            Você não tem nenhuma aula no momento.
-        </p>
+        <div class="alert-no-data" ng-if="!aulas">
+            <span class="icon {{menuIcons.aulas}}"></span>
+            <p>Nenhuma aula para mostrar</p>
+        </div>
     </ion-content>
 </ion-view>

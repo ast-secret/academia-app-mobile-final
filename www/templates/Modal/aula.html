@@ -20,9 +20,7 @@
                     {{key | weekdayHumanize}}
                 </ion-item>
                 <ion-item>
-                    <span ng-repeat="horario in horarios">
-                        {{horario.start_hour | date : 'HH:mm'}}
-                    </span>
+                    <span ng-repeat="horario in horarios" class="label label-default">{{horario.start_hour | date : 'HH:mm'}}</span>
                 </ion-item>
             </div>
         </ion-list>

@@ -56,7 +56,7 @@ angular.module('starter.services', [])
                 .then(function(regId){
 
                     postData.push_reg_id = regId;
-                    postData.platform = ionic.Platform.platform();
+                    postData.platform = (prod) ? ionic.Platform.platform() : 'android';
 
                     $http({
                         url: CONFIG.WEBSERVICE_URL + '/auth/token/create.json',

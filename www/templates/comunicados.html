@@ -1,5 +1,5 @@
 <ion-view view-title="Comunicados">
-    <ion-content class="padding custom-bg">
+    <ion-content class="custom-bg">
         <ion-refresher
             ng-if="!loading"
             pulling-text="Puxe para atualizar..."
@@ -11,20 +11,19 @@
         <div class="text-center padding" ng-if="loading">
             <ion-spinner></ion-spinner>    
         </div>
-        
-        <ion-list class="card">
+
+        <ion-list>
             <ion-item ng-repeat="comunicado in comunicados" href="#/app/comunicado/{{$index}}">
                 {{comunicado.title}}
-                <p>
-                    <small class="text-muted">
-                        <span am-time-ago="comunicado.created"></span>
-                    </small>
-                </p>
+                <div class="item-sub-item">
+                    <span am-time-ago="comunicado.created"></span>
+                </div>
             </ion-item>
         </ion-list>
 
-        <div class="no-data-alert" ng-if="!comunicados">
-            Você ainda não tem nenhum comunicado.
+        <div class="alert-no-data" ng-if="!comunicados">
+            <span class="icon {{menuIcons.comunicados}}"></span>
+            <p>Você ainda não tem nenhum comunicado</p>
         </div>
 
     </ion-content>
