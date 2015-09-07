@@ -7833,6 +7833,7 @@ textarea.sugestao {
 /*home*/
 .home-container {
   background-color: #387ef5;
+  height: 100vh;
   display: flex;
   flex-direction: column; }
 
@@ -7840,30 +7841,17 @@ textarea.sugestao {
   text-align: center;
   /*background-color: red;*/ }
 
-.home-logo > img {
-  margin-top: 40px; }
-
 .home-text {
   text-align: center;
-  color: #FFF;
-  flex: 2;
+  height: 100%;
   /*background-color: pink;*/ }
-
-.home-text h4 {
-  font-size: 22px;
-  color: #FFF;
-  margin-bottom: 5px;
-  /*background-color: pink;*/ }
-
-.home-text p {
-  font-size: 14px; }
 
 .home-bottom {
   /*background-color: yellow;*/ }
 
 .home-bottom .button {
   margin: 20px 15px;
-  background-color: #2975f4; }
+  background-color: #206ef4; }
 
 /*LOGIN*/
 .container-esqueceu-senha {
@@ -7871,4 +7859,5 @@ textarea.sugestao {
 
 .link-login {
   text-decoration: none;
-  color: #387ef5; }
+  color: #595959;
+  font-weight: bold; }

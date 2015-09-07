@@ -201,3 +201,51 @@ $mFooterBg: #050505;
     background-color: darken(#FFF, 8%);
     color: $color-secondary-text;
 }
+
+
+/*home*/
+.home-container{
+    background-color: $main-color;
+    background-image: url(../img/)
+    display: flex;
+    flex-direction: column;
+}
+.home-logo{
+    text-align: center;
+    /*background-color: red;*/
+}
+.home-logo > img{
+    margin-top: 40px;
+}
+.home-text{
+    text-align: center;
+    color: #FFF;
+    flex: 2;
+    /*background-color: pink;*/
+}
+.home-text h4{
+    font-size: 22px;
+    color: #FFF;
+    margin-bottom: 5px;
+    /*background-color: pink;*/
+}
+.home-text p{
+    font-size: 14px;
+}
+.home-bottom{
+    /*background-color: yellow;*/
+}
+.home-bottom .button{
+    margin: 20px 15px;
+    background-color: darken($main-color, 2%);
+}
+/*LOGIN*/
+
+.container-esqueceu-senha{
+    margin-top: 20px;
+}
+
+.link-login{
+    text-decoration: none;
+    color: $main-color;
+}

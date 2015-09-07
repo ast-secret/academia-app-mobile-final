@@ -34,25 +34,19 @@ angular.module('starter.controllers', [])
     return {
         restrict: 'C',
         link: function(scope, element){
-            function fillHeight() {
-                console.log('filling');
-                var windowH = $window.innerHeight;
-                var content = document.getElementsByClassName('scroll-content');
-                var scroll = document.getElementsByClassName('scroll');
-                // scroll[0].style.height = '100%';
-                // scroll[0].style.overflow = 'hidden';
-                // scroll[0].removeChild(element[0]);
-                if (scroll.length) {
-                    content[0].removeChild(scroll[0]);
-                    content[0].appendChild(element[0]);
-                }
-                element[0].style.height = (windowH) + 'px';
-            }
-            fillHeight();
-            $window.addEventListener("resize", fillHeight);
+            var windowH = $window.innerHeight;
+            var content = document.getElementsByClassName('scroll-content');
+            var scroll = document.getElementsByClassName('scroll');
+            // scroll[0].style.height = '100%';
+            // scroll[0].style.overflow = 'hidden';
+            // scroll[0].removeChild(element[0]);
+            // content[0].removeChild(scroll[0]);
+            // content[0].appendChild(element[0]);
+            element[0].style.height = (windowH) + 'px';
+
 
             // document.getElementsByClassName('scroll')[0].remove();
-            ///document.getElementsByClassName('scroll-bar-v')[0].style.visibility = 'hidden';
+            document.getElementsByClassName('scroll-bar-v')[0].style.visibility = 'hidden';
         }
     };
 })
@@ -60,31 +54,64 @@ angular.module('starter.controllers', [])
     $scope,
     $ionicModal,
     $ionicLoading,
-    $window
+    $state,
+    User
 ) {
-    $window.localStorage.clear();
+    $scope.$on( "$ionicView.beforeEnter", function(scopes, states) {
+        $scope.form = {};
+        $scope.wrongCredentials = false;
+    });
+
+    $ionicModal.fromTemplateUrl('templates/Modal/login.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+    }).then(function(modal) {
+        $scope.modal = modal;
+    });
+    $scope.openModal = function() {
+        $scope.modal.show();
+    };
+    $scope.closeModal = function() {
+        $scope.modal.hide();
+    };
+
+    $scope.doLogin = function(){
+        $ionicLoading.show({template: 'Entrando, aguarde...'});
+        User
+            .login($scope.form)
+            .then(function(home){
+                $scope.closeModal();
+                $state.go(home);
+            }, function(err){
+                if (err.status == 401) {
+                    $scope.wrongCredentials = true;
+                }
+            })
+            .finally(function(){
+                $ionicLoading.hide();
+            });
+    };
 })
 .controller('LogoutController', function(
     $ionicLoading,
     $scope,
     $rootScope,
     $state,
-    CONFIG,
     $timeout,
+    CONFIG,
     $window
 ) {
-
-    var delay = 1500;
+    var duration = 1000;
     $scope.$on( "$ionicView.beforeEnter", function(scopes, states) {
         $ionicLoading.show({template: 'Saindo, aguarde...'});
         
         $window.localStorage.clear();
-    });
-    $timeout(function(){
-        $ionicLoading.hide();
-        $state.go('home');
-    }, delay);
 
+        $timeout(function(){
+            $ionicLoading.hide();
+            $state.go(CONFIG.LOGOUT_REDIRECT);
+        }, duration);
+    });
 })
 .controller('EsqueciMinhaSenhaController', function(
     $scope,
@@ -118,24 +145,23 @@ angular.module('starter.controllers', [])
     $scope,
     $state,
     $ionicLoading,
-    $cordovaDialogs,
     User
 ) {
     
     $scope.$on( "$ionicView.beforeEnter", function(scopes, states) {
         $scope.form = {};
+        $scope.wrongCredentials = false;
     });
 
     $scope.doLogin = function(){
         $ionicLoading.show({template: 'Entrando, aguarde...'});
-        console.log($scope.form);
         User
             .login($scope.form)
             .then(function(home){
                 $state.go(home);
             }, function(err){
                 if (err.status == 401) {
-                    $cordovaDialogs.alert('Por favor, tente novamente', 'Combinação Email/Senha incorreta');
+                    $scope.wrongCredentials = true;
                 }
             })
             .finally(function(){
@@ -284,44 +310,28 @@ angular.module('starter.controllers', [])
     $scope,
     $stateParams,
     $ionicModal,
-    $cordovaDialogs,
     Fichas
 ) {
     $scope.$on( "$ionicView.beforeEnter", function(scopes, states) {
         $scope.ficha = Fichas.getLocalData();
         $scope.loading = !$scope.ficha;
-        // Só puxa do server se não tiver nenhuma.. fiz isso diferente das outras
-        // paginas pq aqui eh diferente soh de tempos em tempos que muda e tb
-        // pq estava bugando as marcações das checkboxes
-        if (!$scope.ficha) {
-            Fichas
-                .getServerData()
-                .then(function(data){
-                    $scope.ficha = data;
-                })
-                .finally(function(){
-                    $scope.loading = false;
-                });
-        }
+
+        Fichas
+            .getServerData()
+            .then(function(data){
+                $scope.ficha = data;
+            })
+            .finally(function(){
+                $scope.loading = false;
+            });
     });
 
     $scope.exercisesColumns = Fichas.getExercisesColumns();
 
     $scope.currentTab = 0;
 
-    $scope.clearCheckboxes = function(){
-        $cordovaDialogs.confirm(
-            'Tem certeza que deseja limpar as seleções dos exercícios deste grupo?',
-            'Limpar seleções',
-            ['Limpar', 'Cancelar'])
-            .then(function(buttonIndex) {
-                // no button = 0, 'OK' = 1, 'Cancel' = 2
-                if (buttonIndex == 1) {
-                    angular.forEach($scope.ficha.exercises[$scope.currentTab], function(value){
-                        value.checked = false;
-                    });
-                }
-            });
+    $scope.isOverdue = function(date){
+        return date < new Date().toISOString();
     };
 
     $ionicModal.fromTemplateUrl('templates/Modal/ficha_detalhes.html', {
@@ -387,25 +397,21 @@ angular.module('starter.controllers', [])
 .controller('CaixaDeSugestoesController', function(
     $ionicLoading, 
     $scope, 
-    $timeout,
     CaixaDeSugestoes
 ) {
-    var delay = 1500;
     $scope.sugestao = {};
 
     $scope.send = function(sugestao){
         $ionicLoading.show({
             template: 'Enviando, aguarde...'
         });
-        $timeout(function(){
-            CaixaDeSugestoes
-                .send(sugestao)
-                .then(function(){
-                    $scope.sugestao = {};
-                })
-                .finally(function(){
-                    $ionicLoading.hide();
-                });
-        }, delay);
+        CaixaDeSugestoes
+            .send(sugestao)
+            .then(function(){
+                $scope.sugestao = {};
+            })
+            .finally(function(){
+                $ionicLoading.hide();
+            });
     };
 });

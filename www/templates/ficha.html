@@ -2,7 +2,14 @@
     <ion-nav-buttons side="right">
         <button
             ng-if="ficha"
-            class="button button-icon icon ion-ios-more" ng-click="openModal()"></button>
+            class="button button-icon icon ion-reply"
+            ng-click="clearCheckboxes()">
+        </button>
+        <button
+            ng-if="ficha"
+            class="button button-icon icon ion-ios-more"
+            ng-click="openModal()">
+        </button>
     </ion-nav-buttons>
     <div
         ng-if="ficha"
@@ -29,13 +36,10 @@
         </div>
 
         <div ng-if="ficha">
-<!--             <div class="alert alert-default text-center" ng-if="ficha.obs">
-                    {{ficha.obs}}
-            </div> -->
         	<ion-list>
                 <ion-item class="item-checkbox" ng-repeat="exercise in ficha.exercises[currentTab]">
                     <label class="checkbox">
-                        <input type="checkbox">
+                        <input type="checkbox" ng-model="exercise.checked">
                     </label>
                     {{exercise.name}}
                 </ion-item>

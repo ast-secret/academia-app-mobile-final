@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 
-var prod = true;
+var prod = false;
 
 angular.module('starter', [
     'ionic',
@@ -21,11 +21,11 @@ angular.module('starter', [
 // CONFIGURAÇÕES
 .constant('CONFIG', {
     HTTP_TIMEOUT: 15000,
-    WEBSERVICE_URL: (prod) ? 'http://api.asturia.kinghost.net' : 'http://localhost/academia-webservice',
-    HOME: 'app/comunicados',
-    HOME_STATE: 'app.comunicados',
-    LOGOUT_REDIRECT: 'home',
-    LOGOUT: 'home'
+    WEBSERVICE_URL: (prod) ? 'http://api.asturia.kinghost.net' : 'http://169.254.253.182/academia-webservice',
+    HOME: 'home',
+    HOME_STATE: 'home',
+    LOGOUT_REDIRECT: 'login',
+    LOGOUT: 'logout'
 })
 
 .run(function(
@@ -115,25 +115,16 @@ angular.module('starter', [
     })
     .state('login', {
         url: '/login',
-        data: {
-            requiresLog: false
-        },
         templateUrl: 'templates/login.html',
         controller: 'LoginController'
     })
     .state('esqueci-minha-senha', {
         url: '/esqueci-minha-senha',
-        data: {
-            requiresLog: false
-        },
         templateUrl: 'templates/esqueci_minha_senha.html',
         controller: 'EsqueciMinhaSenhaController'
     })
     .state('logout', {
         url: '/logout',
-        data: {
-            requiresLog: false
-        },
         templateUrl: 'templates/logout.html',
         controller: 'LogoutController'
     })
