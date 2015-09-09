@@ -29,6 +29,7 @@ angular.module('starter.services', [])
     $cordovaToast,
     $http,
     store,
+    $cordovaDialogs,
     CONFIG
 ){
     return {
@@ -42,8 +43,9 @@ angular.module('starter.services', [])
             })
             .then(function(result){
                 defer.resolve(result);
-                $cordovaToast.show('Senha alterada com sucesso!', 'long', 'bottom');
+                $cordovaToast.show('Senha alterada com sucesso', 'long', 'bottom');
             }, function(err){
+                $cordovaDialogs.alert(err.data.message, 'Confirmação incorreta');
                 defer.reject(err.data.message);
             });
 
@@ -256,16 +258,16 @@ angular.module('starter.services', [])
             $http
                 .post(CONFIG.WEBSERVICE_URL + '/suggestions/add.json', sugestao)
                 .success(function(result){
-                    toastMsg = 'A sua sugestão foi enviada com sucesso, obrigado.';
+                    toastMsg = 'Sugestão enviada com sucesso, obrigado';
                     defer.resolve(result);
                 })
                 .error(function(){
-                    toastMsg = 'A sua sugestão não foi enviada, Por favor aguarde um pouco e tente novamente.';
+                    toastMsg = 'Sugestão não enviada. Por favor, aguarde um pouco e tente novamente';
                     defer.reject();  
                 })
                 .finally(function(){
                     $ionicPlatform.ready(function() {
-                        $cordovaToast.show(toastMsg, 'short', 'bottom');
+                        $cordovaToast.show(toastMsg, 'long', 'bottom');
                     });
                 });
 

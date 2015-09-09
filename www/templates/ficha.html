@@ -1,4 +1,4 @@
-<ion-view view-title="Minha Ficha">
+    <ion-view view-title="Minha Ficha">
     <ion-nav-buttons side="right">
         <button
             ng-if="ficha"
@@ -36,8 +36,11 @@
         </div>
 
         <div ng-if="ficha">
-        	<ion-list>
-                <ion-item class="item-checkbox" ng-repeat="exercise in ficha.exercises[currentTab]">
+        	<ion-list class="list-no-border-top">
+                <ion-item
+                    class="item-checkbox"
+                    ng-class="{first: $first}"
+                    ng-repeat="exercise in ficha.exercises[currentTab]">
                     <label class="checkbox">
                         <input type="checkbox" ng-model="exercise.checked">
                     </label>

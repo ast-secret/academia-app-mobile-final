@@ -1,11 +1,12 @@
 <ion-side-menus enable-menu-with-back-views="false">
     <ion-side-menu-content>
-        <ion-nav-bar class="bar-positive">
-            <ion-nav-back-button>
+        <!-- É necessário classe bar-app para o header do modal não pegar o estilo tb. -->
+        <ion-nav-bar class="bar-app">
+            <ion-nav-back-button class="custom-back-button">
             </ion-nav-back-button>
 
             <ion-nav-buttons side="left">
-                <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+                <button class="button button-icon button-clear ion-navicon button-open-menu" menu-toggle="left">
                 </button>
             </ion-nav-buttons>
         </ion-nav-bar>

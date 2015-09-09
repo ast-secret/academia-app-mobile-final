@@ -1,14 +1,74 @@
 @charset "UTF-8";
-/*
-To customize the look and feel of Ionic, you can override the variables
-in ionic's _variables.scss file.
+/*MY VARS*/
+/*LOGIN*/
+.login-container {
+  background-color: #2196F3;
+  display: flex;
+  flex-direction: column; }
 
-For example, you might change some of the default colors:
-*/
+.login-logo {
+  text-align: center;
+  flex: 1; }
+
+.login-logo-img {
+  width: 60% !important; }
+
+.login-form > form > .list {
+  background: none; }
+
+.login-form > form > .list > .item {
+  background: none;
+  border: 0;
+  border-bottom: 1px solid #FFF; }
+
+.login-form > form > .list > .item > input {
+  color: #FFF !important; }
+
+.login-form > form > .list > .item > input::-webkit-input-placeholder {
+  color: #e6e6e6; }
+
+.login-footer {
+  flex: 1; }
+
+.container-esqueceu-senha {
+  padding: 30px 10px; }
+
+.button-logar {
+  background-color: #349ff4 !important;
+  border: 0 !important;
+  color: #FFF !important; }
+
+.link-login {
+  text-decoration: none;
+  color: #FFF; }
+
+.bar-app {
+  background-color: #2196F3 !important;
+  color: #FFF !important; }
+
+.bar-app > .title, .button-open-menu {
+  color: #FFF !important; }
+
+.bar-app > .buttons button:before, .back-button {
+  color: #FFF !important; }
+
+.bar-modal .button {
+  color: #2196F3 !important; }
+
+.tabs {
+  background-color: #2196F3 !important;
+  border-bottom: 0 !important; }
+
+.tabs > a {
+  color: rgba(255, 255, 255, 0.4) !important; }
+
+.tab-item.active, .tab-item.activated {
+  border-bottom-color: #FFF !important;
+  color: #FFF !important; }
+
 /*TIPOGRAFIA CORES*/
 /*BASE*/
 /*ITEMS*/
-/*MY VARS*/
 /*!
   Ionicons, v2.0.1
   Created by Ben Sperry for the Ionic Framework, http://ionicons.com/
@@ -7707,13 +7767,17 @@ small {
   font-size: 13px; }
 
 .item-sub-item, .item-note {
-  font-size: 13px;
+  font-size: 15px;
   color: #666666 !important; }
 
 .custom-bg {
   background-color: #f7f7f7; }
 
+input, textarea {
+  font-size: 18px !important; }
+
 textarea.sugestao {
+  padding: 10px 5px;
   min-height: 200px;
   resize: none; }
 
@@ -7730,7 +7794,7 @@ textarea.sugestao {
 .alert-no-network {
   padding: 3px;
   text-align: center;
-  background-color: #387ef5;
+  background-color: #2196F3;
   color: white;
   font-size: 13px; }
 
@@ -7758,6 +7822,9 @@ textarea.sugestao {
   color: #FFF;
   background-color: #387ef5; }
 
+.item.first {
+  border-top: 0 !important; }
+
 /*MENU*/
 .content-menu {
   background-color: #000;
@@ -7782,7 +7849,7 @@ textarea.sugestao {
   font-size: 24px; }
 
 .spartan-sidemenu > .list > .item.active {
-  border-left: 4px solid #387ef5;
+  border-left: 4px solid #2196F3;
   padding-left: 4px; }
 
 .spartan-sidemenu > .list > .item.active > a {
@@ -7832,7 +7899,7 @@ textarea.sugestao {
 
 /*home*/
 .home-container {
-  background-color: #387ef5;
+  background-color: #2196F3;
   display: flex;
   flex-direction: column; }
 
@@ -7863,12 +7930,4 @@ textarea.sugestao {
 
 .home-bottom .button {
   margin: 20px 15px;
-  background-color: #2975f4; }
-
-/*LOGIN*/
-.container-esqueceu-senha {
-  margin-top: 20px; }
-
-.link-login {
-  text-decoration: none;
-  color: #387ef5; }
+  background-color: #1791f2; }

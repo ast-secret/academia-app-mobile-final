@@ -1,0 +1,143 @@
+$light:                           #fff !default;
+$stable:                          #f8f8f8 !default;
+$positive:                        #387ef5 !default;
+$calm:                            #11c1f3 !default;
+$balanced:                        #33cd5f !default;
+$energized:                       #ffc900 !default;
+$assertive:                       #ef473a !default;
+$royal:                           #886aea !default;
+$dark:                            #444 !default;
+
+// TEMAS
+// texto claro
+$vermelho: #F44336;
+// texto claro
+$rosa: #E91E63;
+// texto claro
+$purpura: #9C27B0;
+// texto claro
+$purpura-escuro: #673AB7;
+// texto claro
+$indigo: #3F51B5;
+// texto claro
+$azul: #2196F3;
+// texto escuro
+$azul-light: #03A9F4;
+// texto escuro
+$ciano: #00BCD4;
+// texto claro
+$verde-agua: #009688;
+// texto escuro
+$verde: #4CAF50;
+// texto escuro
+$vere-claro: #8BC34A;
+// texto escuro
+$lima: #CDDC39;
+// texto escuro
+$amarelo: #FFEB3B;
+// texto escuro
+$ambar: #FFC107;
+// texto escuro
+$laranja: #FF9800;
+// texto claro
+$laranja-escuro: #FF5722;
+// texto escuro
+$cinza: #9E9E9E;
+// texto claro
+$cinza-azulado: #607D8B;
+// texto claro
+$preto: #000;
+// texto escuro
+$branco: #FFF;
+
+/*MY VARS*/
+$main-color: $azul;
+$main-color-style-dark: true;
+
+$text-color-light: #FFF;
+$text-color-half: lighten(#000, 50%);
+$text-color-dark: lighten(#000, 18%);
+
+$text-color: $text-color-light;
+// $text-color: $text-color-dark;
+
+// LOGIN
+$login-bg-color: $azul;
+$login-text-color: $text-color-light;
+
+/*LOGIN*/
+.login-container{
+    background-color: $login-bg-color;
+    display: flex;
+    flex-direction: column;
+}
+.login-logo{
+    text-align: center;
+    flex: 1;
+}
+.login-logo-img{
+    width: 60%!important;
+}
+.login-form{
+}
+.login-form > form > .list{
+    background: none;
+}
+.login-form > form > .list > .item{
+    background: none;
+    border: 0;
+    border-bottom: 1px solid $login-text-color;
+}
+.login-form > form > .list > .item > input{
+    color: $login-text-color!important;
+}
+.login-form > form > .list > .item > input::-webkit-input-placeholder{
+    color: darken($login-text-color, 10%);
+}
+
+.login-footer{
+    flex: 1;
+}
+.container-esqueceu-senha{
+    padding: 30px 10px;
+}
+.button-logar{
+    background-color: lighten($login-bg-color, 4%)!important;
+    border: 0!important;
+		color: $login-text-color!important;
+}
+
+.link-login{
+    text-decoration: none;
+    color: $login-text-color;
+}
+
+.bar-app{
+	background-color: $main-color!important;
+	color: $text-color!important;
+}
+.bar-app > .title, .button-open-menu{
+	color: $text-color!important;
+}
+.bar-app > .buttons  button:before, .back-button{
+    color: $text-color!important;
+}
+
+// MODAL
+.bar-modal .button{
+	color: $main-color!important;
+}
+
+// TABS
+.tabs{
+	background-color: $main-color!important;
+	// border-bottom-color: darken($main-color, 20%)!important;
+	border-bottom: 0!important;
+}
+.tabs > a{
+	color: rgba($text-color, 0.4)!important;
+}
+.tab-item.active, .tab-item.activated{
+	border-bottom-color: $text-color!important;
+	color: $text-color!important;
+}

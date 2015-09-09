@@ -105,9 +105,6 @@ angular.module('starter.controllers', [])
             .then(function(home){
                 $state.go(home);
             }, function(err){
-                if (err.status == 401) {
-                    $scope.wrongCredentials = true;
-                }
             })
             .finally(function(){
                 $ionicLoading.hide();
@@ -135,7 +132,7 @@ angular.module('starter.controllers', [])
                 $state.go(home);
             }, function(err){
                 if (err.status == 401) {
-                    $cordovaDialogs.alert('Por favor, tente novamente', 'Combinação Email/Senha incorreta');
+                    $cordovaDialogs.alert('A combinação email/senha está incorreta. Por favor, tente novamente', 'Combinação email/senha incorreta');
                 }
             })
             .finally(function(){
@@ -259,6 +256,7 @@ angular.module('starter.controllers', [])
 .controller('AlterarSenhaController', function(
     $scope,
     $ionicLoading,
+    $cordovaDialogs,
     User
 ) {
     $scope.form = {};
@@ -271,8 +269,6 @@ angular.module('starter.controllers', [])
             .changePassword($scope.form)
             .then(function(result){
                 $scope.form = {};
-            }, function(err){
-                $scope.formError = err;
             })
             .finally(function(){
                 $ionicLoading.hide();
@@ -311,7 +307,7 @@ angular.module('starter.controllers', [])
 
     $scope.clearCheckboxes = function(){
         $cordovaDialogs.confirm(
-            'Tem certeza que deseja limpar as seleções dos exercícios deste grupo?',
+            'Tem certeza que deseja limpar todas as seleções dos exercícios deste grupo?',
             'Limpar seleções',
             ['Limpar', 'Cancelar'])
             .then(function(buttonIndex) {

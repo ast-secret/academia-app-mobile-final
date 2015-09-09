@@ -1,23 +1,10 @@
-/*
-To customize the look and feel of Ionic, you can override the variables
-in ionic's _variables.scss file.
-
-For example, you might change some of the default colors:
-*/
-$light:                           #fff !default;
-$stable:                          #f8f8f8 !default;
-$positive:                        #387ef5 !default;
-$calm:                            #11c1f3 !default;
-$balanced:                        #33cd5f !default;
-$energized:                       #ffc900 !default;
-$assertive:                       #ef473a !default;
-$royal:                           #886aea !default;
-$dark:                            #444 !default;
+@import "_config";
 
 /*TIPOGRAFIA CORES*/
 $color-primary-text: darken(#FFF, 85%);
 $color-secondary-text: darken(#FFF, 60%);
 $color-primary-text-light: lighten(#000, 100%);
+$color-primary-text-dark: lighten(#000, 100%);
 
 /*BASE*/
 
@@ -31,13 +18,9 @@ $base-color: $color-primary-text !default;
 
 /*ITEMS*/
 $item-font-size: 17px;
-$item-sub-item-font-size: 13px;
+$item-sub-item-font-size: 15px;
 $item-default-text: $color-primary-text !default;
 $item-default-sub-item-text: $color-secondary-text !default;
-
-/*MY VARS*/
-$main-color: $positive;
-$main-color-style-dark: true;
 
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
@@ -68,7 +51,12 @@ small{
     background-color: darken(#FFF, 3%);
 }
 
+input, textarea{
+    font-size: 18px!important;
+}
+
 textarea.sugestao{
+    padding: 10px 5px;
     min-height: 200px;
     resize: none;
 }
@@ -82,12 +70,12 @@ textarea.sugestao{
 /*ALERTS*/
 .alert-no-data{
     padding: 40px 10px;
-    text-align: center;   
+    text-align: center;
     color: lighten(#000, 60%);
 }
 .alert-no-network{
     padding: 3px;
-    text-align: center;   
+    text-align: center;
     background-color: $main-color;
     @if $main-color-style-dark {
         color: $color-primary-text-light;
@@ -120,6 +108,9 @@ textarea.sugestao{
 .alert-positive{
     color: #FFF;
     background-color: $positive;
+}
+.item.first{
+  border-top: 0!important;
 }
 
 /*MENU*/
@@ -206,7 +197,6 @@ $mFooterBg: #050505;
 /*home*/
 .home-container{
     background-color: $main-color;
-    background-image: url(../img/)
     display: flex;
     flex-direction: column;
 }
@@ -238,14 +228,4 @@ $mFooterBg: #050505;
 .home-bottom .button{
     margin: 20px 15px;
     background-color: darken($main-color, 2%);
-}
-/*LOGIN*/
-
-.container-esqueceu-senha{
-    margin-top: 20px;
-}
-
-.link-login{
-    text-decoration: none;
-    color: $main-color;
 }

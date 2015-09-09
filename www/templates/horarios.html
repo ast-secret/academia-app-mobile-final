@@ -1,5 +1,5 @@
 <ion-view view-title="Horários">
-    <div class="tabs tabs-top tabs-striped tabs-positive">
+    <div class="tabs tabs-top tabs-striped tabs-light">
         <a
             ng-class="{'active' : weekdayIndex == $index}"
             class="tab-item"
@@ -18,11 +18,11 @@
 
         <my-network-alert></my-network-alert>
 
-        <ion-list class="list-android">
+        <ion-list class="list-no-border-top">
             <span
                 ng-repeat="(key, horario) in horarios[weekdayIndex] | groupBy: 'start_hour'"
                 ng-if="horarios[weekdayIndex]">
-                <ion-item class="item-divider">
+                <ion-item class="item-divider" ng-class="{first: $first}">
                     {{key | date: 'HH:mm'}}
                 </ion-item>
                 <ion-item ng-repeat="aula in horario" ng-click="openModal(aula.service)">
@@ -35,7 +35,7 @@
 
         <div class="alert-no-data" ng-if="!horarios[weekdayIndex]">
             <span class="icon {{menuIcons.horarios}}"></span>
-            <p>Nenhuma aula para hoje</p>
+            <p>Nenhuma aula para {{weekdays[weekdayIndex]}}</p>
         </div>
 
     </ion-content>

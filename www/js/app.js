@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 
-var prod = true;
+var prod = false;
 
 angular.module('starter', [
     'ionic',
@@ -22,10 +22,10 @@ angular.module('starter', [
 .constant('CONFIG', {
     HTTP_TIMEOUT: 15000,
     WEBSERVICE_URL: (prod) ? 'http://api.asturia.kinghost.net' : 'http://localhost/academia-webservice',
-    HOME: 'app/comunicados',
-    HOME_STATE: 'app.comunicados',
-    LOGOUT_REDIRECT: 'home',
-    LOGOUT: 'home'
+    HOME: 'app/horarios',
+    HOME_STATE: 'app.horarios',
+    LOGOUT_REDIRECT: 'login',
+    LOGOUT: 'login'
 })
 
 .run(function(

@@ -1,33 +1,40 @@
 <ion-view view-title="Entrar">
-
-        <ion-nav-bar class="bar-positive">
-            <ion-nav-back-button>
-            </ion-nav-back-button>
-        </ion-nav-bar>
-
-    <ion-content class="padding">
-    		<form ng-submit="doLogin()" name="my_form">
-				<div class="list list-inset">
-					<label class="item item-input">
-						<input type="email" ng-model="form.email" placeholder="Email" required>
-					</label>
-					<label class="item item-input">
-						<input type="password" ng-model="form.password" placeholder="Senha" required>
-					</label>
-					<div ng-if="wrongCredentials">Email ou senha incorretos.</div>
-				</div>
-				<button
-					ng-disabled="my_form.$pristine|| my_form.$invalid"
-					type="submit"
-					class="button button-positive button-block">
-					Entrar
-				</button>
+    <ion-content>
+		<div class="login-container fill-content-height">
+    		<div class="login-logo" style="display: flex;">
+    			<div class="row" style="flex: 1;">
+    				<div class="col col-bottom">
+    					<img src="img/logo_login.png" class="login-logo-img">		
+    				</div>
+    			</div>
+    		</div>
+			<div class="login-form">
+	    		<form ng-submit="doLogin()" name="my_form" class="padding">
+					<div class="list list-inset">
+						<label class="item item-input">
+							<input type="email" ng-model="form.email" placeholder="Email" required>
+						</label>
+						<label class="item item-input">
+							<input type="password" ng-model="form.password" placeholder="Senha" required>
+						</label>
+						<div ng-if="wrongCredentials">Email ou senha incorretos.</div>
+					</div>
+					<button
+						ng-disabled="my_form.$pristine|| my_form.$invalid"
+						type="submit"
+						class="button button-positive button-block button-logar">
+						Entrar
+					</button>
+				</form>
+			</div>
+    		<div class="login-footer">
 				<div
 					class="text-center container-esqueceu-senha">
 					<a
 						href="#/esqueci-minha-senha"
 						class="link-login">Esqueceu a sua senha?</a>	
 				</div>
-			</form>
+    		</div>
+		</div>
     </ion-content>
 </ion-view>

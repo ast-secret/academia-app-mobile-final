@@ -24,14 +24,11 @@
                     <input type="password" ng-model="form.current_password" required>
                 </label>
             </div>
-            <div ng-if="formError">
-                {{formError}}
-            </div>
             <div class="padding">
                 <button
                     ng-disabled="my_form.$pristine|| my_form.$invalid"
                     type="submit"
-                    class="button button-assertive button-outline button-block">
+                    class="button button-assertive button-block">
                     Confirmar Alteração
                 </button>
             </div>
