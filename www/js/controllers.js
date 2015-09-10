@@ -8,7 +8,7 @@ angular.module('starter.controllers', [])
             ficha: 'ion-clipboard',
             horarios: 'ion-android-time',
         };
-        $scope.user = store.get('User');    
+        $scope.user = store.get('User');
     });
 })
 .filter('weekdayHumanize', function(Weekdays) {
@@ -77,7 +77,7 @@ angular.module('starter.controllers', [])
     var delay = 1500;
     $scope.$on( "$ionicView.beforeEnter", function(scopes, states) {
         $ionicLoading.show({template: 'Saindo, aguarde...'});
-        
+
         $window.localStorage.clear();
     });
     $timeout(function(){
@@ -92,7 +92,7 @@ angular.module('starter.controllers', [])
     $ionicLoading,
     User
 ) {
-    
+
     $scope.$on( "$ionicView.beforeEnter", function(scopes, states) {
         $scope.form = {};
         $scope.wrongCredentials = false;
@@ -116,11 +116,13 @@ angular.module('starter.controllers', [])
     $state,
     $ionicLoading,
     $cordovaDialogs,
-    User
+    User,
+    $window
 ) {
-    
+
     $scope.$on( "$ionicView.beforeEnter", function(scopes, states) {
         $scope.form = {};
+        $window.localStorage.clear();
     });
 
     $scope.doLogin = function(){
@@ -145,7 +147,7 @@ angular.module('starter.controllers', [])
     $stateParams,
     $state,
     Aulas,
-    Horarios, 
+    Horarios,
     Weekdays
 ) {
     $scope.$on( "$ionicView.beforeEnter", function(scopes, states) {
@@ -190,7 +192,7 @@ angular.module('starter.controllers', [])
                 $scope.horarios = data;
             })
             .finally(function(){
-                $scope.$broadcast('scroll.refreshComplete');    
+                $scope.$broadcast('scroll.refreshComplete');
             });
     };
 })
@@ -238,7 +240,7 @@ angular.module('starter.controllers', [])
                 $scope.aulas = data;
             })
             .finally(function(){
-                $scope.$broadcast('scroll.refreshComplete');    
+                $scope.$broadcast('scroll.refreshComplete');
             });
     };
 })
@@ -343,7 +345,7 @@ angular.module('starter.controllers', [])
                 $scope.ficha = data;
             })
             .finally(function(){
-                $scope.$broadcast('scroll.refreshComplete');    
+                $scope.$broadcast('scroll.refreshComplete');
             });
     };
 })
@@ -373,7 +375,7 @@ angular.module('starter.controllers', [])
                 $scope.comunicados = data;
             })
             .finally(function(){
-                $scope.$broadcast('scroll.refreshComplete');    
+                $scope.$broadcast('scroll.refreshComplete');
             });
     };
 })
@@ -381,8 +383,8 @@ angular.module('starter.controllers', [])
     $scope.comunicado = Comunicados.getLocalData()[$stateParams.comunicadoIndex];
 })
 .controller('CaixaDeSugestoesController', function(
-    $ionicLoading, 
-    $scope, 
+    $ionicLoading,
+    $scope,
     $timeout,
     CaixaDeSugestoes
 ) {

@@ -1,5 +1,5 @@
 <ion-modal-view>
-	<ion-header-bar class="bar-modal">	
+	<ion-header-bar class="bar-modal">
 		<h1 class="title">Detalhes da Ficha</h1>
 		<button
 			class="button button-clear"
@@ -15,15 +15,15 @@
 		<ion-list>
 			<ion-item>
 				Instrutor
-				<div class="item-sub-item">{{ficha.user.name}}</div>
+				<div class="sub-item">{{ficha.user.name}}</div>
 			</ion-item>
 			<ion-item>
 				Objetivo
-				<div class="item-sub-item">{{ficha.goal}}</div>
+				<div class="sub-item">{{ficha.goal}}</div>
 			</ion-item>
 			<ion-item>
 				Vencimento
-				<div class="item-sub-item"><span am-time-ago="ficha.end_date"></span></div	>
+				<div class="sub-item"><span am-time-ago="ficha.end_date"></span></div	>
 			</ion-item>
 		</ion-list>
 	</ion-content>

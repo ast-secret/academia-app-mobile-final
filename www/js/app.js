@@ -22,8 +22,8 @@ angular.module('starter', [
 .constant('CONFIG', {
     HTTP_TIMEOUT: 15000,
     WEBSERVICE_URL: (prod) ? 'http://api.asturia.kinghost.net' : 'http://localhost/academia-webservice',
-    HOME: 'app/horarios',
-    HOME_STATE: 'app.horarios',
+    HOME: 'app/aulas',
+    HOME_STATE: 'app.aulas',
     LOGOUT_REDIRECT: 'login',
     LOGOUT: 'login'
 })
@@ -47,7 +47,7 @@ angular.module('starter', [
     });
 
     $rootScope.isOnline = true;
-    
+
     $ionicPlatform.ready(function() {
         if (prod) {
             $rootScope.isOnline = $cordovaNetwork.isOnline();
@@ -84,7 +84,7 @@ angular.module('starter', [
 
 .config(function(
     $httpProvider,
-    $stateProvider, 
+    $stateProvider,
     $urlRouterProvider,
     CONFIG,
     jwtInterceptorProvider
@@ -98,7 +98,7 @@ angular.module('starter', [
     $httpProvider.interceptors.push('jwtInterceptor');
     $httpProvider.interceptors.push('myHttpInterceptor');
 
-    $stateProvider    
+    $stateProvider
     .state('app', {
         url: '/app',
         abstract: true,
@@ -233,7 +233,7 @@ angular.module('starter', [
                 controller: 'CaixaDeSugestoesController'
             }
         }
-    });    
+    });
 
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise(CONFIG.HOME);

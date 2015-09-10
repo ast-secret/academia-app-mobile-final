@@ -1,10 +1,10 @@
     <ion-view view-title="Minha Ficha">
     <ion-nav-buttons side="right">
-        <button
+        <!-- <button
             ng-if="ficha"
-            class="button button-icon icon ion-reply"
+            class="button button-icon ion-ios-close-empty"
             ng-click="clearCheckboxes()">
-        </button>
+        </button> -->
         <button
             ng-if="ficha"
             class="button button-icon icon ion-ios-more"
@@ -32,7 +32,7 @@
         <my-network-alert></my-network-alert>
 
         <div class="text-center padding" ng-if="loading">
-            <ion-spinner></ion-spinner>    
+            <ion-spinner></ion-spinner>
         </div>
 
         <div ng-if="ficha">

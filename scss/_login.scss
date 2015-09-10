@@ -1,0 +1,45 @@
+.login-container{
+    background-color: $login-bg-color;
+    display: flex;
+    flex-direction: column;
+}
+.login-logo{
+    text-align: center;
+    flex: 1;
+}
+.login-logo-img{
+    width: 60%!important;
+}
+.login-form{
+}
+.login-form > form > .list{
+    background: none;
+}
+.login-form > form > .list > .item{
+    background: none;
+    border: 0;
+    border-bottom: 1px solid $login-text-color;
+}
+.login-form > form > .list > .item > input{
+    color: $login-text-color!important;
+}
+.login-form > form > .list > .item > input::-webkit-input-placeholder{
+    color: rgba($login-text-color, .6);
+}
+
+.login-footer{
+    flex: 1;
+}
+.container-esqueceu-senha{
+    padding: 30px 10px;
+}
+.button-logar{
+    background-color: lighten($login-bg-color, 4%)!important;
+    border: 0!important;
+		color: $login-text-color!important;
+}
+
+.link-login{
+    text-decoration: none;
+    color: $login-text-color;
+}

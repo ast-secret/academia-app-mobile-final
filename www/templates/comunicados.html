@@ -9,13 +9,13 @@
         <my-network-alert></my-network-alert>
 
         <div class="text-center padding" ng-if="loading">
-            <ion-spinner></ion-spinner>    
+            <ion-spinner></ion-spinner>
         </div>
 
         <ion-list>
             <ion-item ng-repeat="comunicado in comunicados" href="#/app/comunicado/{{$index}}">
                 {{comunicado.title}}
-                <div class="item-sub-item">
+                <div class="sub-item">
                     <span am-time-ago="comunicado.created"></span>
                 </div>
             </ion-item>

@@ -9,7 +9,7 @@
         </a>
     </div>
     <ion-content class="custom-bg has-tabs-top">
-        
+
         <ion-refresher
             ng-if="!loading"
             pulling-text="Puxe para atualizar..."
@@ -35,7 +35,7 @@
 
         <div class="alert-no-data" ng-if="!horarios[weekdayIndex]">
             <span class="icon {{menuIcons.horarios}}"></span>
-            <p>Nenhuma aula para {{weekdays[weekdayIndex]}}</p>
+            <p>Nenhuma aula para {{weekdays[weekdayIndex]}}.</p>
         </div>
 
     </ion-content>
