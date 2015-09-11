@@ -1,7 +1,11 @@
 // NAVBAR
-$navbar-color: $azul;
+$navbar-color: $verde-agua;
 $navbar-text-color: $text-color-light;
 
 // LOGIN
-$login-bg-color: $azul;
-$login-text-color: darken(#FFF, 10%);
+$login-bg-color: $verde-agua;
+$login-text-color: darken(#FFF, 2%);
+$login-button-color: lighten($login-bg-color, 5%);
+$login-logo-width: 40%!default;
+$login-logo-height: auto!default;
+$login-logo-padding: 0 0 0px 0!default;

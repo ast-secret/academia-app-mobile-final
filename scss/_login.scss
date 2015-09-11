@@ -2,15 +2,24 @@
     background-color: $login-bg-color;
     display: flex;
     flex-direction: column;
+
 }
 .login-logo{
+    width: 100%;
+    // background-color: red;
     text-align: center;
-    flex: 1;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
 }
 .login-logo-img{
-    width: 60%!important;
+    width: $login-logo-width!important;
+    height: $login-logo-height!important;
+    padding: $login-logo-padding!important;
 }
 .login-form{
+  flex: 1;
 }
 .login-form > form > .list{
     background: none;
@@ -34,7 +43,7 @@
     padding: 30px 10px;
 }
 .button-logar{
-    background-color: lighten($login-bg-color, 4%)!important;
+    background-color: $login-button-color!important;
     border: 0!important;
 		color: $login-text-color!important;
 }
