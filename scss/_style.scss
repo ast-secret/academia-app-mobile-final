@@ -3,6 +3,11 @@
     background-color: $app-bg;
 }
 
+// SUMIR COM BORDA DA NAVBAR
+.bar{
+    background-image: none;
+}
+
 // INPUTS
 input, textarea{
     font-size: $input-font-size!important;
@@ -11,4 +16,7 @@ textarea.sugestao{
     padding: 10px 5px;
     min-height: 200px;
     resize: none;
+}
+.button-theme{
+      background-color: $navbar-color;
 }

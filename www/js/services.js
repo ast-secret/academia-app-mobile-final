@@ -16,7 +16,7 @@ angular.module('starter.services', [])
 })
 .factory('Weekdays', function(){
     return {
-        data: ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sabado'],
+        data: ['Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado', 'Domingo'],
         get: function(){
             return this.data;
         }
@@ -80,7 +80,7 @@ angular.module('starter.services', [])
         },
         getPushRegistrationId: function(){
             var defer = $q.defer();
-            
+
             if (!prod) {
                 defer.resolve('login_browser_dont_have_regid');
                 return defer.promise;
@@ -111,8 +111,8 @@ angular.module('starter.services', [])
     };
 })
 .factory('Fichas', function(
-    $q, 
-    $http, 
+    $q,
+    $http,
     store,
     CONFIG
 ){
@@ -126,7 +126,7 @@ angular.module('starter.services', [])
         getServerData: function(){
             var _this = this;
             var defer = $q.defer();
-            
+
             $http
                 .get(CONFIG.WEBSERVICE_URL + '/cards.json')
                 .success(function(result){
@@ -135,7 +135,7 @@ angular.module('starter.services', [])
                     defer.resolve(ficha);
                 })
                 .error(function(){
-                  defer.reject();  
+                  defer.reject();
                 });
 
             return defer.promise;
@@ -143,8 +143,8 @@ angular.module('starter.services', [])
     };
 })
 .factory('Horarios', function(
-    $q, 
-    $http, 
+    $q,
+    $http,
     Aulas,
     store,
     CONFIG
@@ -172,7 +172,7 @@ angular.module('starter.services', [])
                         });
                 })
                 .error(function(){
-                  defer.reject();  
+                  defer.reject();
                 });
 
             return defer.promise;
@@ -180,8 +180,8 @@ angular.module('starter.services', [])
     };
 })
 .factory('Aulas', function(
-    $q, 
-    $http, 
+    $q,
+    $http,
     store,
     Util,
     CONFIG
@@ -197,7 +197,7 @@ angular.module('starter.services', [])
         getServerData: function(){
             var _this = this;
             var defer = $q.defer();
-            
+
             $http
                 .get(CONFIG.WEBSERVICE_URL + '/services.json')
                 .success(function(result){
@@ -206,7 +206,7 @@ angular.module('starter.services', [])
                     defer.resolve(services);
                 })
                 .error(function(){
-                  defer.reject();  
+                  defer.reject();
                 });
 
             return defer.promise;
@@ -214,8 +214,8 @@ angular.module('starter.services', [])
     };
 })
 .factory('Comunicados', function(
-    $q, 
-    $http, 
+    $q,
+    $http,
     store,
     CONFIG
 ){
@@ -226,7 +226,7 @@ angular.module('starter.services', [])
         getServerData: function(){
             var _this = this;
             var defer = $q.defer();
-            
+
             $http
                 .get(CONFIG.WEBSERVICE_URL + '/releases.json')
                 .success(function(result){
@@ -235,7 +235,7 @@ angular.module('starter.services', [])
                     defer.resolve(releases);
                 })
                 .error(function(){
-                  defer.reject();  
+                  defer.reject();
                 });
 
             return defer.promise;
@@ -252,18 +252,18 @@ angular.module('starter.services', [])
     return {
         send: function(sugestao){
             var defer = $q.defer();
-            
+
             var toastMsg = '';
 
             $http
                 .post(CONFIG.WEBSERVICE_URL + '/suggestions/add.json', sugestao)
                 .success(function(result){
-                    toastMsg = 'Sugestão enviada com sucesso, obrigado';
+                    toastMsg = 'Sugestão enviada, obrigado.';
                     defer.resolve(result);
                 })
                 .error(function(){
-                    toastMsg = 'Sugestão não enviada. Por favor, aguarde um pouco e tente novamente';
-                    defer.reject();  
+                    toastMsg = 'Sugestão não enviada. Por favor, aguarde um pouco e tente novamente.';
+                    defer.reject();
                 })
                 .finally(function(){
                     $ionicPlatform.ready(function() {

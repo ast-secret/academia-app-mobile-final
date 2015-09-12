@@ -22,10 +22,10 @@ angular.module('starter', [
 .constant('CONFIG', {
     HTTP_TIMEOUT: 15000,
     WEBSERVICE_URL: (prod) ? 'http://api.asturia.kinghost.net' : 'http://localhost/academia-webservice',
-    HOME: 'app/aulas',
-    HOME_STATE: 'app.aulas',
+    HOME: 'app/horarios',
+    HOME_STATE: 'app.horarios',
     LOGOUT_REDIRECT: 'login',
-    LOGOUT: 'login'
+    LOGOUT: 'logout'
 })
 
 .run(function(
@@ -40,8 +40,8 @@ angular.module('starter', [
     $rootScope.$on('$stateChangeStart', function(e, to){
         if (to.data && to.data.requiresLogin) {
             if (!store.get('jwt')) {
-                $state.go(CONFIG.LOGOUT);
                 e.preventDefault();
+                $state.go(CONFIG.LOGOUT);
             }
         }
     });
@@ -113,8 +113,20 @@ angular.module('starter', [
         templateUrl: 'templates/home.html',
         controller: 'HomeController'
     })
+    .state('app.teste', {
+        url: '/teste',
+        data: {
+            requiresLogin: true
+        },
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/teste.html'
+            }
+        }
+    })
     .state('login', {
         url: '/login',
+        cache: false,
         data: {
             requiresLog: false
         },
@@ -131,6 +143,7 @@ angular.module('starter', [
     })
     .state('logout', {
         url: '/logout',
+        cache: false,
         data: {
             requiresLog: false
         },
@@ -147,6 +160,18 @@ angular.module('starter', [
             'menuContent': {
                 templateUrl: 'templates/aulas.html',
                 controller: 'AulasController'
+            }
+        }
+    })
+    .state('app.aula', {
+        url: '/aula/:aulaId',
+        data: {
+            requiresLogin: true
+        },
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/aula.html',
+                controller: 'AulaController'
             }
         }
     })

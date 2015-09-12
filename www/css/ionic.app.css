@@ -9,8 +9,10 @@
   src: url("../fonts/Doida.ttf") format("truetype"); }
 
 .tabs {
-  background-color: #009688 !important;
-  border-bottom: 0 !important; }
+  background: none !important;
+  background-color: #3F51B5 !important;
+  border-bottom: 0 !important;
+  border: 0 !important; }
 
 .tabs > a {
   color: rgba(255, 255, 255, 0.4) !important; }
@@ -20,7 +22,7 @@
   color: #FFF !important; }
 
 .bar-app {
-  background-color: #009688 !important;
+  background-color: #3F51B5 !important;
   color: #FFF !important; }
 
 .bar-app > .title, .button-open-menu {
@@ -31,9 +33,6 @@
 
 .bar-app {
   border: 0 !important; }
-
-.bar-modal .button {
-  color: #009688 !important; }
 
 .alert-no-data p {
   margin-top: 15px;
@@ -61,7 +60,7 @@
 .alert-no-network {
   padding: 3px;
   text-align: center;
-  background-color: #009688;
+  background-color: #3F51B5;
   color: #FFF;
   font-size: 13px; }
 
@@ -118,7 +117,7 @@ p {
   font-size: 24px; }
 
 .spartan-sidemenu > .list > .item.active {
-  border-left: 4px solid #009688;
+  border-left: 5px solid #3F51B5;
   padding-left: 4px; }
 
 .spartan-sidemenu > .list > .item.active > a {
@@ -138,14 +137,14 @@ p {
   font-size: 24px !important; }
 
 .login-container {
-  background-color: #009688;
+  background-color: #3F51B5;
   display: flex;
   flex-direction: column; }
 
 .login-logo {
   width: 100%;
   text-align: center;
-  height: 200px;
+  height: 30%;
   display: flex;
   justify-content: center;
   align-items: flex-end; }
@@ -156,7 +155,7 @@ p {
   padding: 0 0 0px 0 !important; }
 
 .login-form {
-  flex: 1; }
+  flex: auto; }
 
 .login-form > form > .list {
   background: none; }
@@ -173,13 +172,16 @@ p {
   color: rgba(250, 250, 250, 0.6); }
 
 .login-footer {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
   flex: 1; }
 
 .container-esqueceu-senha {
   padding: 30px 10px; }
 
 .button-logar {
-  background-color: #00b09f !important;
+  background-color: #4d5ec1 !important;
   border: 0 !important;
   color: #fafafa !important; }
 
@@ -190,6 +192,9 @@ p {
 .custom-bg {
   background-color: #f7f7f7; }
 
+.bar {
+  background-image: none; }
+
 input, textarea {
   font-size: 16px !important; }
 
@@ -197,6 +202,9 @@ textarea.sugestao {
   padding: 10px 5px;
   min-height: 200px;
   resize: none; }
+
+.button-theme {
+  background-color: #3F51B5; }
 
 /*!
   Ionicons, v2.0.1

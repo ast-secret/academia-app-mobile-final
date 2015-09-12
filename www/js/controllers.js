@@ -38,13 +38,10 @@ angular.module('starter.controllers', [])
                 console.log('filling');
                 var windowH = $window.innerHeight;
                 var content = document.getElementsByClassName('scroll-content');
-                var scroll = document.getElementsByClassName('scroll');
-                // scroll[0].style.height = '100%';
-                // scroll[0].style.overflow = 'hidden';
-                // scroll[0].removeChild(element[0]);
-                if (scroll.length) {
-                    content[0].removeChild(scroll[0]);
-                    content[0].appendChild(element[0]);
+                var scrollBar = document.getElementsByClassName('scroll-bar');
+                console.log(scrollBar.length);
+                if (scrollBar.length > 1) {
+                  content[0].removeChild(scrollBar[0]);
                 }
                 element[0].style.height = (windowH) + 'px';
             }
@@ -82,7 +79,7 @@ angular.module('starter.controllers', [])
     });
     $timeout(function(){
         $ionicLoading.hide();
-        $state.go('home');
+        $state.go(CONFIG.LOGOUT_REDIRECT);
     }, delay);
 
 })
@@ -121,13 +118,13 @@ angular.module('starter.controllers', [])
 ) {
 
     $scope.$on( "$ionicView.beforeEnter", function(scopes, states) {
+      console.log('Estou no login');
         $scope.form = {};
         $window.localStorage.clear();
     });
 
     $scope.doLogin = function(){
         $ionicLoading.show({template: 'Entrando, aguarde...'});
-        console.log($scope.form);
         User
             .login($scope.form)
             .then(function(home){
@@ -153,6 +150,7 @@ angular.module('starter.controllers', [])
     $scope.$on( "$ionicView.beforeEnter", function(scopes, states) {
         $scope.horarios = Horarios.getLocalData();
         $scope.loading = !$scope.horarios;
+        console.log($scope.horarios);
 
         Horarios
             .getServerData()
@@ -245,11 +243,12 @@ angular.module('starter.controllers', [])
     };
 })
 
-.controller('AulaController', function($scope, $stateParams, Aulas) {
+.controller('AulaController', function(
+  $scope,
+  $stateParams,
+  Aulas
+) {
     $scope.aula = Aulas.get('id', $stateParams.aulaId);
-    // angular.forEach($scope.aula, function(value, key){
-    //     console.log(value);
-    // });
 })
 
 .controller('ConfiguracoesDeContaController', function($scope) {
