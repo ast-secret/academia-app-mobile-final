@@ -6,8 +6,14 @@ $mFooterBg: #050505;
     background-size: auto 100%;
     background-position: center;
 }
+.menu-wrap{
+  // width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto!important;
+  // background: red!important;
+  padding-top: 60px;
+}
 .spartan-sidemenu > .list{
-    margin-top: 60px;
 }
 .spartan-sidemenu > .list > .item{
     background: none;

@@ -41,7 +41,7 @@ angular.module('starter.controllers', [])
                 var scrollBar = document.getElementsByClassName('scroll-bar');
                 console.log(scrollBar.length);
                 if (scrollBar.length > 1) {
-                  content[0].removeChild(scrollBar[0]);
+                  // content[0].removeChild(scrollBar[0]);
                 }
                 element[0].style.height = (windowH) + 'px';
             }
@@ -131,7 +131,7 @@ angular.module('starter.controllers', [])
                 $state.go(home);
             }, function(err){
                 if (err.status == 401) {
-                    $cordovaDialogs.alert('A combinação email/senha está incorreta. Por favor, tente novamente', 'Combinação email/senha incorreta');
+                    $cordovaDialogs.alert('A combinação email/senha está incorreta. Por favor, tente novamente.', 'Combinação incorreta');
                 }
             })
             .finally(function(){

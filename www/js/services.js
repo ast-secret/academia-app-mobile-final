@@ -53,6 +53,8 @@ angular.module('starter.services', [])
         },
         login: function(postData){
             var defer = $q.defer();
+            // Garanto que ele faça login na academia dona do app
+            postData.gym_id = CONFIG.GYM_ID;
 
             this.getPushRegistrationId()
                 .then(function(regId){

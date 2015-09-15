@@ -99,8 +99,10 @@ p {
   background-size: auto 100%;
   background-position: center; }
 
-.spartan-sidemenu > .list {
-  margin-top: 60px; }
+.menu-wrap {
+  overflow-x: hidden;
+  overflow-y: auto !important;
+  padding-top: 60px; }
 
 .spartan-sidemenu > .list > .item {
   background: none;
@@ -143,11 +145,10 @@ p {
 
 .login-logo {
   width: 100%;
-  text-align: center;
-  height: 30%;
   display: flex;
-  justify-content: center;
-  align-items: flex-end; }
+  flex: 1;
+  align-items: flex-end;
+  justify-content: center; }
 
 .login-logo-img {
   width: 40% !important;
@@ -155,7 +156,10 @@ p {
   padding: 0 0 0px 0 !important; }
 
 .login-form {
-  flex: auto; }
+  width: 100%;
+  display: flex;
+  flex: 2;
+  align-items: center; }
 
 .login-form > form > .list {
   background: none; }
@@ -163,18 +167,18 @@ p {
 .login-form > form > .list > .item {
   background: none;
   border: 0;
-  border-bottom: 1px solid #fafafa; }
+  border-bottom: 1px solid #FFF; }
 
 .login-form > form > .list > .item > input {
-  color: #fafafa !important; }
+  color: #FFF !important; }
 
 .login-form > form > .list > .item > input::-webkit-input-placeholder {
-  color: rgba(250, 250, 250, 0.6); }
+  color: rgba(255, 255, 255, 0.6); }
 
 .login-footer {
   display: flex;
   justify-content: center;
-  align-items: stretch;
+  align-items: flex-end;
   flex: 1; }
 
 .container-esqueceu-senha {
@@ -183,11 +187,11 @@ p {
 .button-logar {
   background-color: #4d5ec1 !important;
   border: 0 !important;
-  color: #fafafa !important; }
+  color: #FFF !important; }
 
 .link-login {
   text-decoration: none;
-  color: #fafafa; }
+  color: #FFF; }
 
 .custom-bg {
   background-color: #f7f7f7; }
@@ -204,7 +208,7 @@ textarea.sugestao {
   resize: none; }
 
 .button-theme {
-  background-color: #3F51B5; }
+  color: #3F51B5 !important; }
 
 /*!
   Ionicons, v2.0.1
@@ -6094,8 +6098,8 @@ input[type="radio"][disabled], input[type="checkbox"][disabled], input[type="rad
   .checkbox input:before, .checkbox .checkbox-icon:before {
     border-color: #ddd; }
   .checkbox input:checked:before, .checkbox input:checked + .checkbox-icon:before {
-    background: #387ef5;
-    border-color: #387ef5; }
+    background: #3F51B5;
+    border-color: #3F51B5; }
 
 .checkbox-light input:before, .checkbox-light .checkbox-icon:before {
   border-color: #ddd; }

@@ -20,12 +20,14 @@ angular.module('starter', [
 
 // CONFIGURAÇÕES
 .constant('CONFIG', {
+    GYM_ID: 1, //Spartan
     HTTP_TIMEOUT: 15000,
     WEBSERVICE_URL: (prod) ? 'http://api.asturia.kinghost.net' : 'http://localhost/academia-webservice',
     HOME: 'app/horarios',
     HOME_STATE: 'app.horarios',
     LOGOUT_REDIRECT: 'login',
-    LOGOUT: 'logout'
+    LOGOUT: 'logout',
+    NATIVE_SCROLL: prod
 })
 
 .run(function(
@@ -87,8 +89,17 @@ angular.module('starter', [
     $stateProvider,
     $urlRouterProvider,
     CONFIG,
-    jwtInterceptorProvider
+    jwtInterceptorProvider,
+    $ionicConfigProvider
 ) {
+
+    // CONFIG IONIC
+    if (CONFIG.NATIVE_SCROLL) {
+      $ionicConfigProvider.scrolling.jsScrolling(false);
+    }
+    if (ionic.Platform.isIOS()) {
+      $ionicConfigProvider.backButton.text('Voltar');
+    }
 
     // Interceptor to send the JWT for every $http call.
     jwtInterceptorProvider.tokenGetter = function(store){

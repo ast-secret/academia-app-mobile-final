@@ -7,11 +7,10 @@
 .login-logo{
     width: 100%;
     // background-color: red;
-    text-align: center;
-    height: 30%;
     display: flex;
-    justify-content: center;
+    flex: 1;
     align-items: flex-end;
+    justify-content: center;
 }
 .login-logo-img{
     width: $login-logo-width!important;
@@ -19,8 +18,11 @@
     padding: $login-logo-padding!important;
 }
 .login-form{
+  width: 100%;
   // background-color: green;
-  flex: auto;
+  display: flex;
+  flex: 2;
+  align-items: center;
 }
 .login-form > form > .list{
     background: none;
@@ -38,11 +40,11 @@
 }
 
 .login-footer{
+    // background-color: pink;
     display: flex;
     justify-content: center;
-    align-items: stretch;
+    align-items: flex-end;
     flex: 1;
-    // background-color: red;
 }
 .container-esqueceu-senha{
     padding: 30px 10px;

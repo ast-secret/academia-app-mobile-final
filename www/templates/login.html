@@ -1,5 +1,5 @@
 <ion-view view-title="Entrar">
-    <ion-content>
+    <ion-content has-bouncing="false">
 		<div class="login-container fill-content-height">
     		<div class="login-logo" style="">
 <img src="img/logo_login.png" class="login-logo-img">
@@ -10,7 +10,7 @@
     			</div> -->
     		</div>
 			<div class="login-form">
-	    		<form ng-submit="doLogin()" name="my_form" class="padding">
+	    		<form ng-submit="doLogin()" name="my_form" class="padding" style="width: 100%!important;">
 					<div class="list list-inset">
 						<label class="item item-input">
 							<input type="email" ng-model="form.email" placeholder="Email" required>

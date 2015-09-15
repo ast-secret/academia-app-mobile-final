@@ -4,8 +4,12 @@ $navbar-text-color: $text-color-light;
 
 // LOGIN
 $login-bg-color: $navbar-color;
-$login-text-color: darken(#FFF, 2%);
+$login-text-color: #FFF;
 $login-button-color: lighten($login-bg-color, 5%);
 $login-logo-width: 40%!default;
 $login-logo-height: auto!default;
 $login-logo-padding: 0 0 0px 0!default;
+
+//CHECKBOX
+$checkbox-on-bg-default: $navbar-color;
+$checkbox-on-border-default: $checkbox-on-bg-default;

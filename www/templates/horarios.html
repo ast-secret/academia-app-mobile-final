@@ -25,7 +25,7 @@
         ng-if="horarios[weekdayIndex]">
  <ion-item class="item-divider"
         ng-class="{first: $first}">
- {{key | date: 'HH:mm'}}
+ {{key | date: 'HH:mm' : 'UTC'}}
  </ion-item>
         <a class="item" ng-repeat="aula in horario" href="#/app/aula/{{aula.service_id}}">
                     <!-- {{aula.service.name}}
