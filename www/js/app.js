@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 
-var prod = true;
+var prod = false;
 
 angular.module('starter', [
     'ionic',
@@ -20,11 +20,11 @@ angular.module('starter', [
 
 // CONFIGURAÇÕES
 .constant('CONFIG', {
-    GYM_ID: 1, //Spartan
+    GYM_ID: 2, //Spartan
     HTTP_TIMEOUT: 15000,
     WEBSERVICE_URL: (prod) ? 'http://api.asturia.kinghost.net' : 'http://localhost/academia-webservice',
-    HOME: 'app/horarios',
-    HOME_STATE: 'app.horarios',
+    HOME: 'app/comunicados',
+    HOME_STATE: 'app.comunicados',
     LOGOUT_REDIRECT: 'login',
     LOGOUT: 'logout',
     NATIVE_SCROLL: prod
@@ -67,7 +67,6 @@ angular.module('starter', [
         if (window.cordova && window.cordova.plugins.Keyboard) {
             cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
             cordova.plugins.Keyboard.disableScroll(true);
-
         }
         if (window.StatusBar) {
             // org.apache.cordova.statusbar required
@@ -78,6 +77,7 @@ angular.module('starter', [
 .factory('myHttpInterceptor', function($q, CONFIG){
     return {
         request: function(config){
+            // config.params = {gym_id: CONFIG.GYM_ID};
             config.timeout = CONFIG.HTTP_TIMEOUT;
             return config;
         }
@@ -211,7 +211,7 @@ angular.module('starter', [
         }
     })
     .state('app.comunicado', {
-        url: '/comunicado/:comunicadoIndex',
+        url: '/comunicado/:destaque/:comunicadoIndex',
         data: {
             requiresLogin: true
         },

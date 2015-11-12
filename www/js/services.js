@@ -54,7 +54,9 @@ angular.module('starter.services', [])
         login: function(postData){
             var defer = $q.defer();
             // Garanto que ele faça login na academia dona do app
-            postData.gym_id = CONFIG.GYM_ID;
+            // Deve ser passado por get pois ele pega no initialize do appController
+            // e se passar por post ali ele ainda não formou o request->data...
+            var gymId = CONFIG.GYM_ID;
 
             this.getPushRegistrationId()
                 .then(function(regId){
@@ -63,7 +65,7 @@ angular.module('starter.services', [])
                     postData.platform = (prod) ? ionic.Platform.platform() : 'android';
 
                     $http({
-                        url: CONFIG.WEBSERVICE_URL + '/auth/token/create.json',
+                        url: CONFIG.WEBSERVICE_URL + '/auth/token/create.json?gym_id=' + gymId,
                         method: 'POST',
                         data: postData,
                         skipAuthorization: true
@@ -85,7 +87,6 @@ angular.module('starter.services', [])
 
             if (!prod) {
                 defer.resolve('login_browser_dont_have_regid');
-                return defer.promise;
             }
 
             var androidConfig = {
@@ -232,7 +233,8 @@ angular.module('starter.services', [])
             $http
                 .get(CONFIG.WEBSERVICE_URL + '/releases.json')
                 .success(function(result){
-                    var releases = result.releases;
+                    // console.log(result.releasesByDestaque[1]);
+                    var releases = result.releasesByDestaque;
                     store.set('comunicados', releases);
                     defer.resolve(releases);
                 })

@@ -371,6 +371,7 @@ angular.module('starter.controllers', [])
         Comunicados
             .getServerData()
             .then(function(data){
+                console.log(data[1]);
                 $scope.comunicados = data;
             })
             .finally(function(){
@@ -379,7 +380,7 @@ angular.module('starter.controllers', [])
     };
 })
 .controller('ComunicadoController', function($scope, $stateParams, Comunicados) {
-    $scope.comunicado = Comunicados.getLocalData()[$stateParams.comunicadoIndex];
+    $scope.comunicado = Comunicados.getLocalData()[$stateParams.destaque][$stateParams.comunicadoIndex];
 })
 .controller('CaixaDeSugestoesController', function(
     $ionicLoading,
