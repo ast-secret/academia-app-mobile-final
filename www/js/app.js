@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 
-var prod = false;
+var prod = true;
 
 angular.module('starter', [
     'ionic',
@@ -20,11 +20,12 @@ angular.module('starter', [
 
 // CONFIGURAÇÕES
 .constant('CONFIG', {
-    GYM_ID: 2, //Spartan
+    GYM_ID: 1,
     HTTP_TIMEOUT: 15000,
     WEBSERVICE_URL: (prod) ? 'http://api.asturia.kinghost.net' : 'http://localhost/academia-webservice',
-    HOME: 'app/comunicados',
-    HOME_STATE: 'app.comunicados',
+    HOME: 'app/institucional',
+    HOME_STATE: 'app.institucional',
+    LOGIN_STATE: 'app.login',
     LOGOUT_REDIRECT: 'login',
     LOGOUT: 'logout',
     NATIVE_SCROLL: prod
@@ -34,17 +35,32 @@ angular.module('starter', [
     $ionicPlatform,
     $cordovaNetwork,
     $rootScope,
+    $cordovaDialogs,
     $state,
     CONFIG,
     store
 ) {
     // Garanto que rotas com requiresLogin = true não sejam acessados sem o JWT no localStore
     $rootScope.$on('$stateChangeStart', function(e, to){
-        if (to.data && to.data.requiresLogin) {
-            if (!store.get('jwt')) {
-                e.preventDefault();
-                $state.go(CONFIG.LOGOUT);
-            }
+        // if (to.data && to.data.requiresLogin) {
+        //     if (!store.get('jwt')) {
+        //         e.preventDefault();
+        //         $state.go(CONFIG.LOGOUT);
+        //     }
+        // }
+    });
+
+     $rootScope.$on("$stateChangeError", function(event, toState, toParams, fromState, fromParams, error) {
+        if (error === "AUTH_REQUIRED") {
+            event.preventDefault();
+            $cordovaDialogs
+                .confirm('Você deve estar logado, deseja entrar?', 'Área restrita para alunos', ['Sim', 'Agora não'])
+                .then(function(buttonIndex){
+                    var btnIndex = buttonIndex;
+                    if (btnIndex === 1) {
+                        $state.go(CONFIG.LOGIN_STATE);
+                    }
+                });
         }
     });
 
@@ -135,14 +151,15 @@ angular.module('starter', [
             }
         }
     })
-    .state('login', {
+    .state('app.login', {
         url: '/login',
         cache: false,
-        data: {
-            requiresLog: false
-        },
-        templateUrl: 'templates/login.html',
-        controller: 'LoginController'
+        views: {
+            'menuContent' : {
+                templateUrl: 'templates/login.html',
+                controller: 'LoginController'    
+            }
+        }
     })
     .state('esqueci-minha-senha', {
         url: '/esqueci-minha-senha',
@@ -155,18 +172,27 @@ angular.module('starter', [
     .state('logout', {
         url: '/logout',
         cache: false,
-        data: {
-            requiresLog: false
-        },
-        templateUrl: 'templates/logout.html',
+        // templateUrl: 'templates/logout.html',
         controller: 'LogoutController'
+    })
+
+    .state('app.institucional', {
+        url: '/institucional',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/institucional.html',
+                controller: 'InstitucionalController'
+            }
+        },
+        resolve: {
+            dadosGerais: function(DadosGerais){
+                return DadosGerais.getInstitucional();
+            }
+        }
     })
 
     .state('app.aulas', {
         url: '/aulas',
-        data: {
-            requiresLogin: true
-        },
         views: {
             'menuContent': {
                 templateUrl: 'templates/aulas.html',
@@ -232,7 +258,12 @@ angular.module('starter', [
                 templateUrl: 'templates/ficha.html',
                 controller: 'FichaController'
             }
-        }
+        },
+        resolve: {
+            authRequire: function(User) {
+                return User.authRequire();
+            }
+        },
     })
     .state('app.configuracoes-de-conta', {
         url: '/configuracoes-de-conta',
@@ -260,8 +291,10 @@ angular.module('starter', [
     })
     .state('app.caixa-de-sugestoes', {
         url: '/caixa-de-sugestoes',
-        data: {
-            requiresLogin: true
+        resolve: {
+            authRequire: function(User) {
+                return User.authRequire();
+            }
         },
         views: {
             'menuContent': {

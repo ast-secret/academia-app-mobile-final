@@ -1,14 +1,20 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, store) {
+.controller('AppCtrl', function($scope, $rootScope, User, store) {
     $scope.$on( "$ionicView.beforeEnter", function(scopes, states) {
         $scope.menuIcons = {
             comunicados: 'ion-flag',
             aulas: 'ion-arrow-graph-up-right',
             ficha: 'ion-clipboard',
             horarios: 'ion-android-time',
+            institucional: 'ion-android-time',
         };
-        $scope.user = store.get('User');
+        User
+            .authData()
+            .then(function(data){
+                console.log(data);
+                $rootScope.authData = data;
+            });
     });
 })
 .filter('weekdayHumanize', function(Weekdays) {
@@ -43,7 +49,7 @@ angular.module('starter.controllers', [])
                 if (scrollBar.length > 1) {
                   // content[0].removeChild(scrollBar[0]);
                 }
-                element[0].style.height = (windowH) + 'px';
+                element[0].style.height = (windowH - 44) + 'px';
             }
             fillHeight();
             $window.addEventListener("resize", fillHeight);
@@ -68,18 +74,21 @@ angular.module('starter.controllers', [])
     $state,
     CONFIG,
     $timeout,
+    store,
     $window
 ) {
 
     var delay = 1500;
     $scope.$on( "$ionicView.beforeEnter", function(scopes, states) {
         $ionicLoading.show({template: 'Saindo, aguarde...'});
-
-        $window.localStorage.clear();
+        
+        store.remove('cards');
+        store.remove('user');
+        store.remove('jwt');
     });
     $timeout(function(){
         $ionicLoading.hide();
-        $state.go(CONFIG.LOGOUT_REDIRECT);
+        $state.go(CONFIG.HOME_STATE);
     }, delay);
 
 })
@@ -118,9 +127,7 @@ angular.module('starter.controllers', [])
 ) {
 
     $scope.$on( "$ionicView.beforeEnter", function(scopes, states) {
-      console.log('Estou no login');
         $scope.form = {};
-        $window.localStorage.clear();
     });
 
     $scope.doLogin = function(){
@@ -406,4 +413,11 @@ angular.module('starter.controllers', [])
                 });
         }, delay);
     };
+})
+
+.controller('InstitucionalController', function(
+    $scope,
+    dadosGerais
+) {
+    $scope.dadosGerais = dadosGerais;
 });

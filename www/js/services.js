@@ -1,5 +1,44 @@
 angular.module('starter.services', [])
 
+.factory('DadosGerais', function($q){
+    var data = {
+        institucional: {
+            name: 'Spartan',
+            funcionamento: 'Segunda e sexta de 07 às 22',
+            endereco: 'Rua 223, N 92',
+            contatos: [
+                {
+                    icon: 'iphone',
+                    name: '(24) 93123189372',
+                },
+                {
+                    icon: 'ios-email',
+                    name: 'atendimento@spartan.com.br'
+                }
+            ],
+            redesSociais: [
+                {
+                    icon: 'social-facebook',
+                    name: 'Facebook',
+                    url: 'https://facebook.com/spartan'
+                },
+                {
+                    icon: 'social-twitter',
+                    name: 'Twitter',
+                    url: 'https://twitter.com/spartan'
+                }
+            ]
+        }
+    };
+    return {
+        getInstitucional: function() {
+            var defer = $q.defer();
+            defer.resolve(data.institucional);
+            return defer.promise;
+        }
+    };
+})
+
 .factory('Util', function(){
     return {
         get: function(data, key, value){
@@ -33,6 +72,24 @@ angular.module('starter.services', [])
     CONFIG
 ){
     return {
+        authRequire: function() {
+            var defer = $q.defer();
+            if (store.get('jwt')) {
+                console.log(store.get('jwt'));
+                console.log(store.get('user'));
+                console.log('De boas');
+                defer.resolve();
+            } else {
+                console.log('rejeitado');
+                defer.reject('AUTH_REQUIRED');
+            }
+            return defer.promise;
+        },
+        authData: function() {
+            var defer = $q.defer();
+            defer.resolve(store.get('user') || null);
+            return defer.promise;
+        },
         changePassword: function(data){
             console.log(data);
             var defer = $q.defer();
@@ -72,7 +129,9 @@ angular.module('starter.services', [])
                     })
                     .then(function(result){
                         store.set('jwt', result.data.message.token || null);
-                        store.set('User', result.data.message.user);
+                        store.set('user', result.data.message.user);
+                        console.log('Retrieving JWT');
+                        console.log(store.get('jwt'));
                         defer.resolve(CONFIG.HOME_STATE);
                     }, function(err){
                         defer.reject(err);
@@ -160,7 +219,7 @@ angular.module('starter.services', [])
             var _this = this;
             var defer = $q.defer();
             $http
-                .get(CONFIG.WEBSERVICE_URL + '/times.json')
+                .get(CONFIG.WEBSERVICE_URL + '/times.json?gym_id=' + CONFIG.GYM_ID)
                 .success(function(result){
                     // ATENÇÃO!! Eu também pego as aulas pq quando ele clica na moral
                     // eu trago a aula
@@ -202,7 +261,7 @@ angular.module('starter.services', [])
             var defer = $q.defer();
 
             $http
-                .get(CONFIG.WEBSERVICE_URL + '/services.json')
+                .get(CONFIG.WEBSERVICE_URL + '/services.json?gym_id=' + CONFIG.GYM_ID)
                 .success(function(result){
                     var services = result.services;
                     store.set('aulas', services);
@@ -231,7 +290,7 @@ angular.module('starter.services', [])
             var defer = $q.defer();
 
             $http
-                .get(CONFIG.WEBSERVICE_URL + '/releases.json')
+                .get(CONFIG.WEBSERVICE_URL + '/releases.json?gym_id=' + CONFIG.GYM_ID)
                 .success(function(result){
                     // console.log(result.releasesByDestaque[1]);
                     var releases = result.releasesByDestaque;

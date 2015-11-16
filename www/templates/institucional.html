@@ -1,0 +1,33 @@
+<ion-view view-title="{{dadosGerais.name}}">
+    <ion-content class="custom-bg">
+        <div
+            style="background-image: url(img/cover_institucional.jpg); background-size: cover; background-position: center center; height: 140px;">
+            
+        </div>
+        <div class="text-center" style="margin: -50px 0 20px 0">
+            <img
+                src="img/logo_institucional.jpg"
+                style="border-radius: 6px; border: 3px solid #FFF; width: 100px; height: 100px;">
+        </div>
+
+        <div class="padding text-center">
+            <span class="icon ion-android-time"></span>&nbsp;&nbsp;{{dadosGerais.funcionamento}}
+        </div>
+        <div class="padding text-center">
+            <span class="icon ion-ios-location"></span>&nbsp;&nbsp;{{dadosGerais.endereco}}
+        </div>
+        <div class="padding text-center" ng-if="dadosGerais.contatos">
+            <div ng-repeat="contato in dadosGerais.contatos">
+                <span class="icon ion-{{contato.icon}}"></span>&nbsp;&nbsp;{{contato.name}}
+            </div>
+        </div>
+        <div class="padding text-center" ng-if="dadosGerais.redesSociais">
+            <span ng-repeat="redeSocial in dadosGerais.redesSociais">
+                <a
+                    class="button button-icon icon ion-{{redeSocial.icon}}"
+                    ng-href="{{redeSocial.url}}">
+                </a>
+            </span>
+        </div>
+    </ion-content>
+</ion-view>

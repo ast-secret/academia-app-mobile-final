@@ -57,13 +57,28 @@
                     class="item-icon-left">
                     <span class="icon ion-ios-box"></span> Caixa de sugestões
                 </ion-item>
+                <ion-item
+                    menu-close
+                    ui-sref="app.institucional"
+                    ui-sref-active="active"
+                    class="item-icon-left">
+                    <span class="icon ion-ios-box"></span> Academia
+                </ion-item>
+                <ion-item
+                    ng-if="!authData"
+                    menu-close
+                    ui-sref="app.login"
+                    ui-sref-active="active"
+                    class="item-icon-left">
+                    <span class="icon ion-ios-box"></span> Entrar
+                </ion-item>
             </ion-list>
             </div>
         </ion-content>
 
-        <ion-footer-bar align-title="left" class="spartan-bar-footer">
+        <ion-footer-bar ng-show="authData" align-title="left" class="spartan-bar-footer">
             <div class="title">
-                {{user.name}}
+                {{authData.name}}
             </div>
             <div class="buttons">
                 <a
