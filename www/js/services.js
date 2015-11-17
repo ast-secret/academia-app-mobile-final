@@ -39,6 +39,102 @@ angular.module('starter.services', [])
     };
 })
 
+.factory('Notification', function(
+    $q,
+    $http,
+    $ionicPlatform,
+    $cordovaPush,
+    $rootScope,
+    CONFIG,
+    store
+){
+    return {
+        register: function(){
+
+            var defer = $q.defer();
+            var _this = this;
+
+            if (ionic.Platform.isIOS()) {
+                this
+                    .registerIos
+                    .then(function(){
+                        defer.resolve();
+                    }, function(){
+                        defer.reject();
+                    });
+            } else {
+                _this
+                    .registerAndroid
+                    .then(function(regid){
+                        if (!store.get('regIdRegistered')) {
+                            _this
+                                .saveRegId()
+                                .then(function(){
+                                    defer.resolve();
+                                }, function (){
+                                    defer.reject();
+                                });
+                        }
+                    }, function(){
+                        defer.reject();
+                    });
+            }
+            return defer.promise;
+        },
+        saveRegId: function(){
+            var defer = $q.defer();
+            $http
+                .get(CONFIG.WEBSERVICE_URL + '/regid/save?gym_id=' + CONFIG.GYM_ID)
+                .then(function(){
+                    store.set('regIdRegistered', true);
+                    defer.resolve();
+                }, function(){
+                    defer.reject();
+                });
+
+                return defer.promise;
+        },
+        registerAndroid: function(){
+            var defer = $q.defer();
+
+            var config = {
+                "senderID": 688277362803,
+            };
+
+            ionic.Platform.ready(function(){
+                $cordovaPush.register(config).then(function(result) {
+                    // Success
+                }, function(err) {
+                    defer.reject();
+                });
+
+                $rootScope.$on('$cordovaPush:notificationReceived', function(event, notification) {
+                    switch(notification.event) {
+                        case 'registered':
+                            if (notification.regid.length > 0 ) {
+                                resolve.resolve(notification.regid);
+                            } else {
+                                resolve.reject();
+                            }
+                        break;
+                        case 'error':
+                            resolve.reject();
+                            break;
+                        default:
+                            defer.reject();
+                            break;
+                    }
+                });
+
+            });
+            return defer.promise;
+        },
+        registerIos: function(){
+
+        },
+    };
+})
+
 .factory('Util', function(){
     return {
         get: function(data, key, value){

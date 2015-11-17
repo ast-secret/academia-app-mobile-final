@@ -1,6 +1,12 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $rootScope, User, store) {
+.controller('AppCtrl', function(
+    $scope,
+    $rootScope,
+    Notification,
+    User,
+    store
+) {
     $scope.$on( "$ionicView.beforeEnter", function(scopes, states) {
         $scope.menuIcons = {
             comunicados: 'ion-flag',
@@ -15,6 +21,14 @@ angular.module('starter.controllers', [])
                 console.log(data);
                 $rootScope.authData = data;
             });
+
+        /**
+         * Toda vez que entrar em uma view eu verifico se eu já enviei o meu DEVICE REG ID
+         * após o envio e a resposta positiva salvamos local que o device já está registrado,
+         * apesar de executar toda entrada de view só é feito o contato com o servidor
+         * caso o cache local diga que este device ainda não foi registrado
+         */
+        Notification.register();
     });
 })
 .filter('weekdayHumanize', function(Weekdays) {
