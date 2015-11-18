@@ -43,8 +43,8 @@ angular.module('starter.services', [])
     $q,
     $http,
     $ionicPlatform,
-    $cordovaPush,
     $rootScope,
+    $cordovaDevice,
     CONFIG,
     store
 ){
@@ -54,9 +54,9 @@ angular.module('starter.services', [])
             var defer = $q.defer();
             var _this = this;
 
-            if (ionic.Platform.isIOS()) {
-                this
-                    .registerIos
+            if (ionic.Platform.isIOS() && prod) {
+                _this
+                    .registerIos()
                     .then(function(){
                         defer.resolve();
                     }, function(){
@@ -64,14 +64,26 @@ angular.module('starter.services', [])
                     });
             } else {
                 _this
-                    .registerAndroid
-                    .then(function(regid){
-                        if (!store.get('regIdRegistered')) {
+                    .registerAndroid()
+                    .then(function(regId){
+                        var registeredBefore = store.get('regIdRegistered') || false;
+                        console.log('Valor do registered Before');
+                        console.log(registeredBefore);
+                        if (!registeredBefore) {
+
+                            var uuid = (prod) ? $cordovaDevice.getUUID() : '123';
+                            var platform = (prod) ? $cordovaDevice.getPlatform() : 'android';
+
+                            console.log(regId);
+                            console.log(uuid);
+
+                            console.log('Salvando');
                             _this
-                                .saveRegId()
+                                .saveRegId(uuid, regId, platform)
                                 .then(function(){
                                     defer.resolve();
                                 }, function (){
+                                    console.log('deu ruim para salvar');
                                     defer.reject();
                                 });
                         }
@@ -81,49 +93,66 @@ angular.module('starter.services', [])
             }
             return defer.promise;
         },
-        saveRegId: function(){
+        saveRegId: function(uuid, regId, platform){
+
             var defer = $q.defer();
+            console.log('Indo no servidor salvar o regid');
             $http
-                .get(CONFIG.WEBSERVICE_URL + '/regid/save?gym_id=' + CONFIG.GYM_ID)
-                .then(function(){
-                    store.set('regIdRegistered', true);
+                .post(CONFIG.WEBSERVICE_URL + '/regid/add.json', {
+                    gym_id: CONFIG.GYM_ID,
+                    uuid: uuid,
+                    regid: regId,
+                    platform: platform
+                })
+                .then(function(result){
+                    
+                    console.log('FOi no servidor e voltou jóia');
+                    /**
+                     * importante pois pode retornar 200 por algum motivo mas nao
+                     * ter salvo, ai falariamos para o app que salvou e ele nao salvaria nunca
+                     * sendo assim o app nunca receberia notificação.
+                     * o retorno pixuleco garante que salvou 
+                     */
+                    if (result.data.message.message == 'pixuleco') {
+                        store.set('regIdRegistered', true);    
+                    }
                     defer.resolve();
                 }, function(){
+                    console.log('FOi no servidor e voltou reuim, deu erro rsrsrs');
                     defer.reject();
                 });
 
-                return defer.promise;
+            return defer.promise;
         },
         registerAndroid: function(){
             var defer = $q.defer();
 
-            var config = {
-                "senderID": 688277362803,
-            };
+            if (!prod) {
+                defer.resolve('123regid');
+                return defer.promise;
+            }
 
             ionic.Platform.ready(function(){
-                $cordovaPush.register(config).then(function(result) {
-                    // Success
-                }, function(err) {
-                    defer.reject();
-                });
-
-                $rootScope.$on('$cordovaPush:notificationReceived', function(event, notification) {
-                    switch(notification.event) {
-                        case 'registered':
-                            if (notification.regid.length > 0 ) {
-                                resolve.resolve(notification.regid);
-                            } else {
-                                resolve.reject();
-                            }
-                        break;
-                        case 'error':
-                            resolve.reject();
-                            break;
-                        default:
-                            defer.reject();
-                            break;
+                var push = PushNotification.init({
+                    "android": {
+                        "senderID": "1004540944791",
+                        "icon": "www/img/push_notification_icon.png"
+                    },
+                    "ios": {
+                        "alert": "true",
+                        "badge": "true",
+                        "sound": "true"
                     }
+                });
+                push.on('registration', function(data) {
+                    console.log('Registrado');
+                    console.log(data.registrationId);
+                    defer.resolve(data.registrationId);
+                });
+                push.on('error', function(e) {
+                    console.log('deu erro no registro');
+                    console.log(e.message);
+                    defer.reject();
                 });
 
             });
@@ -134,6 +163,7 @@ angular.module('starter.services', [])
         },
     };
 })
+
 
 .factory('Util', function(){
     return {
