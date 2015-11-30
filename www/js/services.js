@@ -45,10 +45,25 @@ angular.module('starter.services', [])
     $ionicPlatform,
     $rootScope,
     $cordovaDevice,
+    $cordovaToast,
+    $cordovaDialogs,
+    CustomState,
     CONFIG,
     store
 ){
     return {
+        getToastTextFromType: function(type){
+            switch (type) {
+                case 'releases':
+                    return  'Você tem um novo comunicado.';
+            }
+        },
+        getViewNameFromType: function(type){
+            switch (type) {
+                case 'releases':
+                    return  'app.comunicados';
+            }
+        },
         register: function(){
 
             var defer = $q.defer();
@@ -126,6 +141,7 @@ angular.module('starter.services', [])
         },
         registerAndroid: function(){
             var defer = $q.defer();
+            var _this = this;
 
             if (!prod) {
                 defer.resolve('123regid');
@@ -148,6 +164,17 @@ angular.module('starter.services', [])
                     console.log('Registrado');
                     console.log(data.registrationId);
                     defer.resolve(data.registrationId);
+                });
+                push.on('notification', function(data) {
+                    var additionalData = data.additionalData;
+                    if (additionalData.foreground) {
+                        var text = _this.getToastTextFromType(additionalData.type);
+                        $cordovaToast.show(text, 'short', 'bottom');
+                        $cordovaDialogs.beep(1);
+                    } else {
+                        var path = _this.getViewNameFromType(additionalData.type);
+                        CustomState.goRoot(path);
+                    }
                 });
                 push.on('error', function(e) {
                     console.log('deu erro no registro');
@@ -466,6 +493,61 @@ angular.module('starter.services', [])
                 });
 
             return defer.promise;
+        }
+    };
+}).factory('CustomState', function(
+    $ionicHistory,
+    $ionicLoading,
+    $cordovaInAppBrowser,
+    $ionicPlatform,
+    $rootScope,
+    $state,
+    $ionicSideMenuDelegate
+) {
+    return {
+        goExternal: function (url) {
+            $ionicPlatform.ready(function() {
+                var options = {
+                    location: 'yes',
+                    clearcache: 'yes',
+                    toolbar: 'no'
+                };
+                $ionicLoading.show({template: 'Abrindo, aguarde...'});
+                $cordovaInAppBrowser.open(url, '_blank', options)
+                    .then(function(event) {
+                    // success
+                    })
+                    .catch(function(event) {
+                        $ionicLoading.hide();
+                    });
+            });
+
+            $rootScope.$on('$cordovaInAppBrowser:loaderror', function(e, event){
+                $ionicLoading.hide();
+            });
+
+            $rootScope.$on('$cordovaInAppBrowser:exit', function(e, event){
+                $ionicLoading.hide();
+            });
+
+            // if (ionic.Platform.isIOS()) {
+            //     alert('Aqui');
+            //     window.open(url, '_blank', 'location=yes');    
+            // } else {
+            //     window.open(url, '_system', 'location=yes');
+            // }
+            
+            return false;
+        },
+        goRoot: function(url, params){
+            params = (typeof params == 'undefined') ? {} : params;
+            $ionicHistory.nextViewOptions({
+                historyRoot: true
+            });
+            if ($ionicSideMenuDelegate.isOpenLeft()) {
+                $ionicSideMenuDelegate.toggleLeft();    
+            }
+            $state.go(url, params);
         }
     };
 });

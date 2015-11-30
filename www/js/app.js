@@ -117,9 +117,11 @@ angular.module('starter', [
     if (ionic.Platform.isIOS()) {
       $ionicConfigProvider.backButton.text('Voltar');
     }
-
     // Interceptor to send the JWT for every $http call.
-    jwtInterceptorProvider.tokenGetter = function(store){
+    jwtInterceptorProvider.tokenGetter = function(store, config){
+        if (config.url.substr(config.url.length - 5) == '.html') {
+            return null;
+        }
         return store.get('jwt');
     };
 
