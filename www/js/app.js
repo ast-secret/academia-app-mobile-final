@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 
-var prod = false;
+var prod = true;
 
 angular.module('starter', [
     'ionic',
@@ -21,6 +21,7 @@ angular.module('starter', [
 // CONFIGURAÇÕES
 .constant('CONFIG', {
     GYM_ID: 1,
+    GCM_SENDER_ID: '688277362803',
     HTTP_TIMEOUT: 15000,
     WEBSERVICE_URL: (prod) ? 'http://api.asturia.kinghost.net' : 'http://localhost/academia-webservice',
     HOME: 'app/institucional',

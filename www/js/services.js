@@ -100,8 +100,8 @@ angular.module('starter.services', [])
             $http
                 .post(CONFIG.WEBSERVICE_URL + '/regid/add.json', {
                     gym_id: CONFIG.GYM_ID,
-                    uuid: uuid,
-                    regid: regId,
+                    device_uuid: uuid,
+                    device_regid: regId,
                     platform: platform
                 })
                 .then(function(result){
@@ -114,7 +114,7 @@ angular.module('starter.services', [])
                      * o retorno pixuleco garante que salvou 
                      */
                     if (result.data.message.message == 'pixuleco') {
-                        store.set('regIdRegistered', true);    
+                        store.set('regIdRegistered', true);
                     }
                     defer.resolve();
                 }, function(){
@@ -135,7 +135,7 @@ angular.module('starter.services', [])
             ionic.Platform.ready(function(){
                 var push = PushNotification.init({
                     "android": {
-                        "senderID": "1004540944791",
+                        "senderID": CONFIG.GCM_SENDER_ID,
                         "icon": "www/img/push_notification_icon.png"
                     },
                     "ios": {
@@ -256,8 +256,11 @@ angular.module('starter.services', [])
                     .then(function(result){
                         store.set('jwt', result.data.message.token || null);
                         store.set('user', result.data.message.user);
-                        console.log('Retrieving JWT');
-                        console.log(store.get('jwt'));
+                        /**
+                         * Obrigo ele a registrar o regid novamente mas agora ele
+                         * tera o ID do usuario logado no telefone.
+                         */
+                        store.set('regIdRegistered', false);
                         defer.resolve(CONFIG.HOME_STATE);
                     }, function(err){
                         defer.reject(err);
@@ -269,13 +272,15 @@ angular.module('starter.services', [])
         },
         getPushRegistrationId: function(){
             var defer = $q.defer();
+            defer.resolve('123');
+            return defer.promise;
 
             if (!prod) {
                 defer.resolve('login_browser_dont_have_regid');
             }
 
             var androidConfig = {
-                "senderID": "replace_with_sender_id",
+                "senderID": CONFIG.GOOGLE_SENDER_ID,
             };
 
             document.addEventListener("deviceready", function(){
