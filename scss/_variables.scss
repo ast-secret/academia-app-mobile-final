@@ -50,6 +50,9 @@ $preto: #000;
 // texto escuro
 $branco: #FFF;
 
+$facebook: #3b5998;
+$twitter: #4099FF;
+
 // SOBRESCREVENDO IONIC
 $font-family-sans-serif:          "Roboto", "Segoe UI", sans-serif !default;
 $font-family-light-sans-serif:    "HelveticaNeue-Light", "Roboto-Light", "Segoe UI-Light", sans-serif-light !default;
@@ -66,6 +69,10 @@ $text-color-secondary: rgba(#000, .5)!default;
 $text-color-light: #FFF;
 $text-color-half: lighten(#000, 50%);
 $text-color-dark: lighten(#000, 18%);
+
+// NAVBAR
+$navbar-color: $indigo;
+$navbar-text-color: $text-color-light;
 
 // LISTS
 $list-font-size: 16px;
@@ -90,3 +97,6 @@ $menu-font-color: #DDD;
 $menu-font-size: 17px;
 
 // LOGIN
+/*Institucional*/
+$institucional-header-bg-color: $navbar-color; 
+$institucional-header-text-color: $text-color-light;

@@ -10,6 +10,9 @@
 
 // The path for our ionicons font files, relative to the built CSS in www/css
 
+// FLEXBOX MIXIN
+@import "www/lib/sass-flex-mixin/_flexbox";
+
 @import "_variables";
 @import "_config";
 @import "_tabs";

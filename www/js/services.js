@@ -19,12 +19,12 @@ angular.module('starter.services', [])
             redesSociais: [
                 {
                     icon: 'social-facebook',
-                    name: 'Facebook',
+                    name: 'facebook',
                     url: 'https://facebook.com/spartan'
                 },
                 {
                     icon: 'social-twitter',
-                    name: 'Twitter',
+                    name: 'twitter',
                     url: 'https://twitter.com/spartan'
                 }
             ]
@@ -215,22 +215,21 @@ angular.module('starter.services', [])
     };
 })
 .factory('User', function(
+    $cordovaDialogs,
     $cordovaPush,
-    $rootScope,
-    $q,
     $cordovaToast,
     $http,
-    store,
-    $cordovaDialogs,
-    CONFIG
+    $ionicLoading,
+    $q,
+    $rootScope,
+    CustomState,
+    CONFIG,
+    store
 ){
     return {
         authRequire: function() {
             var defer = $q.defer();
             if (store.get('jwt')) {
-                console.log(store.get('jwt'));
-                console.log(store.get('user'));
-                console.log('De boas');
                 defer.resolve();
             } else {
                 console.log('rejeitado');
@@ -261,6 +260,19 @@ angular.module('starter.services', [])
 
             return defer.promise;
         },
+        logout: function(){
+
+            var defer = $q.defer();
+
+            store.remove('cards');
+            store.remove('user');
+            store.remove('jwt');
+            store.set('regIdRegistered', false);
+
+            defer.resolve(CONFIG.HOME_STATE);
+
+            return defer.promise;
+        },
         login: function(postData){
             var defer = $q.defer();
             // Garanto que ele faça login na academia dona do app
@@ -268,33 +280,29 @@ angular.module('starter.services', [])
             // e se passar por post ali ele ainda não formou o request->data...
             var gymId = CONFIG.GYM_ID;
 
-            this.getPushRegistrationId()
-                .then(function(regId){
+            $http({
+                url: CONFIG.WEBSERVICE_URL + '/auth/token/create.json?gym_id=' + gymId,
+                method: 'POST',
+                data: postData,
+                skipAuthorization: true
+            })
+            .then(function(result){
+                store.set('jwt', result.data.message.token || null);
+                store.set('user', result.data.message.user);
+                /**
+                 * Obrigo ele a registrar o regid novamente mas agora ele
+                 * tera o ID do usuario logado no telefone.
+                 */
+                store.set('regIdRegistered', false);
+                CustomState.goRoot(CONFIG.HOME_STATE);
+                defer.resolve();
+            }, function(err){
+                if (err.status == 401) {
+                    $cordovaDialogs.alert('A combinação email/senha está incorreta. Por favor, tente novamente.', 'Combinação incorreta');
+                }
+                defer.reject(err);
+            });
 
-                    postData.push_reg_id = regId;
-                    postData.platform = (prod) ? ionic.Platform.platform() : 'android';
-
-                    $http({
-                        url: CONFIG.WEBSERVICE_URL + '/auth/token/create.json?gym_id=' + gymId,
-                        method: 'POST',
-                        data: postData,
-                        skipAuthorization: true
-                    })
-                    .then(function(result){
-                        store.set('jwt', result.data.message.token || null);
-                        store.set('user', result.data.message.user);
-                        /**
-                         * Obrigo ele a registrar o regid novamente mas agora ele
-                         * tera o ID do usuario logado no telefone.
-                         */
-                        store.set('regIdRegistered', false);
-                        defer.resolve(CONFIG.HOME_STATE);
-                    }, function(err){
-                        defer.reject(err);
-                    });
-                }, function(){
-                    defer.reject();
-                });
             return defer.promise;
         },
         getPushRegistrationId: function(){
@@ -529,13 +537,6 @@ angular.module('starter.services', [])
             $rootScope.$on('$cordovaInAppBrowser:exit', function(e, event){
                 $ionicLoading.hide();
             });
-
-            // if (ionic.Platform.isIOS()) {
-            //     alert('Aqui');
-            //     window.open(url, '_blank', 'location=yes');    
-            // } else {
-            //     window.open(url, '_system', 'location=yes');
-            // }
             
             return false;
         },

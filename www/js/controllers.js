@@ -55,7 +55,6 @@ angular.module('starter.controllers', [])
         restrict: 'C',
         link: function(scope, element){
             function fillHeight() {
-                console.log('filling');
                 var windowH = $window.innerHeight;
                 var content = document.getElementsByClassName('scroll-content');
                 var scrollBar = document.getElementsByClassName('scroll-bar');
@@ -63,7 +62,9 @@ angular.module('starter.controllers', [])
                 if (scrollBar.length > 1) {
                   // content[0].removeChild(scrollBar[0]);
                 }
-                element[0].style.height = (windowH - 44) + 'px';
+                var finalH = (windowH - 44);
+                finalH = (ionic.Platform.isIOS()) ? finalH - 15 : finalH;
+                element[0].style.height = finalH + 'px';
             }
             fillHeight();
             $window.addEventListener("resize", fillHeight);
@@ -82,29 +83,25 @@ angular.module('starter.controllers', [])
     $window.localStorage.clear();
 })
 .controller('LogoutController', function(
-    $ionicLoading,
     $scope,
-    $rootScope,
-    $state,
-    CONFIG,
     $timeout,
-    store,
-    $window
+    $ionicLoading,
+    CustomState,
+    User
 ) {
 
     var delay = 1500;
+    $ionicLoading.show({template: 'Saindo, aguarde...'});
     $scope.$on( "$ionicView.beforeEnter", function(scopes, states) {
-        $ionicLoading.show({template: 'Saindo, aguarde...'});
-        
-        store.remove('cards');
-        store.remove('user');
-        store.remove('jwt');
+        $timeout(function(){
+            User
+                .logout()
+                .then(function(homeState){
+                    $ionicLoading.hide();
+                    CustomState.goRoot(homeState);
+                });
+        }, delay);
     });
-    $timeout(function(){
-        $ionicLoading.hide();
-        $state.go(CONFIG.HOME_STATE);
-    }, delay);
-
 })
 .controller('EsqueciMinhaSenhaController', function(
     $scope,
@@ -123,7 +120,7 @@ angular.module('starter.controllers', [])
         User
             .login($scope.form)
             .then(function(home){
-                $state.go(home);
+                CustomState.goRoot(CONFIG.HOME_STATE);
             }, function(err){
             })
             .finally(function(){
@@ -148,13 +145,6 @@ angular.module('starter.controllers', [])
         $ionicLoading.show({template: 'Entrando, aguarde...'});
         User
             .login($scope.form)
-            .then(function(home){
-                $state.go(home);
-            }, function(err){
-                if (err.status == 401) {
-                    $cordovaDialogs.alert('A combinação email/senha está incorreta. Por favor, tente novamente.', 'Combinação incorreta');
-                }
-            })
             .finally(function(){
                 $ionicLoading.hide();
             });
@@ -431,7 +421,12 @@ angular.module('starter.controllers', [])
 
 .controller('InstitucionalController', function(
     $scope,
+    CustomState,
     dadosGerais
 ) {
     $scope.dadosGerais = dadosGerais;
+
+    $scope.goExternal = function(url) {
+        CustomState.goExternal(url);
+    };
 });
