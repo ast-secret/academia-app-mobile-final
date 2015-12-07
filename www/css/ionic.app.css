@@ -8,7 +8,9 @@
   font-family: "Doida";
   src: url("../fonts/Doida.ttf") format("truetype"); }
 
+/*NAVBAR*/
 /*Institucional*/
+/*// Fechar modal*/
 .tabs {
   background: none !important;
   background-color: #3F51B5 !important;
@@ -140,7 +142,7 @@ p {
   font-size: 24px !important; }
 
 .login-container {
-  background-color: #3F51B5;
+  background-color: white;
   display: flex;
   flex-direction: column; }
 
@@ -168,13 +170,13 @@ p {
 .login-form > form > .list > .item {
   background: none;
   border: 0;
-  border-bottom: 1px solid #FFF; }
+  border-bottom: 1px solid blue; }
 
 .login-form > form > .list > .item > input {
-  color: #FFF !important; }
+  color: blue !important; }
 
 .login-form > form > .list > .item > input::-webkit-input-placeholder {
-  color: rgba(255, 255, 255, 0.6); }
+  color: rgba(0, 0, 255, 0.6); }
 
 .login-footer {
   display: flex;
@@ -186,13 +188,13 @@ p {
   padding: 30px 10px; }
 
 .button-logar {
-  background-color: #4d5ec1 !important;
+  background-color: white !important;
   border: 0 !important;
-  color: #FFF !important; }
+  color: blue !important; }
 
 .link-login {
   text-decoration: none;
-  color: #FFF; }
+  color: blue; }
 
 /*APP*/
 .custom-bg {
@@ -211,8 +213,8 @@ textarea.sugestao {
   min-height: 200px;
   resize: none; }
 
-.button-theme {
-  color: #3F51B5 !important; }
+.btn-close-modal {
+  color: pink !important; }
 
 /*Institucional*/
 .institucional-container {
@@ -229,14 +231,27 @@ textarea.sugestao {
   flex-direction: column;
   height: 100%; }
 
+.institucional-header-container {
+  position: absolute;
+  top: 0;
+  width: 100%; }
+
 .institucional-header {
   font-size: 15px !important;
-  background-color: red;
-  padding: 15px;
   line-height: 25px;
   background-color: #3F51B5;
   color: #FFF;
-  text-align: right; }
+  text-align: center;
+  padding: 20px 20px 0 20px; }
+
+.institucional-social-bar, .institucional-header {
+  background-color: rgba(0, 0, 0, 0.6); }
+
+.institucional-social-bar .button-clear:before {
+  color: #FFF !important; }
+
+.institucional-social-bar .button-clear:before {
+  /*font-size: 28px!important;*/ }
 
 .institucional-header .icon {
   font-size: 18px;
@@ -5733,6 +5748,13 @@ a.item-content {
       transition: opacity 0.4s ease-in;
       opacity: 1; }
 
+.slider-slide.ng-enter, .slider-slide.ng-leave, .slider-slide.ng-animate, .slider-pager-page.ng-enter, .slider-pager-page.ng-leave, .slider-pager-page.ng-animate {
+  -webkit-transition: none !important;
+  transition: none !important; }
+.slider-slide.ng-animate, .slider-pager-page.ng-animate {
+  -webkit-animation: none 0s;
+  animation: none 0s; }
+
 .scroll-refresher {
   position: absolute;
   top: -60px;
@@ -5800,7 +5822,12 @@ a.item-content {
   -webkit-overflow-scrolling: touch;
   width: 100%; }
   .overflow-scroll > .scroll.overscroll {
-    position: fixed; }
+    position: fixed;
+    right: 0;
+    left: 0; }
+
+.overflow-scroll.padding > .scroll.overscroll {
+  padding: 10px; }
 
 @-webkit-keyframes refresh-spin {
   0% {
@@ -6521,22 +6548,12 @@ input[type="radio"][disabled], input[type="checkbox"][disabled], input[type="rad
   /* hide any radio button inputs elements (the ugly circles) */
   position: absolute;
   left: -9999px; }
-  .item-radio input:checked ~ .item-content {
+  .item-radio input:checked + .radio-content .item-content {
     /* style the item content when its checked */
     background: #f7f7f7; }
-  .item-radio input:checked ~ .radio-icon {
+  .item-radio input:checked + .radio-content .radio-icon {
     /* show the checkmark icon when its checked */
     visibility: visible; }
-
-.platform-android.grade-b .item-radio, .platform-android.grade-c .item-radio {
-  -webkit-animation: androidCheckedbugfix infinite 1s; }
-
-@-webkit-keyframes androidCheckedbugfix {
-  from {
-    padding: 0; }
-
-  to {
-    padding: 0; } }
 
 /**
  * Range

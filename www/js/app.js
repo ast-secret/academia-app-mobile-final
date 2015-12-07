@@ -27,8 +27,6 @@ angular.module('starter', [
     HOME: 'app/institucional',
     HOME_STATE: 'app.institucional',
     LOGIN_STATE: 'app.login',
-    LOGOUT_REDIRECT: 'login',
-    LOGOUT: 'logout',
     NATIVE_SCROLL: prod
 })
 
@@ -164,13 +162,14 @@ angular.module('starter', [
             }
         }
     })
-    .state('esqueci-minha-senha', {
+    .state('app.esqueci_minha_senha', {
         url: '/esqueci-minha-senha',
-        data: {
-            requiresLog: false
-        },
-        templateUrl: 'templates/esqueci_minha_senha.html',
-        controller: 'EsqueciMinhaSenhaController'
+        views: {
+        	'menuContent': {
+		        templateUrl: 'templates/esqueci_minha_senha.html',
+		        controller: 'EsqueciMinhaSenhaController'
+        	}
+        }
     })
     .state('logout', {
         url: '/logout',
@@ -205,9 +204,6 @@ angular.module('starter', [
     })
     .state('app.aula', {
         url: '/aula/:aulaId',
-        data: {
-            requiresLogin: true
-        },
         views: {
             'menuContent': {
                 templateUrl: 'templates/aula.html',

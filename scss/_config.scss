@@ -1,6 +1,10 @@
+/*NAVBAR*/
+$navbar-color: $indigo;
+$navbar-text-color: #FFF;
+
 // LOGIN
-$login-bg-color: $navbar-color;
-$login-text-color: #FFF;
+$login-bg-color: white;
+$login-text-color: blue;
 $login-button-color: lighten($login-bg-color, 5%);
 $login-logo-width: 40%!default;
 $login-logo-height: auto!default;
@@ -9,3 +13,10 @@ $login-logo-padding: 0 0 0px 0!default;
 //CHECKBOX
 $checkbox-on-bg-default: $navbar-color;
 $checkbox-on-border-default: $checkbox-on-bg-default;
+
+/*Institucional*/
+$institucional-header-bg-color: $navbar-color; 
+$institucional-header-text-color: $text-color-light;
+
+/*// Fechar modal*/
+$btn-close-modal-text-color: pink;

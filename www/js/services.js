@@ -275,6 +275,15 @@ angular.module('starter.services', [])
         },
         login: function(postData){
             var defer = $q.defer();
+
+            // if (!prod) {
+            //     store.set('jwt', '8ads89djs89a' || null);
+            //     store.set('user', {name: 'Daniel'});
+            //     CustomState.goRoot(CONFIG.HOME_STATE);
+            //     defer.resolve();
+            //     return defer.promise;
+            // }
+
             // Garanto que ele faça login na academia dona do app
             // Deve ser passado por get pois ele pega no initialize do appController
             // e se passar por post ali ele ainda não formou o request->data...

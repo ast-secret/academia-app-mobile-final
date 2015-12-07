@@ -15,8 +15,8 @@ textarea.sugestao{
     min-height: 200px;
     resize: none;
 }
-.button-theme{
-    color: $navbar-color!important;
+.btn-close-modal{
+    color: $btn-close-modal-text-color!important;
 }
 /*Institucional*/
 .institucional-container{
@@ -24,14 +24,27 @@ textarea.sugestao{
     @include flex-direction(column);
     height: 100%;
 }
+.institucional-header-container{
+    position: absolute;
+    top:0;
+    width: 100%;
+}
 .institucional-header{
     font-size: 15px!important;
-    background-color: red;
-    padding: 15px;
     line-height: 25px;
     background-color: $institucional-header-bg-color;
     color: $institucional-header-text-color;
-    text-align: right;
+    text-align: center;
+    padding: 20px 20px 0 20px;
+}
+.institucional-social-bar, .institucional-header{
+    background-color: rgba(0, 0, 0, .6);
+}
+.institucional-social-bar .button-clear:before{
+    color: #FFF!important;
+}
+.institucional-social-bar .button-clear:before{
+    /*font-size: 28px!important;*/
 }
 .institucional-header .icon{
     font-size: 18px;

@@ -106,8 +106,7 @@ angular.module('starter.controllers', [])
 .controller('EsqueciMinhaSenhaController', function(
     $scope,
     $state,
-    $ionicLoading,
-    User
+    $ionicLoading
 ) {
 
     $scope.$on( "$ionicView.beforeEnter", function(scopes, states) {
@@ -115,18 +114,6 @@ angular.module('starter.controllers', [])
         $scope.wrongCredentials = false;
     });
 
-    $scope.doLogin = function(){
-        $ionicLoading.show({template: 'Entrando, aguarde...'});
-        User
-            .login($scope.form)
-            .then(function(home){
-                CustomState.goRoot(CONFIG.HOME_STATE);
-            }, function(err){
-            })
-            .finally(function(){
-                $ionicLoading.hide();
-            });
-    };
 })
 .controller('LoginController', function(
     $scope,

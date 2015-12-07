@@ -70,10 +70,6 @@ $text-color-light: #FFF;
 $text-color-half: lighten(#000, 50%);
 $text-color-dark: lighten(#000, 18%);
 
-// NAVBAR
-$navbar-color: $indigo;
-$navbar-text-color: $text-color-light;
-
 // LISTS
 $list-font-size: 16px;
 $list-sub-item-font-size: $list-font-size - 2;
@@ -95,8 +91,3 @@ $alert-default-font-color: $label-font-color;
 $menu-lateral-bg-image: '../img/menu_bg.jpg';
 $menu-font-color: #DDD;
 $menu-font-size: 17px;
-
-// LOGIN
-/*Institucional*/
-$institucional-header-bg-color: $navbar-color; 
-$institucional-header-text-color: $text-color-light;
